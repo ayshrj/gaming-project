@@ -1,0 +1,46 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    height: 30px;
+    background-color: var(--background-color);
+    padding: 5px;
+}
+
+.leftpane-open-close-button {
+    position: fixed;
+    color: var(--border-color);
+    cursor: pointer;
+}
+
+.content-user-top-right-options {
+    position: fixed;
+    right: 5px;
+    top: 5px;
+    color: var(--border-color);
+    z-index: 2;
+    display: flex;
+    gap: 30px;
+    margin-right: 10px;
+}
+
+.content-user-top-right-options img {
+    width: 30px;
+    border-radius: 50%;
+    transition: box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.content-user-top-right-options div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.content-user-top-right-options img:hover {
+    box-shadow: var(--shadow-elevation-medium);
+}

@@ -1,0 +1,17 @@
+.nonogram-container {
+    text-align: center;
+}
+
+.nonogram {
+    display: grid;
+    grid-template-columns: repeat(8, 40px);
+    grid-template-rows: repeat(8, 40px);
+    border: 0.5px solid var(--background-color);
+    justify-content: center;
+}
+
+
+.cell {
+    border: 1px solid var(--background-color);
+    transition: background-color 0.1s ease-in-out;
+}

@@ -1,0 +1,15 @@
+.app {
+  display: flex;
+  height: 90vh;
+  padding: 10px;
+  position: relative;
+}
+
+/* .leftpane-open-close-button {
+  position: fixed;
+  left: 5px;
+  top: 5px;
+  color: var(--border-color);
+  cursor: pointer;
+  z-index: 5;
+} */

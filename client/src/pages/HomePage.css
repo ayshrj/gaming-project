@@ -1,0 +1,59 @@
+.welcome p {
+    color: var(--para-color);
+}
+
+.row {
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.column {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    color: rgb(219, 219, 219);
+    margin: 5px;
+    min-width: 300px;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    transform: border 0.3s ease-in-out;
+    flex-direction: column;
+}
+
+.column-text {
+    position: absolute;
+    top: 13px;
+    left: 13px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* .column:hover {
+    border: 1px dashed var(--border-color);
+} */
+
+.column img {
+    height: 300px;
+    filter: var(--image-invert-filter)
+}
+
+.games {
+    width: 100%;
+    margin-top: 15px;
+    align-self: start;
+}
+
+.game {
+    padding: 10px;
+}
+
+.game:hover {
+    border-radius: var(--border-radius);
+    border: 1px dashed var(--border-color);
+}
