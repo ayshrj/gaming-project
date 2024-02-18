@@ -8,6 +8,7 @@ import {
 } from "@tabler/icons-react";
 import "./Navbar.css";
 import DarkModeToggle from "./DarkModeToggle";
+import Search from "./Search";
 
 const Navbar = ({
   setIsLeftPaneOpen,
@@ -51,9 +52,7 @@ const Navbar = ({
         {isLeftPaneOpen ? <IconAlignJustified /> : <IconAlignLeft />}
       </div>
       <div className="content-user-top-right-options">
-        <div>
-          <IconSearch />
-        </div>
+        <Search />
         <div>
           <IconBell />
         </div>

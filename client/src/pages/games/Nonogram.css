@@ -1,17 +1,260 @@
+:root {
+    --nonogram-cell-size-15: 20px;
+    --nonogram-cell-size-10: 33px;
+    --nonogram-cell-size-5: 60px;
+    --nonogram-options-buttons-width: 160px;
+    --nonogram-size-buttons-width: 105px;
+    --nonogram-board-button-width: 160px;
+    --nonogram-buttons-gap: 5px;
+    --nonogram-cell-border-width: 1px;
+    --nonogram-button-height: 50px;
+    --nonogram-button-font-size: 20px;
+    --nonogram-button-border-radius: 15px;
+}
+
 .nonogram-container {
     text-align: center;
 }
 
 .nonogram {
-    display: grid;
-    grid-template-columns: repeat(8, 40px);
-    grid-template-rows: repeat(8, 40px);
-    border: 0.5px solid var(--background-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nonogram-row {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+.nonogram-cell {
+    display: flex;
     justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 3px;
+    border: var(--nonogram-cell-border-width) solid var(--border-color);
+    user-select: none;
+    color: var(--para-color);
+    transition: border 0.3s ease-in-out;
+    user-select: none;
+}
+
+.nonogram-size-15 {
+    height: var(--nonogram-cell-size-15);
+    width: var(--nonogram-cell-size-15);
+    font-size: var(--nonogram-cell-size-15);
+}
+
+.nonogram-size-10 {
+    height: var(--nonogram-cell-size-10);
+    width: var(--nonogram-cell-size-10);
+    font-size: var(--nonogram-cell-size-10);
+}
+
+.nonogram-size-5 {
+    height: var(--nonogram-cell-size-5);
+    width: var(--nonogram-cell-size-5);
+    font-size: var(--nonogram-cell-size-5);
+}
+
+.filled {
+    background-color: var(--para-color);
+}
+
+.no-border {
+    border: 1px solid var(--background-color);
+}
+
+.no-top-border {
+    border-top: none;
+}
+
+.no-left-border {
+    border-left: none;
+}
+
+.prompt {
+    display: block;
+    min-height: 19px;
+    margin: 5px;
+    color: var(--para-color);
+}
+
+.nonogram-options-buttons, .nonogram-size-buttons, .nonogram-board-button {
+    display: flex;
+    gap: var(--nonogram-buttons-gap);
+    justify-content: center;
+    margin: 5px;
+    user-select: none;
+}
+
+.nonogram-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--nonogram-button-border-radius);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: var(--nonogram-button-font-size);
+    height: var(--nonogram-button-height);
+}
+
+.nonogram-options-buttons .nonogram-button {
+    width: var(--nonogram-options-buttons-width);
+}
+
+.nonogram-size-buttons .nonogram-button {
+    width: var(--nonogram-size-buttons-width);
+}
+
+.nonogram-board-button .nonogram-button {
+    width: var(--nonogram-board-button-width);
+}
+
+.nonogram-button:hover {
+    border-style: dashed;
+}
+
+.active-button {
+    border: 1px dashed var(--para-color);
 }
 
 
-.cell {
-    border: 1px solid var(--background-color);
-    transition: background-color 0.1s ease-in-out;
+@media (max-width: 1134px) {
+    .nonogram-size-15 {
+        height: calc(0.75*var(--nonogram-cell-size-15));
+        width: calc(0.75*var(--nonogram-cell-size-15));
+        font-size: calc(0.75*var(--nonogram-cell-size-15));
+        border-width: calc(0.75*var(--nonogram-cell-border-width));
+    }
+
+    .nonogram-size-10 {
+        height: calc(0.75*var(--nonogram-cell-size-10));
+        width: calc(0.75*var(--nonogram-cell-size-10));
+        font-size: calc(0.75*var(--nonogram-cell-size-10));
+        border-width: calc(0.75*var(--nonogram-cell-border-width));
+    }
+
+    .nonogram-size-5 {
+        height: calc(0.75*var(--nonogram-cell-size-5));
+        width: calc(0.75*var(--nonogram-cell-size-5));
+        font-size: calc(0.75*var(--nonogram-cell-size-5));
+        border-width: calc(0.75*var(--nonogram-cell-border-width));
+    }
+
+    .nonogram-button {
+        height: calc(0.75*var(--nonogram-button-height));
+        font-size: calc(0.75*var(--nonogram-button-font-size));
+        border-radius: calc(0.75*var(--nonogram-button-border-radius));
+    }
+
+    .nonogram-options-buttons .nonogram-button {
+        width: calc(0.75*var(--nonogram-options-buttons-width));
+    }
+
+    .nonogram-size-buttons .nonogram-button {
+        width: calc(0.75*var(--nonogram-size-buttons-width));
+    }
+
+    .nonogram-board-button .nonogram-button {
+        width: calc(0.75*var(--nonogram-board-button-width));
+    }
+
+    .nonogram-options-buttons, .nonogram-size-buttons, .nonogram-board-button {
+        gap: calc(0.75*var(--nonogram-buttons-gap))
+    }
+}
+
+@media (max-width: 665px) {
+    .nonogram-size-15 {
+        height: calc(0.5*var(--nonogram-cell-size-15));
+        width: calc(0.5*var(--nonogram-cell-size-15));
+        font-size: calc(0.5*var(--nonogram-cell-size-15));
+        border-width: calc(0.5*var(--nonogram-cell-border-width));
+    }
+
+    .nonogram-size-10 {
+        height: calc(0.5*var(--nonogram-cell-size-10));
+        width: calc(0.5*var(--nonogram-cell-size-10));
+        font-size: calc(0.5*var(--nonogram-cell-size-10));
+        border-width: calc(0.5*var(--nonogram-cell-border-width));
+    }
+
+    .nonogram-size-5 {
+        height: calc(0.5*var(--nonogram-cell-size-5));
+        width: calc(0.5*var(--nonogram-cell-size-5));
+        font-size: calc(0.5*var(--nonogram-cell-size-5));
+        border-width: calc(0.5*var(--nonogram-cell-border-width));
+    }
+
+    .nonogram-button {
+        height: calc(0.5*var(--nonogram-button-height));
+        font-size: calc(0.5*var(--nonogram-button-font-size));
+        border-radius: calc(0.5*var(--nonogram-button-border-radius));
+    }
+
+    .nonogram-options-buttons .nonogram-button {
+        width: calc(0.5*var(--nonogram-options-buttons-width));
+    }
+
+    .nonogram-size-buttons .nonogram-button {
+        width: calc(0.5*var(--nonogram-size-buttons-width));
+    }
+
+    .nonogram-board-button .nonogram-button {
+        width: calc(0.5*var(--nonogram-board-button-width));
+    }
+
+    .nonogram-options-buttons, .nonogram-size-buttons, .nonogram-board-button {
+        gap: calc(0.5*var(--nonogram-buttons-gap))
+    }
+}
+
+@media (max-width: 508px) {
+    .nonogram-size-15 {
+        height: calc(0.3*var(--nonogram-cell-size-15));
+        width: calc(0.3*var(--nonogram-cell-size-15));
+        font-size: calc(0.3*var(--nonogram-cell-size-15));
+        border-width: calc(0.3*var(--nonogram-cell-border-width));
+    }
+
+    .nonogram-size-10 {
+        height: calc(0.3*var(--nonogram-cell-size-10));
+        width: calc(0.3*var(--nonogram-cell-size-10));
+        font-size: calc(0.3*var(--nonogram-cell-size-10));
+        border-width: calc(0.3*var(--nonogram-cell-border-width));
+    }
+
+    .nonogram-size-5 {
+        height: calc(0.3*var(--nonogram-cell-size-5));
+        width: calc(0.3*var(--nonogram-cell-size-5));
+        font-size: calc(0.3*var(--nonogram-cell-size-5));
+        border-width: calc(0.3*var(--nonogram-cell-border-width));
+    }
+
+    .nonogram-button {
+        height: calc(0.3*var(--nonogram-button-height));
+        font-size: calc(0.3*var(--nonogram-button-font-size));
+        border-radius: calc(0.3*var(--nonogram-button-border-radius));
+    }
+
+    .nonogram-options-buttons .nonogram-button {
+        width: calc(0.3*var(--nonogram-options-buttons-width));
+    }
+
+    .nonogram-size-buttons .nonogram-button {
+        width: calc(0.3*var(--nonogram-size-buttons-width));
+    }
+
+    .nonogram-board-button .nonogram-button {
+        width: calc(0.3*var(--nonogram-board-button-width));
+    }
+
+    .nonogram-options-buttons, .nonogram-size-buttons, .nonogram-board-button {
+        gap: calc(0.3*var(--nonogram-buttons-gap))
+    }
 }

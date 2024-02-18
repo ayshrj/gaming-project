@@ -1,0 +1,97 @@
+:root {
+    --sudoku-cell-size: 40px;
+    --sudoku-cell-border-width: 1px;
+    --sudoku-thicker-border: 3px;
+    --sudoku-button-height: 50px;
+    --sudoku-number-button-font-size: 20px;
+    --sudoku-number-button-border-radius: 4px;
+    --sudoku-number-button-gap: 7px;
+}
+
+.sudoku-container {
+    text-align: center;
+}
+
+.sudoku {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sudoku-row {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+.sudoku-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 3px;
+    border: var(--sudoku-cell-border-width) solid var(--border-color);
+    user-select: none;
+    color: var(--para-color);
+    transition: border 0.3s ease-in-out;
+    user-select: none;
+    height: var(--sudoku-cell-size);
+    width: var(--sudoku-cell-size);
+    font-size: var(--sudoku-cell-size);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.sudoku-cell-left-thick {
+    border-left-width: var(--sudoku-thicker-border);
+}
+
+.sudoku-cell-top-thick {
+    border-top-width: var(--sudoku-thicker-border);
+}
+
+.sudoku-cell-right-thick {
+    border-right-width: var(--sudoku-thicker-border);
+}
+
+.sudoku-cell-bottom-thick {
+    border-bottom-width: var(--sudoku-thicker-border);
+}
+
+.sudoku-selected {
+    background-color: var(--para-color);
+}
+
+.sudoku-numbers {
+    display: flex;
+    justify-content: center;
+    gap: var(--sudoku-number-button-gap);
+    margin: 5px
+}
+
+.sudoku-number {
+    display: flex;
+    border: 1px solid var(--border-color);
+    font-size: var(--sudoku-number-button-font-size);
+    height: var(--sudoku-cell-size);
+    width: var(--sudoku-cell-size);
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--sudoku-number-button-border-radius);
+    user-select: none;
+    cursor: pointer;
+}
+
+.sudoku-fillable {
+    color: black;
+    cursor: pointer;
+}
+
+@media (max-width: 665px) {
+    .sudoku-cell {
+        height: calc(0.6*var(--sudoku-cell-size));
+        width: calc(0.6*var(--sudoku-cell-size));
+        font-size: calc(0.6*var(--sudoku-cell-size));
+    }
+}

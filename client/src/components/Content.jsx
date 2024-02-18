@@ -6,7 +6,12 @@ import Sudoku from "../pages/games/Sudoku";
 import Games from "../pages/Games";
 import { Routes, Route, Link } from "react-router-dom";
 
-const Content = ({ isMobileViewport, leftPaneContainerWidth, darkMode }) => {
+const Content = ({
+  isMobileViewport,
+  leftPaneContainerWidth,
+  darkMode,
+  browserWindowWidth,
+}) => {
   console.log("Mobile View: ", isMobileViewport);
   console.log("LeftContainerWidth: ", leftPaneContainerWidth);
   return (
@@ -22,9 +27,12 @@ const Content = ({ isMobileViewport, leftPaneContainerWidth, darkMode }) => {
         <Route path="/games" element={<Games />} />
         <Route
           path="games/nonogram"
-          element={<Nonogram darkMode={darkMode} />}
+          element={<Nonogram browserWindowWidth={browserWindowWidth} />}
         />
-        <Route path="games/sudoku" element={<Sudoku />} />
+        <Route
+          path="games/sudoku"
+          element={<Sudoku browserWindowWidth={browserWindowWidth} />}
+        />
       </Routes>
     </div>
   );

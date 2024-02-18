@@ -101,7 +101,7 @@ const Streak = ({
         strokeLinecap
       )}
 
-      <text x={cx} y={cy} class="streak-text">
+      <text x={cx} y={cy} className="streak-text">
         {text}
       </text>
     </svg>

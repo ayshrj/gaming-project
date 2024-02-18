@@ -9,6 +9,8 @@
     height: 30px;
     background-color: var(--background-color);
     padding: 5px;
+    /* background-image: var(--background-image);
+    background-blend-mode: var(--background-blend-mode); */
 }
 
 .leftpane-open-close-button {

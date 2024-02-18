@@ -4,7 +4,12 @@ import LeftPane from "../components/LeftPane";
 import Content from "../components/Content";
 import { BrowserRouter } from "react-router-dom";
 
-const Dashboard = ({ isMobileViewport, isLeftPaneOpen, darkMode }) => {
+const Dashboard = ({
+  isMobileViewport,
+  isLeftPaneOpen,
+  darkMode,
+  browserWindowWidth,
+}) => {
   const [leftPaneContainerWidth, setLeftPaneContainerWidth] = useState(0);
 
   return (
@@ -19,6 +24,7 @@ const Dashboard = ({ isMobileViewport, isLeftPaneOpen, darkMode }) => {
           isMobileViewport={isMobileViewport}
           leftPaneContainerWidth={leftPaneContainerWidth}
           darkMode={darkMode}
+          browserWindowWidth={browserWindowWidth}
         />
       </div>
     </BrowserRouter>

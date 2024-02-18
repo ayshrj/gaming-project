@@ -6,7 +6,8 @@ import Navbar from "./components/Navbar";
 
 function App() {
   const [isMobileViewport, setIsMobileViewport] = useState(false);
-  const [isLeftPaneOpen, setIsLeftPaneOpen] = useState(false); // Initialize as closed
+  const [isLeftPaneOpen, setIsLeftPaneOpen] = useState(false);
+  const [browserWindowWidth, setBrowserWindowWidth] = useState(null);
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "false" ? false : true
   );
@@ -14,8 +15,8 @@ function App() {
   useEffect(() => {
     const handleResize = () => {
       const windowWidth = window.innerWidth;
+      setBrowserWindowWidth(windowWidth);
       setIsMobileViewport(windowWidth <= 933);
-      console.log(window.innerWidth);
     };
 
     handleResize();
@@ -25,7 +26,6 @@ function App() {
     };
   }, []);
 
-  // Update isLeftPaneOpen whenever isMobileViewport changes
   useEffect(() => {
     setIsLeftPaneOpen(!isMobileViewport);
   }, [isMobileViewport]);
@@ -45,6 +45,7 @@ function App() {
           isMobileViewport={isMobileViewport}
           isLeftPaneOpen={isLeftPaneOpen}
           darkMode={darkMode}
+          browserWindowWidth={browserWindowWidth}
         />
       </div>
     </>

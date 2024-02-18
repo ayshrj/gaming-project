@@ -7,6 +7,8 @@
     align-items: center;
     background-color: var(--background-color);
     z-index: 2;
+    /* background-image: var(--background-image);
+    background-blend-mode: var(--background-blend-mode); */
 }
 
 .leftpane {
@@ -16,10 +18,13 @@
     justify-content: center;
     margin: 0;
     background-color: var(--background-color);
-    border-right: 1px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
     min-width: 300px;
     height: 93vh;
     overflow: auto;
+    /* background-image: var(--background-image);
+    background-blend-mode: var(--background-blend-mode); */
+    border-image: var(--border-image);
 }
 
 .hidden {
