@@ -2,8 +2,8 @@
     display: flex;
     position: fixed;
     left: 0;
-    top: 0;
-    bottom: 0;
+    top: 60px;
+    bottom: 60px;
     align-items: center;
     background-color: var(--background-color);
     z-index: 2;
@@ -20,7 +20,7 @@
     background-color: var(--background-color);
     border-right: 2px solid var(--border-color);
     min-width: 300px;
-    height: 93vh;
+    height: 100%;
     overflow: auto;
     /* background-image: var(--background-image);
     background-blend-mode: var(--background-blend-mode); */
