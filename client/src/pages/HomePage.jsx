@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./HomePage.css";
 import GetRandomFact from "../util/GetRandomFact";
 import CurrentBadge from "../assets/badges/hierarchical/5-Realm.png";
 import Streak from "../components/Streak";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const HomePage = ({ darkMode, myCurrentDays }) => {
   const [randomFact, setRandomFact] = useState("");
   const [currStreak, setCurrStreak] = useState(0);
+
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     setRandomFact(GetRandomFact());
@@ -24,7 +27,12 @@ const HomePage = ({ darkMode, myCurrentDays }) => {
     return () => clearInterval(interval);
   }, [myCurrentDays]);
 
+  useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
+
   const [randomSVG, setRandomSVG] = useState(null);
+
   const targetStreak = 100;
 
   return (

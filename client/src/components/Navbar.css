@@ -37,10 +37,88 @@
     cursor: pointer;
 }
 
+.current-user {
+    gap: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.authentication-box {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background-color: var(--search-background-color);
+    width: 200px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--hover-border-radius);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    cursor: default;
+}
+
+.authentication-box.authentication-box-register {
+    height: 300px;
+}
+
+.authentication-box.authentication-box-login {
+    height: 200px;
+}
+
+.authentication-box.authentication-box-user {
+    height: 100px;
+}
+
+.authentication-sign-out-button {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    width: 100px;
+    border-radius: 5px;
+    background-color: var(--para-color);
+    cursor: pointer;
+}
+
+.authentication-sign-out-button:hover {
+    background-color: rgb(202, 104, 58);
+}
+
+
+.authentication-button {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    width: 100px;
+    border-radius: 5px;
+    background-color: var(--para-color);
+}
+
+.authentication-options {
+    font-size: 10px;
+    gap: 1px
+}
+
+.authentication-switch {
+    color: var(--para-color);
+}
+
+.authentication-button, .authentication-switch {
+    cursor: pointer;
+}
+
+.authentication-box>input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
 .content-user-top-right-options div {
     display: flex;
     align-items: center;
-    cursor: pointer;
 }
 
 .content-user-top-right-options img:hover {

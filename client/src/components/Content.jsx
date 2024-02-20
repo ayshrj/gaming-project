@@ -22,7 +22,7 @@ const Content = ({
       <Routes>
         <Route
           path=""
-          element={<HomePage darkMode={darkMode} myCurrentDays={78} />}
+          element={<HomePage darkMode={darkMode} myCurrentDays={89} />}
         />
         <Route path="/games" element={<Games />} />
         <Route

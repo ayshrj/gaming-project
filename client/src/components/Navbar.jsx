@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   IconAlignLeft,
   IconAlignJustified,
   IconSearch,
   IconBell,
   IconChevronDown,
+  IconChevronUp,
+  IconUser,
 } from "@tabler/icons-react";
 import "./Navbar.css";
 import DarkModeToggle from "./DarkModeToggle";
 import Search from "./Search";
-
+import Login from "./Login";
+import Register from "./Register";
+import User from "./User";
+import { AuthContext } from "../context/AuthContext";
 const Navbar = ({
   setIsLeftPaneOpen,
   isLeftPaneOpen,
@@ -20,6 +25,10 @@ const Navbar = ({
 }) => {
   const [isAtTop, setIsAtTop] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [authenticationBoxOpen, setAuthenticationBoxOpen] = useState(false);
+  const [isUserRegistered, setIsUserRegistered] = useState(true);
+
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,15 +69,45 @@ const Navbar = ({
           <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
         <div
-          style={{ gap: "10px" }}
+          className="current-user"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <img src={ProfilePic} />
-          {!isMobileViewport && (isAtTop || isHovered) && (
-            <div className="display-name">Ayush Raj</div>
+          {/* <img src={ProfilePic} /> */}
+          {currentUser && currentUser.photoURL ? (
+            <img src={currentUser.photoURL} alt="" />
+          ) : (
+            <IconUser />
           )}
-          <IconChevronDown />
+          {!isMobileViewport && (isAtTop || isHovered) && (
+            <div className="display-name">
+              {currentUser && currentUser.displayName
+                ? currentUser.displayName
+                : "Guest"}
+            </div>
+          )}
+          <div
+            onClick={() => {
+              setAuthenticationBoxOpen(!authenticationBoxOpen);
+            }}
+          >
+            {!authenticationBoxOpen ? <IconChevronDown /> : <IconChevronUp />}
+          </div>
+
+          {authenticationBoxOpen &&
+            (currentUser ? (
+              <User />
+            ) : isUserRegistered ? (
+              <Login
+                setIsUserRegistered={setIsUserRegistered}
+                setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+              />
+            ) : (
+              <Register
+                setIsUserRegistered={setIsUserRegistered}
+                setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+              />
+            ))}
         </div>
       </div>
     </div>
