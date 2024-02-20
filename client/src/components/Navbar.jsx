@@ -22,6 +22,9 @@ const Navbar = ({
   ProfilePic,
   darkMode,
   setDarkMode,
+  setCurrentStreak,
+  setHighestStreak,
+  setTargetStreak,
 }) => {
   const [isAtTop, setIsAtTop] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
@@ -96,16 +99,26 @@ const Navbar = ({
 
           {authenticationBoxOpen &&
             (currentUser ? (
-              <User />
+              <User
+                setCurrentStreak={setCurrentStreak}
+                setHighestStreak={setHighestStreak}
+                setTargetStreak={setTargetStreak}
+              />
             ) : isUserRegistered ? (
               <Login
                 setIsUserRegistered={setIsUserRegistered}
                 setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+                setCurrentStreak={setCurrentStreak}
+                setHighestStreak={setHighestStreak}
+                setTargetStreak={setTargetStreak}
               />
             ) : (
               <Register
                 setIsUserRegistered={setIsUserRegistered}
                 setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+                setCurrentStreak={setCurrentStreak}
+                setHighestStreak={setHighestStreak}
+                setTargetStreak={setTargetStreak}
               />
             ))}
         </div>

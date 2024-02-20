@@ -9,6 +9,9 @@ const Dashboard = ({
   isLeftPaneOpen,
   darkMode,
   browserWindowWidth,
+  currentStreak,
+  highestStreak,
+  targetStreak,
 }) => {
   const [leftPaneContainerWidth, setLeftPaneContainerWidth] = useState(0);
 
@@ -25,6 +28,9 @@ const Dashboard = ({
           leftPaneContainerWidth={leftPaneContainerWidth}
           darkMode={darkMode}
           browserWindowWidth={browserWindowWidth}
+          currentStreak={currentStreak}
+          highestStreak={highestStreak}
+          targetStreak={targetStreak}
         />
       </div>
     </BrowserRouter>

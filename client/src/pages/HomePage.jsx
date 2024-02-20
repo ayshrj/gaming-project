@@ -1,14 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./HomePage.css";
 import GetRandomFact from "../util/GetRandomFact";
-import CurrentBadge from "../assets/badges/hierarchical/5-Realm.png";
+import CurrentBadge1 from "../assets/badges/hierarchical/1-Hamlet.png";
+import CurrentBadge2 from "../assets/badges/hierarchical/2-Barony.png";
+import CurrentBadge3 from "../assets/badges/hierarchical/3-Domain.png";
+import CurrentBadge4 from "../assets/badges/hierarchical/4-Province.png";
+import CurrentBadge5 from "../assets/badges/hierarchical/5-Realm.png";
+import CurrentBadge6 from "../assets/badges/hierarchical/6-Empire.png";
 import Streak from "../components/Streak";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-const HomePage = ({ darkMode, myCurrentDays }) => {
+const HomePage = ({
+  darkMode,
+  myCurrentDays,
+  currentStreak,
+  highestStreak,
+  targetStreak,
+}) => {
   const [randomFact, setRandomFact] = useState("");
   const [currStreak, setCurrStreak] = useState(0);
+  const [badge, setBadge] = useState(null);
 
   const { currentUser } = useContext(AuthContext);
 
@@ -33,7 +45,20 @@ const HomePage = ({ darkMode, myCurrentDays }) => {
 
   const [randomSVG, setRandomSVG] = useState(null);
 
-  const targetStreak = 100;
+  // const targetStreak = 100;
+
+  useEffect(() => {
+    const getBadge = () => {
+      if (highestStreak <= 7) setBadge(CurrentBadge1);
+      else if (highestStreak <= 15) setBadge(CurrentBadge2);
+      else if (highestStreak <= 30) setBadge(CurrentBadge3);
+      else if (highestStreak <= 60) setBadge(CurrentBadge4);
+      else if (highestStreak <= 120) setBadge(CurrentBadge5);
+      else setBadge(CurrentBadge6);
+    };
+
+    getBadge();
+  }, [highestStreak]);
 
   return (
     <div>
@@ -45,25 +70,61 @@ const HomePage = ({ darkMode, myCurrentDays }) => {
       <div className="row">
         <div className="column">
           <div className="column-text">Badge</div>
-          <img src={CurrentBadge} alt="Current Badge" />
+          {highestStreak ? (
+            <>
+              <img src={badge} alt="Current Badge" />
+              <div>{`Highest Streak: ${highestStreak} Days`}</div>
+            </>
+          ) : (
+            <>
+              <img src={CurrentBadge1} alt="Current Badge" />
+              <div>{`Highest Streak: 1 Days`}</div>
+              <div style={{ fontSize: "9px", marginTop: "6px" }}>
+                Log In to continue your streak
+              </div>
+            </>
+          )}
         </div>
         <div className="column">
           <div className="column-text">Streak</div>
-          <Streak
-            cx={150}
-            cy={135}
-            rx={100}
-            ry={100}
-            t1={Math.PI}
-            Δ={(2 * currStreak * Math.PI) / targetStreak}
-            φ={0}
-            stroke={"rgb(193, 82, 31)"}
-            fillColor={"none"}
-            strokeWidth={20}
-            strokeLinecap={"round"}
-            text={`${myCurrentDays}/${targetStreak}`}
-            darkMode={darkMode}
-          />
+          {currentStreak !== null && targetStreak !== null ? (
+            <Streak
+              cx={150}
+              cy={135}
+              rx={100}
+              ry={100}
+              t1={Math.PI}
+              Δ={(2 * currentStreak * Math.PI) / targetStreak}
+              φ={0}
+              stroke={"rgb(193, 82, 31)"}
+              fillColor={"none"}
+              strokeWidth={20}
+              strokeLinecap={"round"}
+              text={`${currentStreak}/${targetStreak}`}
+              darkMode={darkMode}
+            />
+          ) : (
+            <>
+              <Streak
+                cx={150}
+                cy={135}
+                rx={100}
+                ry={100}
+                t1={Math.PI}
+                Δ={(2 * 1 * Math.PI) / 7}
+                φ={0}
+                stroke={"rgb(193, 82, 31)"}
+                fillColor={"none"}
+                strokeWidth={20}
+                strokeLinecap={"round"}
+                text={`${1}/${7} Days`}
+                darkMode={darkMode}
+              />
+              <div style={{ fontSize: "9px" }}>
+                Log In to continue your streak
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="row">

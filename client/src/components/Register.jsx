@@ -6,7 +6,13 @@ import { doc, setDoc } from "firebase/firestore";
 import DefaultProfilePic from "../assets/DefaultProfilePic.jpg";
 import { IconUserScan } from "@tabler/icons-react";
 
-const Register = ({ setIsUserRegistered, setAuthenticationBoxOpen }) => {
+const Register = ({
+  setIsUserRegistered,
+  setAuthenticationBoxOpen,
+  setCurrentStreak,
+  setHighestStreak,
+  setTargetStreak,
+}) => {
   const [err, setErr] = useState(false);
   const [avatarFile, setAvatarFile] = useState(null);
   const [displayName, setDisplayName] = useState("");
@@ -53,6 +59,10 @@ const Register = ({ setIsUserRegistered, setAuthenticationBoxOpen }) => {
       });
 
       await setDoc(doc(db, "userChats", res.user.uid), {});
+
+      setCurrentStreak(1);
+      setHighestStreak(1);
+      setTargetStreak(7);
     } catch (err) {
       console.log(err);
       setErr(true);

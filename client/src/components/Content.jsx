@@ -13,6 +13,9 @@ const Content = ({
   leftPaneContainerWidth,
   darkMode,
   browserWindowWidth,
+  currentStreak,
+  highestStreak,
+  targetStreak,
 }) => {
   return (
     <div
@@ -22,7 +25,15 @@ const Content = ({
       <Routes>
         <Route
           path=""
-          element={<HomePage darkMode={darkMode} myCurrentDays={89} />}
+          element={
+            <HomePage
+              darkMode={darkMode}
+              myCurrentDays={89}
+              currentStreak={currentStreak}
+              highestStreak={highestStreak}
+              targetStreak={targetStreak}
+            />
+          }
         />
         <Route path="/games" element={<Games />} />
         <Route
