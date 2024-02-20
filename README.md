@@ -1,5 +1,3 @@
-# Simple Project Readme
-
 ## Project Name: NoCanDo Games
 
 Welcome to the NoCanDo Games! This project is a simple web application designed for gaming enthusiasts, featuring a minimalist design with a focus on user experience. Below are some key features and information about the project.
