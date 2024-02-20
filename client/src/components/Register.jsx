@@ -25,9 +25,15 @@ const Register = ({ setIsUserRegistered, setAuthenticationBoxOpen }) => {
       if (avatarFile) {
         const storageRef = ref(storage, `${displayName + date}`);
 
-        await uploadBytesResumable(storageRef, file).then(async () => {
-          downloadURL = await getDownloadURL(storageRef);
-        });
+        const metadata = {
+          contentType: avatarFile.type,
+        };
+
+        await uploadBytesResumable(storageRef, avatarFile, metadata).then(
+          async () => {
+            downloadURL = await getDownloadURL(storageRef);
+          }
+        );
       }
 
       await updateProfile(res.user, {

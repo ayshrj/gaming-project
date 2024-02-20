@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 
@@ -7,51 +7,47 @@ const Login = ({ setIsUserRegistered, setAuthenticationBoxOpen }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async () => {
+  const handleLogin = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      const user = auth.currentUser;
-      if (user) {
-        const userRef = db.collection("users").doc(user.uid);
-        const userDoc = await userRef.get();
-        if (userDoc.exists) {
-          const userData = userDoc.data();
-          const lastLoggedIn = userData.lastLoggedIn;
-          const currentStreak = userData.currentStreak;
-          const highestStreak = userData.highestStreak;
-          const now = new Date().getTime();
-          let updatedCurrentStreak = currentStreak;
-          let updatedHighestStreak = highestStreak;
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      const userDocRef = db.collection("users").doc(res.user.uid);
+      const userData = (await userDocRef.get()).data();
 
-          if (now - lastLoggedIn < 24 * 60 * 60 * 1000) {
-            updatedCurrentStreak++;
-            updatedHighestStreak = Math.max(
-              updatedCurrentStreak,
-              updatedHighestStreak
-            );
-            if (updatedCurrentStreak === 7) {
-              updatedCurrentStreak = 15;
-            } else if (updatedCurrentStreak === 15) {
-              updatedCurrentStreak = 30;
-            }
-          } else {
-            updatedCurrentStreak = 1;
-          }
+      const currentDate = new Date().getTime();
+      const lastLoggedInDate = userData.lastLoggedIn;
+      const oneDay = 24 * 60 * 60 * 1000;
 
-          await userRef.update({
-            lastLoggedIn: now,
-            currentStreak: updatedCurrentStreak,
-            highestStreak: updatedHighestStreak,
-          });
+      let { currentStreak, highestStreak } = userData;
+      let targetStreak = userData.targetStreak;
 
-          // Log the updated user data
-          console.log("Updated User Data:", {
-            lastLoggedIn: now,
-            currentStreak: updatedCurrentStreak,
-            highestStreak: updatedHighestStreak,
-          });
+      if (currentDate - lastLoggedInDate >= oneDay) {
+        // Check if lastLoggedIn is a day before
+        if (currentDate - lastLoggedInDate === oneDay) {
+          // Increment currentStreak by 1 if lastLoggedIn is a day before
+          currentStreak += 1;
+        } else {
+          // Set currentStreak to 1 if lastLoggedIn is not a day before
+          currentStreak = 1;
         }
       }
+
+      // Update highestStreak
+      highestStreak = Math.max(currentStreak, highestStreak);
+
+      // Update targetStreak based on currentStreak
+      if (currentStreak === 7) {
+        targetStreak = 15;
+      } else if (currentStreak === 15) {
+        targetStreak = 30;
+      }
+
+      // Update lastLoggedIn to current time
+      await userDocRef.update({
+        lastLoggedIn: currentDate,
+        currentStreak,
+        highestStreak,
+        targetStreak,
+      });
     } catch (err) {
       setErr(true);
     }
@@ -72,7 +68,7 @@ const Login = ({ setIsUserRegistered, setAuthenticationBoxOpen }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <div className="authentication-button" onClick={handleSubmit}>
+        <div className="authentication-button" onClick={handleLogin}>
           Login
         </div>
         <div className="authentication-options">
