@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./Sudoku.css";
 import SudokuGenerator from "../../util/games/SudokuGenerator";
 
-const Sudoku = ({ browserWindowWidth }) => {
+const Sudoku = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(1);
   const [data, setData] = useState([]);
   const [currGrid, setCurrGrid] = useState([]);
+  const [errorField, setErrorField] = useState(
+    Array.from({ length: 9 }, () => Array.from({ length: 9 }).fill(false))
+  );
 
   useEffect(() => {
     setData(SudokuGenerator(selectedDifficulty));
@@ -14,7 +17,8 @@ const Sudoku = ({ browserWindowWidth }) => {
 
   useEffect(() => {
     if (data !== null && Array.isArray(data.unsolvedSudo)) {
-      setCurrGrid(data.unsolvedSudo);
+      const tempArray = data.unsolvedSudo.map((row) => [...row]);
+      setCurrGrid(tempArray);
     }
   }, [data]);
 
@@ -23,21 +27,59 @@ const Sudoku = ({ browserWindowWidth }) => {
   const [selectedCol, setSelectedCol] = useState(-1);
 
   const handleSelect = (e) => {
+    setPrompt("");
     const row = parseInt(e.currentTarget.getAttribute("row"));
     const col = parseInt(e.currentTarget.getAttribute("col"));
+    let tempArray = [...currGrid];
 
     if (selectedRow === row && selectedCol === col) {
-      setSelectedRow(-1);
-      setSelectedCol(-1);
+      if (selectedNumber !== 0) {
+        if (currGrid[row][col] === selectedNumber) {
+          tempArray[row][col] = 0;
+          setCurrGrid(tempArray);
+        } else {
+          tempArray[row][col] = selectedNumber;
+          setCurrGrid(tempArray);
+        }
+      } else {
+        setSelectedRow(-1);
+        setSelectedCol(-1);
+      }
     } else {
       setSelectedRow(row);
       setSelectedCol(col);
 
-      let tempArray = [...currGrid];
-      tempArray[row][col] = selectedNumber;
-      setCurrGrid(tempArray);
+      if (selectedNumber !== 0) {
+        if (currGrid[row][col] === selectedNumber) {
+          tempArray[row][col] = 0;
+          setCurrGrid(tempArray);
+        } else {
+          tempArray[row][col] = selectedNumber;
+          setCurrGrid(tempArray);
+        }
+      }
     }
-    console.log(row, col);
+  };
+
+  const handleSelectedNumber = (number) => {
+    setPrompt("");
+    if (selectedNumber === number) {
+      setSelectedNumber(0);
+      return;
+    } else {
+      setSelectedNumber(number);
+    }
+    if (selectedRow !== -1 && selectedCol !== -1) {
+      if (currGrid[selectedRow][selectedCol] === number) {
+        let tempArray = [...currGrid];
+        tempArray[selectedRow][selectedCol] = 0;
+        setCurrGrid(tempArray);
+      } else {
+        let tempArray = [...currGrid];
+        tempArray[selectedRow][selectedCol] = number;
+        setCurrGrid(tempArray);
+      }
+    }
   };
 
   useEffect(() => {
@@ -51,8 +93,7 @@ const Sudoku = ({ browserWindowWidth }) => {
               key={`${i}-${j}`}
               className={`sudoku-cell ${
                 data.unsolvedSudo[i][j] === 0 ? "sudoku-fillable" : ""
-              }
-              ${j % 3 === 0 ? "sudoku-cell-left-thick" : ""} ${
+              } ${j % 3 === 0 ? "sudoku-cell-left-thick" : ""} ${
                 j === 8 ? "sudoku-cell-right-thick" : ""
               } ${i % 3 === 0 ? "sudoku-cell-top-thick" : ""} ${
                 i === 8 ? "sudoku-cell-bottom-thick" : ""
@@ -61,6 +102,10 @@ const Sudoku = ({ browserWindowWidth }) => {
                 selectedRow === i &&
                 selectedCol === j
                   ? "sudoku-selected"
+                  : ""
+              } ${
+                data.unsolvedSudo[i][j] === 0 && errorField[i][j]
+                  ? "sudoku-error-cell"
                   : ""
               }`}
               row={i}
@@ -86,12 +131,42 @@ const Sudoku = ({ browserWindowWidth }) => {
 
   const [selectedNumber, setSelectedNumber] = useState(0);
 
-  const handleSelectedNumber = (number) => {
-    if (selectedNumber === number) {
-      setSelectedNumber(0);
-    } else {
-      setSelectedNumber(number);
+  const [prompt, setPrompt] = useState("");
+
+  const handleDifficulty = (diff) => {
+    setPrompt("");
+    setSelectedDifficulty(diff);
+    setData(SudokuGenerator(selectedDifficulty));
+    setSelectedNumber(0);
+    setSelectedCol(-1);
+    setSelectedRow(-1);
+  };
+
+  const handleClearAll = () => {
+    setPrompt("");
+    if (data !== null && Array.isArray(data.unsolvedSudo)) {
+      const tempArray = data.unsolvedSudo.map((row) => [...row]);
+      setCurrGrid(tempArray);
     }
+  };
+
+  const handleReset = () => {
+    setData(SudokuGenerator(selectedDifficulty));
+    setSelectedCol(-1);
+    setSelectedRow(-1);
+  };
+
+  const handleCheck = () => {
+    for (let i = 0; i < 9; ++i) {
+      for (let j = 0; j < 9; ++j) {
+        if (data.solvedSudo[i][j] !== currGrid[i][j]) {
+          setPrompt("Something is wrong!");
+          return;
+        }
+      }
+    }
+
+    setPrompt("Everything looks good!");
   };
 
   return (
@@ -99,77 +174,56 @@ const Sudoku = ({ browserWindowWidth }) => {
       <h1>Sudoku</h1>
       <div className="sudoku">{completeGrid ? completeGrid : ""}</div>
       <div className="sudoku-numbers">
+        {[...Array(9)].map((_, index) => (
+          <div
+            key={index + 1}
+            className={`sudoku-number ${
+              selectedNumber === index + 1 ? "sudoku-selected" : ""
+            }`}
+            onClick={() => handleSelectedNumber(index + 1)}
+          >
+            {index + 1}
+          </div>
+        ))}
+      </div>
+      <div className="game-prompt" onClick={handleCheck}>
+        {prompt}
+      </div>
+      <div className="sudoku-options-buttons">
+        <div className="sudoku-button" onClick={handleReset}>
+          Reset
+        </div>
+        <div className="sudoku-button">Check</div>
+      </div>
+      <div className="sudoku-difficulty-buttons">
         <div
-          className={`sudoku-number ${
-            selectedNumber === 1 ? "sudoku-selected" : ""
+          className={`sudoku-button ${
+            selectedDifficulty === 0 ? "game-active-button" : ""
           }`}
-          onClick={() => handleSelectedNumber(1)}
+          onClick={() => handleDifficulty(0)}
         >
-          1
+          Easy
         </div>
         <div
-          className={`sudoku-number ${
-            selectedNumber === 2 ? "sudoku-selected" : ""
+          className={`sudoku-button ${
+            selectedDifficulty === 1 ? "game-active-button" : ""
           }`}
-          onClick={() => handleSelectedNumber(2)}
+          onClick={() => handleDifficulty(1)}
         >
-          2
+          Medium
         </div>
         <div
-          className={`sudoku-number ${
-            selectedNumber === 3 ? "sudoku-selected" : ""
+          className={`sudoku-button ${
+            selectedDifficulty === 2 ? "game-active-button" : ""
           }`}
-          onClick={() => handleSelectedNumber(3)}
+          onClick={() => handleDifficulty(2)}
         >
-          3
+          Hard
         </div>
-        <div
-          className={`sudoku-number ${
-            selectedNumber === 4 ? "sudoku-selected" : ""
-          }`}
-          onClick={() => handleSelectedNumber(4)}
-        >
-          4
-        </div>
-        <div
-          className={`sudoku-number ${
-            selectedNumber === 5 ? "sudoku-selected" : ""
-          }`}
-          onClick={() => handleSelectedNumber(5)}
-        >
-          5
-        </div>
-        <div
-          className={`sudoku-number ${
-            selectedNumber === 6 ? "sudoku-selected" : ""
-          }`}
-          onClick={() => handleSelectedNumber(6)}
-        >
-          6
-        </div>
-        <div
-          className={`sudoku-number ${
-            selectedNumber === 7 ? "sudoku-selected" : ""
-          }`}
-          onClick={() => handleSelectedNumber(7)}
-        >
-          7
-        </div>
-        <div
-          className={`sudoku-number ${
-            selectedNumber === 8 ? "sudoku-selected" : ""
-          }`}
-          onClick={() => handleSelectedNumber(8)}
-        >
-          8
-        </div>
-        <div
-          className={`sudoku-number ${
-            selectedNumber === 9 ? "sudoku-selected" : ""
-          }`}
-          onClick={() => handleSelectedNumber(9)}
-        >
-          9
+      </div>
+      <div className="sudoku-board-buttons">
+        <div className="sudoku-button" onClick={handleClearAll}>
+          Clear All
         </div>
       </div>
     </div>

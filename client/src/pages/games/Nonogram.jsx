@@ -243,7 +243,7 @@ const Nonogram = ({ browserWindowWidth }) => {
         {firstPart ? firstPart : ""}
         {secondPart ? secondPart : ""}
       </div>
-      <div className="prompt">{prompt}</div>
+      <div className="game-prompt">{prompt}</div>
       <div className="nonogram-options-buttons">
         <div
           className="nonogram-button"
@@ -260,7 +260,7 @@ const Nonogram = ({ browserWindowWidth }) => {
       <div className="nonogram-size-buttons">
         <div
           className={`nonogram-button ${
-            selectedSize === 5 ? "active-button" : ""
+            selectedSize === 5 ? "game-active-button" : ""
           }`}
           onClick={
             selectedSize !== 5
@@ -275,7 +275,7 @@ const Nonogram = ({ browserWindowWidth }) => {
         </div>
         <div
           className={`nonogram-button ${
-            selectedSize === 10 ? "active-button" : ""
+            selectedSize === 10 ? "game-active-button" : ""
           }`}
           onClick={
             selectedSize !== 10
@@ -290,7 +290,7 @@ const Nonogram = ({ browserWindowWidth }) => {
         </div>
         <div
           className={`nonogram-button ${
-            selectedSize === 15 ? "active-button" : ""
+            selectedSize === 15 ? "game-active-button" : ""
           }`}
           onClick={
             selectedSize !== 15
@@ -318,7 +318,7 @@ const Nonogram = ({ browserWindowWidth }) => {
           Clear All
         </div>
         <div
-          className={`nonogram-button ${xModeOn ? "active-button" : ""}`}
+          className={`nonogram-button ${xModeOn ? "game-active-button" : ""}`}
           onClick={() => {
             setXModeOn(!xModeOn);
           }}

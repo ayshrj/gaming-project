@@ -1,0 +1,57 @@
+:root {
+    --chess-cell-size: 60px;
+    --chess-cell-border-width: 1px;
+    --chess-reachable-color: rgb(188, 118, 86);
+}
+
+.chess-container {
+    text-align: center;
+}
+
+.chess {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chess-row {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+.chess-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 3px;
+    border: var(--chess-cell-border-width) solid var(--border-color);
+    user-select: none;
+    color: var(--para-color);
+    transition: border 0.3s ease-in-out;
+    user-select: none;
+    height: var(--chess-cell-size);
+    width: var(--chess-cell-size);
+    font-size: var(--chess-cell-size);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.chess-cell-white {
+    background-color: var(--border-color);
+}
+
+.chess-cell-selectable {
+    cursor: pointer;
+}
+
+.chess-cell-selected {
+    background-color: var(--para-color);
+}
+
+.chess-cell-reachable {
+    background-color: var(--chess-reachable-color);
+    cursor: pointer;
+}

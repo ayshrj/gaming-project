@@ -77,13 +77,6 @@
     border-left: none;
 }
 
-.prompt {
-    display: block;
-    min-height: 19px;
-    margin: 5px;
-    color: var(--para-color);
-}
-
 .nonogram-options-buttons, .nonogram-size-buttons, .nonogram-board-button {
     display: flex;
     gap: var(--nonogram-buttons-gap);
@@ -119,10 +112,10 @@
     border-style: dashed;
 }
 
-.active-button {
+
+.game-active-button {
     border: 1px dashed var(--para-color);
 }
-
 
 @media (max-width: 1134px) {
     .nonogram-size-15 {

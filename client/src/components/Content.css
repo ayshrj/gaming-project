@@ -2,3 +2,10 @@
     flex-grow: 1;
     margin-top: 30px;
 }
+
+.game-prompt {
+    display: block;
+    min-height: 19px;
+    margin: 5px;
+    color: var(--para-color);
+}

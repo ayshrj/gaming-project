@@ -6,6 +6,13 @@
     --sudoku-number-button-font-size: 20px;
     --sudoku-number-button-border-radius: 4px;
     --sudoku-number-button-gap: 7px;
+    --sudoku-button-height: 50px;
+    --sudoku-button-font-size: 20px;
+    --sudoku-button-border-radius: 15px;
+    --sudoku-options-buttons-width: 160px;
+    --sudoku-difficulty-buttons-width: 105px;
+    --sudoku-board-buttons-width: 330px;
+    --sudoku-buttons-gap: 5px;
 }
 
 .sudoku-container {
@@ -84,8 +91,51 @@
 }
 
 .sudoku-fillable {
-    color: black;
+    color: var(--div-font-color);
     cursor: pointer;
+}
+
+.sudoku-error-cell {
+    background-color: var(--para-color);
+}
+
+.sudoku-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--sudoku-button-border-radius);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: var(--sudoku-button-font-size);
+    height: var(--sudoku-button-height);
+}
+
+.sudoku-options-buttons, .sudoku-difficulty-buttons, .sudoku-board-buttons {
+    display: flex;
+    gap: var(--sudoku-buttons-gap);
+    justify-content: center;
+    margin: 5px;
+    user-select: none;
+}
+
+.sudoku-options-buttons .sudoku-button {
+    width: var(--sudoku-options-buttons-width);
+}
+
+.sudoku-difficulty-buttons .sudoku-button {
+    width: var(--sudoku-difficulty-buttons-width);
+}
+
+.sudoku-board-buttons .sudoku-button {
+    width: var(--sudoku-board-buttons-width);
+}
+
+.sudoku-button:hover {
+    border-style: dashed;
+}
+
+.game-active-button {
+    border: 1px dashed var(--para-color);
 }
 
 @media (max-width: 665px) {
@@ -94,4 +144,39 @@
         width: calc(0.6*var(--sudoku-cell-size));
         font-size: calc(0.6*var(--sudoku-cell-size));
     }
+
+    /* .sudoku-numbers {
+        gap: calc(var(--sudoku-number-button-gap))
+    } */
+
+    .sudoku-number {
+        display: flex;
+        border: 1px solid var(--border-color);
+        font-size: calc(0.6*var(--sudoku-number-button-font-size));
+        height: calc(0.6*var(--sudoku-cell-size));
+        width: calc(0.6*var(--sudoku-cell-size));
+    }
+
+
+    .sudoku-button {
+        font-size: calc(0.6*var(--sudoku-button-font-size));
+        height: calc(0.6*var(--sudoku-button-height));
+    }
+
+    .sudoku-options-buttons, .sudoku-difficulty-buttons, .sudoku-board-buttons {
+        gap: calc(0.6*var(--sudoku-buttons-gap));
+    }
+
+    .sudoku-options-buttons .sudoku-button {
+        width: calc(0.6*var(--sudoku-options-buttons-width));
+    }
+
+    .sudoku-difficulty-buttons .sudoku-button {
+        width: calc(0.6*var(--sudoku-difficulty-buttons-width));
+    }
+
+    .sudoku-board-buttons .sudoku-button {
+        width: calc(0.6*var(--sudoku-board-buttons-width));
+    }
+
 }

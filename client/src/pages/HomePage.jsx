@@ -19,17 +19,19 @@ const HomePage = ({ darkMode, myCurrentDays }) => {
       } else {
         clearInterval(interval);
       }
-    }, 5);
+    }, 1);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [myCurrentDays]);
 
+  const [randomSVG, setRandomSVG] = useState(null);
   const targetStreak = 100;
 
   return (
     <div>
       <div className="welcome">
         <h2>Welcome back, Ayush</h2>
+        {randomSVG}
         <p>{randomFact.fact}</p>
       </div>
       <div className="row">
@@ -68,6 +70,9 @@ const HomePage = ({ darkMode, myCurrentDays }) => {
             </Link>
             <Link to="/games/sudoku" style={{ textDecoration: "none" }}>
               <div className="game">Sudoku</div>
+            </Link>
+            <Link to="/games/chess" style={{ textDecoration: "none" }}>
+              <div className="game">Chess</div>
             </Link>
           </div>
         </div>
