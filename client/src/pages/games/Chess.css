@@ -1,10 +1,21 @@
 :root {
     --chess-cell-size: 60px;
     --chess-cell-border-width: 1px;
-    --chess-reachable-color: rgb(188, 118, 86);
+    --chess-black-cell-background: rgb(19, 19, 19);
+    --chess-white-cell-background: rgb(245, 245, 220);
+    --chess-selected-color: rgb(132, 132, 119);
+    --chess-reachable-color-black: rgb(66, 66, 60);
+    --chess-reachable-color-white: rgb(198, 198, 179);
+    --chess-button-height: 50px;
+    --chess-button-font-size: 20px;
+    --chess-button-border-radius: 15px;
+    --chess-buttons-gap: 5px;
+    --chess-option-buttons-width: 350px;
 }
 
 .chess-container {
+    display: flex;
+    flex-direction: column;
     text-align: center;
 }
 
@@ -23,12 +34,12 @@
 }
 
 .chess-cell {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0;
     padding: 3px;
-    border: var(--chess-cell-border-width) solid var(--border-color);
     user-select: none;
     color: var(--para-color);
     transition: border 0.3s ease-in-out;
@@ -36,11 +47,32 @@
     height: var(--chess-cell-size);
     width: var(--chess-cell-size);
     font-size: var(--chess-cell-size);
+    background-color: var(--chess-black-cell-background);
     transition: background-color 0.3s ease-in-out;
+    z-index: 0;
+}
+
+.chess-cell-cross {
+    position: absolute;
+    stroke: var(--div-font-color);
+    z-index: 1;
+}
+
+.chess-piece-black {
+    stroke: var(--para-color);
+}
+
+.chess-piece-white {
+    fill: var(--para-color);
+    stroke: var(--para-color);
 }
 
 .chess-cell-white {
-    background-color: var(--border-color);
+    background-color: var(--chess-white-cell-background);
+}
+
+.chess-cell-black {
+    background-color: var(--chess-black-cell-background);
 }
 
 .chess-cell-selectable {
@@ -48,10 +80,53 @@
 }
 
 .chess-cell-selected {
-    background-color: var(--para-color);
+    background-color: var(--chess-selected-color);
 }
 
 .chess-cell-reachable {
-    background-color: var(--chess-reachable-color);
     cursor: pointer;
+}
+
+.chess-cell-white.chess-cell-reachable {
+    background-color: var(--chess-reachable-color-white);
+}
+
+.chess-cell-black.chess-cell-reachable {
+    background-color: var(--chess-reachable-color-black);
+}
+
+.chess-options-buttons {
+    display: flex;
+    gap: var(--chess-buttons-gap);
+    justify-content: center;
+    margin: 5px;
+    user-select: none;
+}
+
+.chess-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--chess-button-border-radius);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: var(--chess-button-font-size);
+    height: var(--chess-button-height);
+}
+
+.chess-button:hover {
+    border-style: dashed;
+}
+
+.chess-options-buttons>.chess-button {
+    margin-top: 10px;
+    width: var(--chess-option-buttons-width);
+}
+
+@media (max-width: 665px) {
+    .chess-cell {
+        height: calc(0.50*var(--chess-cell-size));
+        width: calc(0.50*var(--chess-cell-size));
+        font-size: calc(0.50*var(--chess-cell-size));
+    }
 }

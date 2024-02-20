@@ -14,9 +14,10 @@ import {
   IconChessQueenFilled,
   IconChessBishopFilled,
   IconChessKnightFilled,
+  IconX,
 } from "@tabler/icons-react";
 
-const Chess = () => {
+const Chess = ({ browserWindowWidth }) => {
   const [currBoard, setCurrBoard] = useState([]);
   const [reachable, setReachable] = useState([]);
 
@@ -54,7 +55,6 @@ const Chess = () => {
     setReachable(
       Array.from({ length: 8 }, () => Array.from({ length: 8 }).fill(false))
     );
-    console.log(tempArray);
   }, []);
 
   const [switchCell, setSwitchCell] = useState(false);
@@ -246,29 +246,89 @@ const Chess = () => {
       const renderCell = (value) => {
         switch (value) {
           case 1:
-            return <IconChess />;
+            return (
+              <IconChess
+                className="chess-piece chess-piece-black"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case -1:
-            return <IconChessFilled />;
+            return (
+              <IconChess
+                className="chess-piece chess-piece-white"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case 2:
-            return <IconChessRook />;
+            return (
+              <IconChessRook
+                className="chess-piece chess-piece-black"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case -2:
-            return <IconChessRookFilled />;
+            return (
+              <IconChessRook
+                className="chess-piece chess-piece-white"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case 3:
-            return <IconChessKnight />;
+            return (
+              <IconChessKnight
+                className="chess-piece chess-piece-black"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case -3:
-            return <IconChessKnightFilled />;
+            return (
+              <IconChessKnight
+                className="chess-piece chess-piece-white"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case 4:
-            return <IconChessBishop />;
+            return (
+              <IconChessBishop
+                className="chess-piece chess-piece-black"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case -4:
-            return <IconChessBishopFilled />;
+            return (
+              <IconChessBishop
+                className="chess-piece chess-piece-white"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case 5:
-            return <IconChessQueen />;
+            return (
+              <IconChessQueen
+                className="chess-piece chess-piece-black"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case -5:
-            return <IconChessQueenFilled />;
+            return (
+              <IconChessQueen
+                className="chess-piece chess-piece-white"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case 6:
-            return <IconChessKing />;
+            return (
+              <IconChessKing
+                className="chess-piece chess-piece-black"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           case -6:
-            return <IconChessKingFilled />;
+            return (
+              <IconChessKing
+                className="chess-piece chess-piece-white"
+                size={browserWindowWidth > 665 ? 25 : 12}
+              />
+            );
           default:
             return "";
         }
@@ -282,7 +342,7 @@ const Chess = () => {
             <div
               key={`${i}-${j}`}
               className={`chess-cell ${
-                (i + j) % 2 === 0 ? "chess-cell-white" : ""
+                (i + j) % 2 === 0 ? "chess-cell-white" : "chess-cell-black"
               } ${
                 currBoard[i][j] * currentPlayer > 0
                   ? "chess-cell-selectable"
@@ -303,6 +363,12 @@ const Chess = () => {
               }
             >
               {currBoard[i][j] !== 0 && renderCell(currBoard[i][j])}
+              {currBoard[i][j] !== 0 && reachable[i][j] === true && (
+                <IconX
+                  className="chess-cell-cross"
+                  size={browserWindowWidth > 665 ? 40 : 20}
+                />
+              )}
             </div>
           );
         }
@@ -315,12 +381,25 @@ const Chess = () => {
 
       setCompleteBoard(rows);
     }
-  }, [currBoard, selectedCol, selectedRow, reachable]);
+  }, [currBoard, selectedCol, selectedRow, reachable, browserWindowWidth]);
+
+  const handleReset = () => {
+    const tempArray = newBoard();
+    setCurrBoard(tempArray);
+    setReachable(
+      Array.from({ length: 8 }, () => Array.from({ length: 8 }).fill(false))
+    );
+  };
 
   return (
     <div className="chess-container">
       <h1>Chess</h1>
       <div className="chess">{completeBoard}</div>
+      <div className="chess-options-buttons">
+        <div className="chess-button" onClick={handleReset}>
+          Reset
+        </div>
+      </div>
     </div>
   );
 };

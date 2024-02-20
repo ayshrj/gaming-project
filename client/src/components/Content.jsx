@@ -29,7 +29,10 @@ const Content = ({
           element={<Nonogram browserWindowWidth={browserWindowWidth} />}
         />
         <Route path="games/sudoku" element={<Sudoku />} />
-        <Route path="games/chess" element={<Chess />} />
+        <Route
+          path="games/chess"
+          element={<Chess browserWindowWidth={browserWindowWidth} />}
+        />
       </Routes>
     </div>
   );
