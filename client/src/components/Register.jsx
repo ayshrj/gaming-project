@@ -63,6 +63,7 @@ const Register = ({
       setCurrentStreak(1);
       setHighestStreak(1);
       setTargetStreak(7);
+      setAuthenticationBoxOpen(false);
     } catch (err) {
       console.log(err);
       setErr(true);

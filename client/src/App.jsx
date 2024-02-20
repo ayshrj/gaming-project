@@ -15,6 +15,7 @@ function App() {
   const [currentStreak, setCurrentStreak] = useState(null);
   const [highestStreak, setHighestStreak] = useState(null);
   const [targetStreak, setTargetStreak] = useState(null);
+  const [authenticationBoxOpen, setAuthenticationBoxOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -51,6 +52,8 @@ function App() {
           setCurrentStreak={setCurrentStreak}
           setHighestStreak={setHighestStreak}
           setTargetStreak={setTargetStreak}
+          authenticationBoxOpen={authenticationBoxOpen}
+          setAuthenticationBoxOpen={setAuthenticationBoxOpen}
         />
 
         <Dashboard
@@ -61,6 +64,7 @@ function App() {
           currentStreak={currentStreak}
           highestStreak={highestStreak}
           targetStreak={targetStreak}
+          setAuthenticationBoxOpen={setAuthenticationBoxOpen}
         />
       </div>
     </>

@@ -12,6 +12,7 @@ const Dashboard = ({
   currentStreak,
   highestStreak,
   targetStreak,
+  setAuthenticationBoxOpen,
 }) => {
   const [leftPaneContainerWidth, setLeftPaneContainerWidth] = useState(0);
 
@@ -22,6 +23,7 @@ const Dashboard = ({
           isMobileViewport={isMobileViewport}
           setLeftPaneContainerWidth={setLeftPaneContainerWidth}
           isLeftPaneOpen={isLeftPaneOpen}
+          setAuthenticationBoxOpen={setAuthenticationBoxOpen}
         />
         <Content
           isMobileViewport={isMobileViewport}

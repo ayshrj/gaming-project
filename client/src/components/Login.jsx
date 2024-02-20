@@ -88,6 +88,7 @@ const Login = ({
         setCurrentStreak(newCurrentStreak);
         setTargetStreak(newTargetStreak);
         setHighestStreak(maxStreak);
+        setAuthenticationBoxOpen(false);
 
         updateDoc(doc(db, "users", userData.uid), {
           lastLoggedIn: currentLoggedInTime,

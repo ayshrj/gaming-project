@@ -25,10 +25,11 @@ const Navbar = ({
   setCurrentStreak,
   setHighestStreak,
   setTargetStreak,
+  authenticationBoxOpen,
+  setAuthenticationBoxOpen,
 }) => {
   const [isAtTop, setIsAtTop] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  const [authenticationBoxOpen, setAuthenticationBoxOpen] = useState(false);
   const [isUserRegistered, setIsUserRegistered] = useState(true);
 
   const { currentUser } = useContext(AuthContext);

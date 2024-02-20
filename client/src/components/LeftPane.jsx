@@ -1,20 +1,33 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import "./LeftPane.css";
 import {
   IconDeviceGamepad,
   IconUsersGroup,
   IconSettings2,
   IconLogout,
+  IconLogin,
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
+import { AuthContext } from "../context/AuthContext";
 
 const LeftPane = ({
   isMobileViewport,
   setLeftPaneContainerWidth,
   isLeftPaneOpen,
+  setAuthenticationBoxOpen,
 }) => {
   const leftpaneContainerRef = useRef(null);
 
+  const { currentUser } = useContext(AuthContext);
+
+  const handleSignOut = () => {
+    signOut(auth);
+    setCurrentStreak(null);
+    setHighestStreak(null);
+    setTargetStreak(null);
+  };
   useEffect(() => {
     if (leftpaneContainerRef.current) {
       const width = leftpaneContainerRef.current.offsetWidth;
@@ -50,9 +63,26 @@ const LeftPane = ({
         <div className="leftpane-user">
           <div className="leftpane-option">Help</div>
           <div className="leftpane-option">Contact Us</div>
+          {/* <div className="leftpane-option" onClick={handleSignOut}> */}
           <div className="leftpane-option">
-            <IconLogout />
-            Logout
+            {currentUser ? (
+              <div
+                style={{ display: "flex", alignContent: "center", gap: "10px" }}
+                onClick={handleSignOut}
+              >
+                {" "}
+                <IconLogout />
+                Logout
+              </div>
+            ) : (
+              <div
+                style={{ display: "flex", alignContent: "center", gap: "10px" }}
+                onClick={() => setAuthenticationBoxOpen(true)}
+              >
+                <IconLogin />
+                Login
+              </div>
+            )}
           </div>
         </div>
       </div>
