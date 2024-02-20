@@ -1,0 +1,52 @@
+:root {
+    --tetris-cell-size: 25px;
+    --tetris-cell-border-width: 1px;
+    --tetris-border-color: hsl(0, 0%, 24%);
+}
+
+.tetris-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+.tetris {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.tetris-board, .tetris-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateX(calc(19px + 2 * (var(--tetris-cell-border-width) + var(--tetris-cell-size))));
+}
+
+.tetris-row {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+.tetris-cell {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 3px;
+    user-select: none;
+    color: var(--para-color);
+    transition: border 0.3s ease-in-out;
+    user-select: none;
+    height: var(--tetris-cell-size);
+    width: var(--tetris-cell-size);
+    border: var(--tetris-cell-border-width) solid var(--tetris-border-color);
+    transition: background-color 0.3s ease-in-out;
+    z-index: 0;
+}

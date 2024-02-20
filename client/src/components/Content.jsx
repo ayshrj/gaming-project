@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import Nonogram from "../pages/games/Nonogram";
 import Sudoku from "../pages/games/Sudoku";
 import Chess from "../pages/games/Chess";
+import Tetris from "../pages/games/Tetris";
 import Games from "../pages/Games";
 import { Routes, Route, Link } from "react-router-dom";
 
@@ -33,6 +34,7 @@ const Content = ({
           path="games/chess"
           element={<Chess browserWindowWidth={browserWindowWidth} />}
         />
+        <Route path="games/tetris" element={<Tetris />} />
       </Routes>
     </div>
   );

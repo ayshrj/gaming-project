@@ -74,6 +74,9 @@ const HomePage = ({ darkMode, myCurrentDays }) => {
             <Link to="/games/chess" style={{ textDecoration: "none" }}>
               <div className="game">Chess</div>
             </Link>
+            <Link to="/games/tetris" style={{ textDecoration: "none" }}>
+              <div className="game">Tetris</div>
+            </Link>
           </div>
         </div>
       </div>

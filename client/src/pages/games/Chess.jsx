@@ -58,7 +58,7 @@ const Chess = ({ browserWindowWidth }) => {
   }, []);
 
   const [switchCell, setSwitchCell] = useState(false);
-  const [completeBoard, setCompleteBoard] = useState([]);
+  const [completeBoard, setCompleteBoard] = useState(null);
   const [selectedCol, setSelectedCol] = useState(-1);
   const [selectedRow, setSelectedRow] = useState(-1);
   const [currentPlayer, setCurrentPlayer] = useState(-1);
