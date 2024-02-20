@@ -129,4 +129,15 @@
         width: calc(0.50*var(--chess-cell-size));
         font-size: calc(0.50*var(--chess-cell-size));
     }
+
+    .chess-button {
+        border-radius: calc(0.5*var(--chess-button-border-radius));
+        font-size: calc(0.5*var(--chess-button-font-size));
+        height: calc(0.5*var(--chess-button-height));
+    }
+
+    .chess-options-buttons>.chess-button {
+        margin-top: 10px;
+        width: calc(0.5*var(--chess-option-buttons-width));
+    }
 }

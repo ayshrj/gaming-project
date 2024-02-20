@@ -160,6 +160,7 @@
 
     .sudoku-button {
         font-size: calc(0.6*var(--sudoku-button-font-size));
+        border-radius: calc(0.6*var(--sudoku-button-border-radius));
         height: calc(0.6*var(--sudoku-button-height));
     }
 
