@@ -2,8 +2,8 @@
     display: flex;
     position: fixed;
     left: 0;
-    top: 60px;
-    bottom: 60px;
+    top: 0;
+    bottom: 0;
     align-items: center;
     background-color: var(--background-color);
     z-index: 2;
