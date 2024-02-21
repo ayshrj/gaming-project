@@ -2,8 +2,7 @@
     --tetris-block-color-background: rgb(193, 82, 31);
     --tetris-border-color: hsl(0, 0%, 24%);
     --tetris-cell-size: 30px;
-    --tetris-control-background-color: hsl(0, 0%, 24%);
-    --tetris-control-background-color-hover: hsl(0, 0%, 48%);
+    --tetris-control-border-color: hsl(0, 0%, 24%);
     --tetris-button-padding: 10px;
     --tetris-font-size: 15px;
 }
@@ -82,7 +81,7 @@ element.style {
 
 .tetris-controls>div {
     flex: 1;
-    border: 1px solid var(--tetris-control-background-color);
+    border: 1px solid var(--tetris-control-border-color);
     padding: var(--tetris-button-padding) calc(2*var(--tetris-button-padding));
     margin: 5px;
     border-radius: 5px;

@@ -50,7 +50,10 @@ const Content = ({
           path="games/tetris"
           element={<Tetris browserWindowWidth={browserWindowWidth} />}
         />
-        <Route path="games/snakegame" element={<SnakeGame />} />
+        <Route
+          path="games/snakegame"
+          element={<SnakeGame browserWindowWidth={browserWindowWidth} />}
+        />
       </Routes>
     </div>
   );

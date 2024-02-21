@@ -1,0 +1,50 @@
+:root {
+    --snake-game-block-color-background: rgb(193, 82, 31);
+    --snake-game-border-color: hsl(0, 0%, 24%);
+    --snake-game-cell-size: 30px;
+    --snake-game-control-border-color: hsl(0, 0%, 24%);
+    --snake-game-button-padding: 10px;
+    --snake-game-score-label-font-size: 15px;
+}
+
+.snake-game-score-label {
+    display: flex;
+    font-size: var(--snake-game-score-label-font-size);
+    justify-content: space-between;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.snake-game-container {
+    text-align: center;
+    align-content: center;
+}
+
+.snake-game-controls-container {
+    display: flex;
+    justify-content: center;
+    /* Center the child horizontally */
+    align-items: center;
+    /* Center the child vertically */
+    flex-direction: column;
+}
+
+.snake-game-controls {
+    display: flex;
+    justify-content: center;
+    width: 300px;
+}
+
+.snake-game-controls>div {
+    flex: 1;
+    border: 1px solid var(--snake-game-control-border-color);
+    padding: var(--snake-game-button-padding) calc(2*var(--snake-game-button-padding));
+    margin: 5px;
+    border-radius: 5px;
+    user-select: none;
+}
+
+.snake-game-controls>div:hover {
+    border: 1px dashed var(--snake-game-block-color-background);
+}

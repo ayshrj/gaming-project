@@ -148,9 +148,9 @@ const HomePage = ({
             <Link to="/games/tetris" style={{ textDecoration: "none" }}>
               <div className="game">Tetris</div>
             </Link>
-            {/* <Link to="/games/snakegame" style={{ textDecoration: "none" }}>
+            <Link to="/games/snakegame" style={{ textDecoration: "none" }}>
               <div className="game">Snake Game</div>
-            </Link> */}
+            </Link>
             <Link to="/games/nonogram" style={{ textDecoration: "none" }}>
               <div className="game">Nonogram</div>
             </Link>
