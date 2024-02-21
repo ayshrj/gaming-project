@@ -45,7 +45,10 @@ const Content = ({
           path="games/chess"
           element={<Chess browserWindowWidth={browserWindowWidth} />}
         />
-        <Route path="games/tetris" element={<Tetris />} />
+        <Route
+          path="games/tetris"
+          element={<Tetris browserWindowWidth={browserWindowWidth} />}
+        />
       </Routes>
     </div>
   );

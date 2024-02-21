@@ -1,12 +1,17 @@
 :root {
     --tetris-block-color-background: rgb(193, 82, 31);
     --tetris-border-color: hsl(0, 0%, 24%);
-    --tetris-cell-size: 35px;
+    --tetris-cell-size: 30px;
+    --tetris-control-background-color: hsl(0, 0%, 24%);
+    --tetris-control-background-color-hover: hsl(0, 0%, 48%);
+    --tetris-button-padding: 10px;
+    --tetris-font-size: 15px;
 }
 
 .tetris-container {
     text-align: center;
     align-items: center;
+    justify-content: center;
 }
 
 .tetris-row {
@@ -15,11 +20,10 @@
 
 .tetris {
     display: inline-block;
-    margin: 20px;
+    /* margin: 20px;
     padding: 20px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color); */
 }
-
 
 .tetris-cell {
     display: inline-block;
@@ -49,6 +53,7 @@
 .tetris-score-label {
     display: flex;
     font-weight: bold;
+    font-size: var(--tetris-font-size);
 }
 
 .t-parent {
@@ -64,9 +69,40 @@ element.style {
     transition: none;
 }
 
+.tetris-controls-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.tetris-controls {
+    display: flex;
+    justify-content: center;
+}
+
+.tetris-controls>div {
+    flex: 1;
+    border: 1px solid var(--tetris-control-background-color);
+    padding: var(--tetris-button-padding) calc(2*var(--tetris-button-padding));
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.tetris-controls>div:hover {
+    border: 1px dashed var(--tetris-block-color-background);
+}
+
 @media (max-width: 768px) {
     .tetris-cell {
-        width: calc(0.8*var(--tetris-cell-size));
-        height: calc(0.8*var(--tetris-cell-size));
+        width: calc(0.7*var(--tetris-cell-size));
+        height: calc(0.7*var(--tetris-cell-size));
+    }
+
+    .tetris-controls>div {
+        padding: calc(0.5*var(--tetris-button-padding)) calc(0.4*var(--tetris-button-padding));
+    }
+
+    .tetris-score-label {
+        font-size: calc(0.4*var(--tetris-font-size));
     }
 }

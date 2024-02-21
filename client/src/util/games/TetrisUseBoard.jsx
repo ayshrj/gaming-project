@@ -3,7 +3,7 @@ import { TetrisUseInterval } from "./TetrisUseInterval";
 import { randomShape } from "./TetrisShapeFactory";
 
 export const ROW_COUNT = 20;
-export const COLUMN_COUNT = 10;
+export const COLUMN_COUNT = 20;
 
 function copyScene(scene) {
   return scene.map((row) => row.slice());
@@ -195,5 +195,37 @@ export function TetrisUseBoard() {
     });
   }
 
-  return [display, score, onKeyDown];
+  function moveLeft() {
+    movePosition(-1, 0);
+  }
+
+  function moveRight() {
+    movePosition(1, 0);
+  }
+
+  function moveDown() {
+    movePosition(0, 1);
+  }
+
+  function rotate() {
+    rotateShape();
+  }
+
+  function resetGame() {
+    setScene(createEmptyScene());
+    setShape(randomShape());
+    setPosition({ x: 0, y: 0 });
+    setScore(0);
+  }
+
+  return [
+    display,
+    score,
+    onKeyDown,
+    moveLeft,
+    moveRight,
+    moveDown,
+    rotate,
+    resetGame,
+  ];
 }
