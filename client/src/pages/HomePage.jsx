@@ -134,9 +134,6 @@ const HomePage = ({
           </Link>
 
           <div className="games">
-            <Link to="/games/nonogram" style={{ textDecoration: "none" }}>
-              <div className="game">Nonogram</div>
-            </Link>
             <Link to="/games/sudoku" style={{ textDecoration: "none" }}>
               <div className="game">Sudoku</div>
             </Link>
@@ -145,6 +142,9 @@ const HomePage = ({
             </Link>
             <Link to="/games/tetris" style={{ textDecoration: "none" }}>
               <div className="game">Tetris</div>
+            </Link>
+            <Link to="/games/nonogram" style={{ textDecoration: "none" }}>
+              <div className="game">Nonogram</div>
             </Link>
           </div>
         </div>
