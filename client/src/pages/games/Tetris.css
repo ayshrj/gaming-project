@@ -86,6 +86,7 @@ element.style {
     padding: var(--tetris-button-padding) calc(2*var(--tetris-button-padding));
     margin: 5px;
     border-radius: 5px;
+    user-select: none;
 }
 
 .tetris-controls>div:hover {
@@ -94,8 +95,8 @@ element.style {
 
 @media (max-width: 768px) {
     .tetris-cell {
-        width: calc(0.7*var(--tetris-cell-size));
-        height: calc(0.7*var(--tetris-cell-size));
+        width: calc(0.55*var(--tetris-cell-size));
+        height: calc(0.55*var(--tetris-cell-size));
     }
 
     .tetris-controls>div {
