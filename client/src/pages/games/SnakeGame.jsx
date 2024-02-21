@@ -137,7 +137,7 @@ const SnakeGame = ({ browserWindowWidth }) => {
       />
       <div className="snake-game-controls-container">
         <div className="snake-game-controls">
-          <div onClick={startGame}>{gameOver ? "Restart" : "Start Game"}</div>
+          <div onClick={startGame}>{speed ? "Restart" : "Start Game"}</div>
         </div>
         <div className="snake-game-controls">
           <div onClick={() => moveSnake(38)}>
