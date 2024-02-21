@@ -119,12 +119,14 @@ const HomePage = ({
           {highestStreak ? (
             <>
               <img src={badge} alt="Current Badge" />
-              <div>{`Highest Streak: ${highestStreak} Days`}</div>
+              <div>{`Highest Streak: ${highestStreak} Day${
+                highestStreak > 1 ? "s" : ""
+              }`}</div>
             </>
           ) : (
             <>
               <img src={CurrentBadge1} alt="Current Badge" />
-              <div>{`Highest Streak: 1 Days`}</div>
+              <div>{`Highest Streak: 1 Day`}</div>
               <div style={{ fontSize: "9px", marginTop: "6px" }}>
                 Log In to continue your streak
               </div>
