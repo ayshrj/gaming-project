@@ -13,21 +13,24 @@ const Tetris = () => {
   }
 
   return (
-    <div ref={eBoard} className="tetris" tabIndex={0} onKeyDown={onKeyDown}>
-      <div>
-        <span className="tetris-score-label">Score:</span>
-        <span className="tetris-score-label">{score.toLocaleString()}</span>
+    <div className="tetris-container">
+      <h1>Tetris</h1>
+      <div ref={eBoard} className="tetris" tabIndex={0} onKeyDown={onKeyDown}>
+        <div className="tetris-score-label-container">
+          <span className="tetris-score-label">{`Score: ${score.toLocaleString()}`}</span>
+          <span className="tetris-score-label">{`Highest Score:0`}</span>
+        </div>
+        {display.map((row, index) => (
+          <Row row={row} key={index} />
+        ))}
       </div>
-      {display.map((row, index) => (
-        <Row row={row} key={index} />
-      ))}
     </div>
   );
 };
 
 const Row = memo((props) => {
   return (
-    <span className="t-row">
+    <span className="tetris-row">
       {props.row.map((cell, index) => (
         <Cell cell={cell} key={index} />
       ))}
@@ -41,7 +44,7 @@ const Cell = memo((props) => {
   count.current++;
 
   const value = props.cell ? props.cell : 0;
-  return <span className={`t-cell t-cell-${value}`}></span>;
+  return <span className={`tetris-cell tetris-cell-${value}`}></span>;
 });
 
 export default memo(Tetris);

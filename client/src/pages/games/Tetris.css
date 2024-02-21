@@ -1,9 +1,15 @@
-body {
-    /* font: 14px "Century Gothic", Futura, sans-serif; */
-    margin: 0px;
+:root {
+    --tetris-block-color-background: rgb(193, 82, 31);
+    --tetris-border-color: hsl(0, 0%, 24%);
+    --tetris-cell-size: 35px;
 }
 
-.t-row {
+.tetris-container {
+    text-align: center;
+    align-items: center;
+}
+
+.tetris-row {
     display: flex;
 }
 
@@ -11,38 +17,37 @@ body {
     display: inline-block;
     margin: 20px;
     padding: 20px;
-    border: 1px solid grey;
+    border: 1px solid var(--border-color);
 }
 
-.t-cell {
+
+.tetris-cell {
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: var(--tetris-cell-size);
+    height: var(--tetris-cell-size);
     box-sizing: border-box;
     color: grey;
 }
 
-.t-cell-0 {
+.tetris-cell-0 {
     background-color: black;
 }
 
-.t-cell-1 {
-    background-color: #00d;
-    border-bottom: 1px solid #00f;
-    border-right: 1px solid #00f;
-    border-top: 1px solid #00b;
-    border-left: 1px solid #00b;
+.tetris-cell-1 {
+    background-color: var(--tetris-block-color-background);
+    border-bottom: 1px solid var(--tetris-border-color);
+    border-right: 1px solid var(--tetris-border-color);
+    border-top: 1px solid var(--tetris-border-color);
+    border-left: 1px solid var(--tetris-border-color);
 }
 
-.t-cell-2 {
-    background-color: green;
-}
-
-.t-cell-3 {
-    background-color: red;
+.tetris-score-label-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .tetris-score-label {
+    display: flex;
     font-weight: bold;
 }
 
@@ -57,4 +62,11 @@ element.style {
 
 .tetris * {
     transition: none;
+}
+
+@media (max-width: 768px) {
+    .tetris-cell {
+        width: calc(0.8*var(--tetris-cell-size));
+        height: calc(0.8*var(--tetris-cell-size));
+    }
 }
