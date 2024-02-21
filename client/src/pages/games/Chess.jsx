@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./Chess.css";
 
 import {
@@ -241,6 +241,10 @@ const Chess = ({ browserWindowWidth }) => {
     }
   }, [switchCell]);
 
+  const pieceSize = useCallback(() => {
+    return browserWindowWidth > 665 ? 35 : 20;
+  });
+
   useEffect(() => {
     if (currBoard !== null && currBoard.length > 0) {
       const renderCell = (value) => {
@@ -249,84 +253,84 @@ const Chess = ({ browserWindowWidth }) => {
             return (
               <IconChess
                 className="chess-piece chess-piece-black"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case -1:
             return (
               <IconChess
                 className="chess-piece chess-piece-white"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case 2:
             return (
               <IconChessRook
                 className="chess-piece chess-piece-black"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case -2:
             return (
               <IconChessRook
                 className="chess-piece chess-piece-white"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case 3:
             return (
               <IconChessKnight
                 className="chess-piece chess-piece-black"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case -3:
             return (
               <IconChessKnight
                 className="chess-piece chess-piece-white"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case 4:
             return (
               <IconChessBishop
                 className="chess-piece chess-piece-black"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case -4:
             return (
               <IconChessBishop
                 className="chess-piece chess-piece-white"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case 5:
             return (
               <IconChessQueen
                 className="chess-piece chess-piece-black"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case -5:
             return (
               <IconChessQueen
                 className="chess-piece chess-piece-white"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case 6:
             return (
               <IconChessKing
                 className="chess-piece chess-piece-black"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           case -6:
             return (
               <IconChessKing
                 className="chess-piece chess-piece-white"
-                size={browserWindowWidth > 665 ? 25 : 12}
+                size={pieceSize()}
               />
             );
           default:
