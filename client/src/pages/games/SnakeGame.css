@@ -11,7 +11,7 @@
     display: flex;
     font-size: var(--snake-game-score-label-font-size);
     justify-content: space-between;
-    max-width: 300px;
+    max-width: 400px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -47,4 +47,10 @@
 
 .snake-game-controls>div:hover {
     border: 1px dashed var(--snake-game-block-color-background);
+}
+
+@media (max-width: 768px) {
+    .snake-game-score-label {
+        max-width: 300px;
+    }
 }
