@@ -64,26 +64,30 @@ const LeftPane = ({
           <div className="leftpane-option">Help</div>
           <div className="leftpane-option">Contact Us</div>
           {/* <div className="leftpane-option" onClick={handleSignOut}> */}
-          <div className="leftpane-option">
-            {currentUser ? (
+
+          {currentUser ? (
+            <div className="leftpane-option" onClick={handleSignOut}>
               <div
                 style={{ display: "flex", alignContent: "center", gap: "10px" }}
-                onClick={handleSignOut}
               >
                 {" "}
                 <IconLogout />
                 Logout
               </div>
-            ) : (
+            </div>
+          ) : (
+            <div
+              className="leftpane-option"
+              onClick={() => setAuthenticationBoxOpen(true)}
+            >
               <div
                 style={{ display: "flex", alignContent: "center", gap: "10px" }}
-                onClick={() => setAuthenticationBoxOpen(true)}
               >
                 <IconLogin />
                 Login
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

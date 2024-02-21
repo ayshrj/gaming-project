@@ -81,6 +81,7 @@ const Register = ({
           value={displayName}
           onChange={(e) => setDisplayName(e.target.value)}
           required
+          className="authentication-box-input"
         />
         <input
           placeholder="Email"
@@ -88,6 +89,7 @@ const Register = ({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="authentication-box-input"
         />
         <input
           placeholder="Password"
@@ -95,6 +97,7 @@ const Register = ({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          className="authentication-box-input"
         />
         <input
           style={{ display: "none" }}

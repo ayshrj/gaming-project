@@ -61,6 +61,10 @@
     cursor: default;
 }
 
+.authentication-box-input {
+    color: black;
+}
+
 .authentication-box.authentication-box-register {
     height: 300px;
 }

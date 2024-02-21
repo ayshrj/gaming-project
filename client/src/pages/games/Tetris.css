@@ -1,52 +1,60 @@
-:root {
-    --tetris-cell-size: 25px;
-    --tetris-cell-border-width: 1px;
-    --tetris-border-color: hsl(0, 0%, 24%);
+body {
+    /* font: 14px "Century Gothic", Futura, sans-serif; */
+    margin: 0px;
 }
 
-.tetris-container {
+.t-row {
     display: flex;
-    flex-direction: column;
-    text-align: center;
 }
-
 
 .tetris {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
+    display: inline-block;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid grey;
 }
 
-.tetris-board, .tetris-hint {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transform: translateX(calc(19px + 2 * (var(--tetris-cell-border-width) + var(--tetris-cell-size))));
+.t-cell {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    box-sizing: border-box;
+    color: grey;
 }
 
-.tetris-row {
-    display: flex;
-    flex-direction: row;
-    margin: 0;
-    padding: 0;
-    user-select: none;
+.t-cell-0 {
+    background-color: black;
 }
 
-.tetris-cell {
-    position: relative;
+.t-cell-1 {
+    background-color: #00d;
+    border-bottom: 1px solid #00f;
+    border-right: 1px solid #00f;
+    border-top: 1px solid #00b;
+    border-left: 1px solid #00b;
+}
+
+.t-cell-2 {
+    background-color: green;
+}
+
+.t-cell-3 {
+    background-color: red;
+}
+
+.tetris-score-label {
+    font-weight: bold;
+}
+
+.t-parent {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 3px;
-    user-select: none;
-    color: var(--para-color);
-    transition: border 0.3s ease-in-out;
-    user-select: none;
-    height: var(--tetris-cell-size);
-    width: var(--tetris-cell-size);
-    border: var(--tetris-cell-border-width) solid var(--tetris-border-color);
-    transition: background-color 0.3s ease-in-out;
-    z-index: 0;
+}
+
+element.style {
+    width: 44px;
+    left: 0px;
+}
+
+.tetris * {
+    transition: none;
 }
