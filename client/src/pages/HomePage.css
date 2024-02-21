@@ -20,7 +20,7 @@
     color: rgb(219, 219, 219);
     margin: 5px;
     min-width: 300px;
-    padding: 30px;
+    padding: 20px;
     border-radius: var(--border-radius);
     transform: border 0.3s ease-in-out;
     flex-direction: column;
