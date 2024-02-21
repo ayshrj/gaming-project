@@ -63,7 +63,12 @@ const HomePage = ({
   return (
     <div>
       <div className="welcome">
-        <h2>Welcome back, Ayush</h2>
+        <h2>
+          Welcome
+          {currentUser && currentUser.displayName
+            ? `back, ${currentUser.displayName}`
+            : " guest"}
+        </h2>
         {randomSVG}
         <p>{randomFact.fact}</p>
       </div>
