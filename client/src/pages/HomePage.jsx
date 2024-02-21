@@ -74,23 +74,6 @@ const HomePage = ({
       </div>
       <div className="row">
         <div className="column">
-          <div className="column-text">Badge</div>
-          {highestStreak ? (
-            <>
-              <img src={badge} alt="Current Badge" />
-              <div>{`Highest Streak: ${highestStreak} Days`}</div>
-            </>
-          ) : (
-            <>
-              <img src={CurrentBadge1} alt="Current Badge" />
-              <div>{`Highest Streak: 1 Days`}</div>
-              <div style={{ fontSize: "9px", marginTop: "6px" }}>
-                Log In to continue your streak
-              </div>
-            </>
-          )}
-        </div>
-        <div className="column">
           <div className="column-text">Streak</div>
           {currentStreak !== null && targetStreak !== null ? (
             <Streak
@@ -126,6 +109,23 @@ const HomePage = ({
                 darkMode={darkMode}
               />
               <div style={{ fontSize: "9px" }}>
+                Log In to continue your streak
+              </div>
+            </>
+          )}
+        </div>
+        <div className="column">
+          <div className="column-text">Badge</div>
+          {highestStreak ? (
+            <>
+              <img src={badge} alt="Current Badge" />
+              <div>{`Highest Streak: ${highestStreak} Days`}</div>
+            </>
+          ) : (
+            <>
+              <img src={CurrentBadge1} alt="Current Badge" />
+              <div>{`Highest Streak: 1 Days`}</div>
+              <div style={{ fontSize: "9px", marginTop: "6px" }}>
                 Log In to continue your streak
               </div>
             </>
