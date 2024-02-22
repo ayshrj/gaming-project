@@ -168,7 +168,63 @@ const Sudoku = () => {
 
     setPrompt("Everything looks good!");
   };
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (
+        selectedRow !== -1 &&
+        selectedCol !== -1 &&
+        /^[1-9]$/.test(event.key)
+      ) {
+        let tempArray = [...currGrid];
+        const number = parseInt(event.key);
+        if (tempArray[selectedRow][selectedCol] !== number) {
+          tempArray[selectedRow][selectedCol] = number;
+        } else {
+          tempArray[selectedRow][selectedCol] = 0;
+        }
+        setCurrGrid(tempArray);
+      }
 
+      switch (event.key) {
+        case "ArrowUp":
+          if (
+            data.unsolvedSudo[Math.max(selectedRow - 1, 0)][selectedCol] === 0
+          ) {
+            setSelectedRow((prevRow) => Math.max(prevRow - 1, 0));
+          }
+          break;
+        case "ArrowDown":
+          if (
+            data.unsolvedSudo[Math.max(selectedRow + 1, 0)][selectedCol] === 0
+          ) {
+            setSelectedRow((prevRow) => Math.max(prevRow + 1, 0));
+          }
+          break;
+        case "ArrowLeft":
+          if (
+            data.unsolvedSudo[selectedRow][Math.max(selectedCol - 1, 0)] === 0
+          ) {
+            setSelectedCol((prevCol) => Math.max(prevCol - 1, 0));
+          }
+          break;
+        case "ArrowRight":
+          if (
+            data.unsolvedSudo[selectedRow][Math.max(selectedCol + 1, 0)] === 0
+          ) {
+            setSelectedCol((prevCol) => Math.max(prevCol + 1, 0));
+          }
+          break;
+        default:
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedRow, selectedCol, currGrid]);
   return (
     <div className="sudoku-container">
       <h1>Sudoku</h1>
