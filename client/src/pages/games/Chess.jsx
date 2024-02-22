@@ -8,12 +8,6 @@ import {
   IconChessQueen,
   IconChessBishop,
   IconChessKnight,
-  IconChessFilled,
-  IconChessKingFilled,
-  IconChessRookFilled,
-  IconChessQueenFilled,
-  IconChessBishopFilled,
-  IconChessKnightFilled,
   IconX,
 } from "@tabler/icons-react";
 
@@ -63,6 +57,14 @@ const Chess = ({ browserWindowWidth }) => {
   const [selectedRow, setSelectedRow] = useState(-1);
   const [currentPlayer, setCurrentPlayer] = useState(-1);
   const [currentPieceSelected, setCurrentPieceSelected] = useState(-1);
+  const [hasKingMoved, setHasKingMoved] = useState({
+    white: false,
+    black: false,
+  });
+  const [hasRookMoved, setHasRookMoved] = useState({
+    white: { left: false, right: false },
+    black: { left: false, right: false },
+  });
 
   const handleSelect = (e) => {
     const row = parseInt(e.currentTarget.getAttribute("row"));
@@ -78,9 +80,107 @@ const Chess = ({ browserWindowWidth }) => {
     const row = parseInt(e.currentTarget.getAttribute("row"));
     const col = parseInt(e.currentTarget.getAttribute("col"));
 
+    if (currentPieceSelected === 6 && hasKingMoved.black === false) {
+      let tempHasKingMoved = { ...hasKingMoved, black: true };
+      setHasKingMoved(tempHasKingMoved);
+    } else if (currentPieceSelected === -6 && hasKingMoved.white === false) {
+      let tempHasKingMoved = { ...hasKingMoved, white: true };
+      setHasKingMoved(tempHasKingMoved);
+    } else if (currentPieceSelected === 2) {
+      if (col === 0 && hasRookMoved.black.left === false) {
+        let tempHasRookMoved = {
+          ...hasRookMoved,
+          black: { ...hasRookMoved.black, left: true },
+        };
+        setHasRookMoved(tempHasRookMoved);
+      } else if (col === 7 && hasRookMoved.black.right === false) {
+        let tempHasRookMoved = {
+          ...hasRookMoved,
+          black: { ...hasRookMoved.black, right: true },
+        };
+        setHasRookMoved(tempHasRookMoved);
+      }
+    } else if (currentPieceSelected === -2) {
+      if (col === 0 && hasRookMoved.white.left === false) {
+        let tempHasRookMoved = {
+          ...hasRookMoved,
+          white: { ...hasRookMoved.white, left: true },
+        };
+        setHasRookMoved(tempHasRookMoved);
+      } else if (col === 7 && hasRookMoved.white.right === false) {
+        let tempHasRookMoved = {
+          ...hasRookMoved,
+          white: { ...hasRookMoved.white, right: true },
+        };
+        setHasRookMoved(tempHasRookMoved);
+      }
+    }
+
     let tempArray = currBoard.map((row) => [...row]);
     tempArray[selectedRow][selectedCol] = 0;
+    if (Math.abs(currBoard[row][col]) === 6) {
+      setGameOver("Game Over");
+      setCurrentPlayer(0);
+      tempArray[row][col] = currentPieceSelected;
+      setCurrBoard(tempArray);
+      setSelectedRow(-1);
+      setSelectedCol(-1);
+      setReachable(
+        Array.from({ length: 8 }, () => Array.from({ length: 8 }).fill(false))
+      );
+      return;
+    }
     tempArray[row][col] = currentPieceSelected;
+
+    if (currentPieceSelected === 6 && selectedRow === 0 && selectedCol === 4) {
+      if (row === 0 && col === 2) {
+        tempArray[0][0] = 0;
+        tempArray[0][3] = 2;
+      } else if (row === 0 && col === 6) {
+        tempArray[0][7] = 0;
+        tempArray[0][5] = 2;
+      }
+    } else if (
+      currentPieceSelected === -6 &&
+      selectedRow === 7 &&
+      selectedCol === 4
+    ) {
+      if (row === 7 && col === 2) {
+        tempArray[7][0] = 0;
+        tempArray[7][3] = -2;
+      } else if (row === 7 && col === 6) {
+        tempArray[7][7] = 0;
+        tempArray[7][5] = -2;
+      }
+    }
+
+    if (Math.abs(currentPieceSelected) === 1) {
+      const isBlackPawnPromotion = currentPieceSelected === 1 && row === 7;
+      const isWhitePawnPromotion = currentPieceSelected === -1 && row === 0;
+      if (isBlackPawnPromotion || isWhitePawnPromotion) {
+        const promotionPiece = window.prompt(
+          "Promote your pawn to Q, R, B, or K:"
+        );
+        switch (promotionPiece.toUpperCase()) {
+          case "Q":
+            tempArray[row][col] = currentPieceSelected > 0 ? 5 : -5; // Queen
+            break;
+          case "R":
+            tempArray[row][col] = currentPieceSelected > 0 ? 2 : -2; // Rook
+            break;
+          case "B":
+            tempArray[row][col] = currentPieceSelected > 0 ? 4 : -4; // Bishop
+            break;
+          case "N":
+            tempArray[row][col] = currentPieceSelected > 0 ? 3 : -3; // Knight
+            break;
+          default:
+            // Optionally handle invalid input; default to queen
+            tempArray[row][col] = currentPieceSelected > 0 ? 5 : -5;
+        }
+      }
+    }
+
     setCurrBoard(tempArray);
 
     setSelectedRow(-1);
@@ -106,6 +206,7 @@ const Chess = ({ browserWindowWidth }) => {
 
       if (currentPieceSelected === 1 && selectedRow !== 7) {
         //black pawn
+
         if (currBoard[selectedRow + 1][selectedCol] === 0)
           tempArray[selectedRow + 1][selectedCol] = true;
 
@@ -233,6 +334,43 @@ const Chess = ({ browserWindowWidth }) => {
           ) {
             if (currBoard[i][j] * currentPieceSelected <= 0)
               tempArray[i][j] = true;
+          }
+        }
+
+        if (currentPieceSelected === 6 && hasKingMoved.black === false) {
+          if (
+            hasRookMoved.black.left === false &&
+            currBoard[0][1] === 0 &&
+            currBoard[0][2] === 0 &&
+            currBoard[0][3] === 0
+          ) {
+            tempArray[0][2] = true;
+          }
+          if (
+            hasRookMoved.black.right === false &&
+            currBoard[0][6] === 0 &&
+            currBoard[0][5] === 0
+          ) {
+            tempArray[0][6] = true;
+          }
+        } else if (
+          currentPieceSelected === -6 &&
+          hasKingMoved.white === false
+        ) {
+          if (
+            hasRookMoved.white.left === false &&
+            currBoard[7][1] === 0 &&
+            currBoard[7][2] === 0 &&
+            currBoard[7][3] === 0
+          ) {
+            tempArray[7][2] = true;
+          }
+          if (
+            hasRookMoved.white.right === false &&
+            currBoard[7][6] === 0 &&
+            currBoard[7][5] === 0
+          ) {
+            tempArray[7][6] = true;
           }
         }
       }
@@ -393,7 +531,18 @@ const Chess = ({ browserWindowWidth }) => {
     setReachable(
       Array.from({ length: 8 }, () => Array.from({ length: 8 }).fill(false))
     );
+    setHasKingMoved({
+      white: false,
+      black: false,
+    });
+    setHasRookMoved({
+      white: { left: false, right: false },
+      black: { left: false, right: false },
+    });
+    setCurrentPlayer(-1);
   };
+
+  const [gameOver, setGameOver] = useState("");
 
   return (
     <div className="chess-container">
@@ -404,6 +553,7 @@ const Chess = ({ browserWindowWidth }) => {
           Reset
         </div>
       </div>
+      {gameOver && <div>Game Over!</div>}
     </div>
   );
 };
