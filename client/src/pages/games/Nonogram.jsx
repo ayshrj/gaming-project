@@ -25,10 +25,25 @@ const Nonogram = ({ browserWindowWidth }) => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [fillingValue, setFillingValue] = useState(0);
 
-  const handleMouseEvent = (e) => {
+  const handleEvent = (e) => {
     e.preventDefault();
     e.stopPropagation();
 
+    let row, col;
+
+    if (e.touches) {
+      const touches = e.touches[0];
+      if (touches) {
+        const targetElement = document.elementFromPoint(
+          touches.clientX,
+          touches.clientY
+        );
+        if (targetElement) {
+          row = targetElement.getAttribute("row");
+          col = targetElement.getAttribute("col");
+        }
+      }
+    }
     switch (e.type) {
       case "mousedown":
         setIsMouseDown(true);
@@ -42,9 +57,27 @@ const Nonogram = ({ browserWindowWidth }) => {
           setFillingValue(currGrid[rowDown][colDown] === 0 ? 1 : 0);
         }
 
-        let tempDataDown = [...currGrid];
-        tempDataDown[rowDown][colDown] = fillingValue;
-        setCurrGrid(tempDataDown);
+        let tempDataMouseDown = [...currGrid];
+        tempDataMouseDown[rowDown][colDown] = fillingValue;
+        setCurrGrid(tempDataMouseDown);
+        break;
+      case "touchstart":
+        setIsMouseDown(true);
+
+        if (!e.touches) {
+          row = e.currentTarget.getAttribute("row");
+          col = e.currentTarget.getAttribute("col");
+        }
+
+        if (xModeOn || e.button === 2 || (e.type === "touchstart" && xModeOn)) {
+          setFillingValue(currGrid[row][col] === 2 ? 0 : 2);
+        } else if (e.button === 0 || (e.type === "touchstart" && !xModeOn)) {
+          setFillingValue(currGrid[row][col] === 0 ? 1 : 0);
+        }
+
+        let tempDataTouchStart = [...currGrid];
+        tempDataTouchStart[row][col] = fillingValue;
+        setCurrGrid(tempDataTouchStart);
         break;
       case "mouseenter":
         if (isMouseDown) {
@@ -62,7 +95,38 @@ const Nonogram = ({ browserWindowWidth }) => {
           }
         }
         break;
+      case "touchmove":
+        if (isMouseDown) {
+          if (e.touches) {
+            const touch = e.touches[0];
+            const targetElement = document.elementFromPoint(
+              touch.clientX,
+              touch.clientY
+            );
+            row = targetElement.getAttribute("row");
+            col = targetElement.getAttribute("col");
+          } else {
+            row = e.currentTarget.getAttribute("row");
+            col = e.currentTarget.getAttribute("col");
+          }
+
+          if (
+            fillingValue === 0 ||
+            fillingValue === 2 ||
+            (fillingValue === 1 && currGrid[row][col] !== 2)
+          ) {
+            let tempDataEnter = [...currGrid];
+            tempDataEnter[row][col] = fillingValue;
+            setCurrGrid(tempDataEnter);
+          }
+        }
+        break;
       case "mouseup":
+        setIsMouseDown(false);
+        setFillingValue(0);
+        console.log(currGrid);
+        break;
+      case "touchend":
         setIsMouseDown(false);
         setFillingValue(0);
         console.log(currGrid);
@@ -140,13 +204,22 @@ const Nonogram = ({ browserWindowWidth }) => {
               col={j}
               draggable="false"
               onMouseDown={(e) => {
-                handleMouseEvent(e);
+                handleEvent(e);
               }}
               onMouseEnter={(e) => {
-                handleMouseEvent(e);
+                handleEvent(e);
               }}
               onMouseUp={(e) => {
-                handleMouseEvent(e);
+                handleEvent(e);
+              }}
+              onTouchStart={(e) => {
+                handleEvent(e);
+              }}
+              onTouchMove={(e) => {
+                handleEvent(e);
+              }}
+              onTouchEnd={(e) => {
+                handleEvent(e);
               }}
               onContextMenu={(e) => {
                 e.preventDefault();

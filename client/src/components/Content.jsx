@@ -6,6 +6,7 @@ import Sudoku from "../pages/games/Sudoku";
 import Chess from "../pages/games/Chess";
 import Tetris from "../pages/games/Tetris";
 import SnakeGame from "../pages/games/SnakeGame";
+import PacMan from "../pages/games/PacMan";
 import Games from "../pages/Games";
 import { Routes, Route, Link } from "react-router-dom";
 
@@ -54,6 +55,7 @@ const Content = ({
           path="games/snakegame"
           element={<SnakeGame browserWindowWidth={browserWindowWidth} />}
         />
+        <Route path="games/pacman" element={<PacMan />} />
       </Routes>
     </div>
   );

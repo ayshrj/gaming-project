@@ -168,6 +168,7 @@ const Sudoku = () => {
 
     setPrompt("Everything looks good!");
   };
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (
