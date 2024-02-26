@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Streak.css";
 
 const Streak = ({
@@ -19,6 +19,31 @@ const Streak = ({
   const cos = Math.cos;
   const sin = Math.sin;
   const π = Math.PI;
+  const [animatedDelta, setAnimatedDelta] = useState(0);
+
+  useEffect(() => {
+    setAnimatedDelta(animatedDelta);
+
+    let interval;
+
+    if (Δ > animatedDelta) {
+      interval = setInterval(() => {
+        setAnimatedDelta((prevDelta) => {
+          const newDelta = prevDelta + π / 30;
+          return newDelta < Δ ? newDelta : Δ;
+        });
+      }, 20);
+    } else {
+      interval = setInterval(() => {
+        setAnimatedDelta((prevDelta) => {
+          const newDelta = prevDelta - π / 30;
+          return newDelta > Δ ? newDelta : Δ;
+        });
+      }, 20);
+    }
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount or Δ change
+  }, [Δ]);
 
   const f_matrix_times = ([[a, b], [c, d]], [x, y]) => [
     a * x + b * y,
@@ -83,7 +108,7 @@ const Streak = ({
       {f_svg_ellipse_arc(
         [cx, cy],
         [rx, ry],
-        [t1 + Δ, 2 * Math.PI - Δ],
+        [t1, 2 * Math.PI - Math.PI / 180],
         φ,
         darkMode ? "#131313" : "rgb(219, 219, 219)",
         fillColor,
@@ -93,7 +118,7 @@ const Streak = ({
       {f_svg_ellipse_arc(
         [cx, cy],
         [rx, ry],
-        [t1, Δ],
+        [t1, animatedDelta],
         φ,
         stroke,
         fillColor,

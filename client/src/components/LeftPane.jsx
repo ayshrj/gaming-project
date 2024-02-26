@@ -38,6 +38,15 @@ const LeftPane = ({
 
   console.log(isLeftPaneOpen);
 
+  const Option = ({ icon, children, onClick }) => (
+    <div className="leftpane-option" onClick={onClick}>
+      <div style={{ display: "flex", alignContent: "center", gap: "10px" }}>
+        {icon}
+        {children}
+      </div>
+    </div>
+  );
+
   return (
     <div
       className={`leftpane-container ${isLeftPaneOpen ? "" : "hidden"}`}
@@ -53,40 +62,22 @@ const LeftPane = ({
           </Link>
         </div>
         <div className="leftpane-options">
-          <div className="leftpane-option">
-            <IconUsersGroup /> Friends
-          </div>
-          <div className="leftpane-option">
-            <IconSettings2 /> Options
-          </div>
+          <Option icon={<IconUsersGroup />}>Friends</Option>
+          <Option icon={<IconSettings2 />}>Options</Option>
         </div>
         <div className="leftpane-user">
-          <div className="leftpane-option">Help</div>
-          <div className="leftpane-option">Contact Us</div>
-          {/* <div className="leftpane-option" onClick={handleSignOut}> */}
-
+          <Option>Help</Option>
+          <Option>Contact Us</Option>
           {currentUser ? (
-            <div className="leftpane-option" onClick={handleSignOut}>
-              <div
-                style={{ display: "flex", alignContent: "center", gap: "10px" }}
-              >
-                {" "}
-                <IconLogout />
-                Logout
-              </div>
-            </div>
+            <Option onClick={handleSignOut}>
+              <IconLogout />
+              Logout
+            </Option>
           ) : (
-            <div
-              className="leftpane-option"
-              onClick={() => setAuthenticationBoxOpen(true)}
-            >
-              <div
-                style={{ display: "flex", alignContent: "center", gap: "10px" }}
-              >
-                <IconLogin />
-                Login
-              </div>
-            </div>
+            <Option onClick={() => setAuthenticationBoxOpen(true)}>
+              <IconLogin />
+              Login
+            </Option>
           )}
         </div>
       </div>
