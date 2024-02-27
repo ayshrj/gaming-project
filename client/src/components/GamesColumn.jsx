@@ -144,18 +144,27 @@ const GamesColumn = ({ browserWindowWidth }) => {
                   Each type of piece has its own method of movement.
                   <ul>
                     <li>
-                      Pawns move forward one square, but capture diagonally.
+                      <strong>Pawns</strong> move forward one square, but
+                      capture diagonally.
                     </li>
                     <li>
-                      Rooks move any number of squares along a row or column.
+                      <strong>Rooks</strong> move any number of squares along a
+                      row or column.
                     </li>
-                    <li>Knights move in an 'L' shape.</li>
-                    <li>Bishops move any number of squares diagonally.</li>
                     <li>
-                      Queens move any number of squares along a row, column, or
-                      diagonal.
+                      <strong>Knights</strong> move in an 'L' shape.
                     </li>
-                    <li>Kings move one square in any direction.</li>
+                    <li>
+                      <strong>Bishops</strong> move any number of squares
+                      diagonally.
+                    </li>
+                    <li>
+                      <strong>Queens</strong> move any number of squares along a
+                      row, column, or diagonal.
+                    </li>
+                    <li>
+                      <strong>Kings</strong> move one square in any direction.
+                    </li>
                   </ul>
                 </li>
                 <li>
