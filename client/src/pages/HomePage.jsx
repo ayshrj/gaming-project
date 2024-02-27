@@ -174,6 +174,7 @@ const HomePage = ({
                         ? "game-info-open"
                         : ""
                     }`}
+                    onClick={() => navigate("/games/sudoku")}
                     src={IconSudoku}
                     alt="IconSudoku"
                   />
@@ -235,6 +236,7 @@ const HomePage = ({
                         ? "game-info-open"
                         : ""
                     }`}
+                    onClick={() => navigate("/games/chess")}
                     src={IconChessBoard}
                     alt="IconChessBoard"
                   />
@@ -314,6 +316,7 @@ const HomePage = ({
                         ? "game-info-open"
                         : ""
                     }`}
+                    onClick={() => navigate("/games/tetris")}
                     src={IconTetris}
                     alt="IconTetris"
                   />
@@ -379,6 +382,7 @@ const HomePage = ({
                         ? "game-info-open"
                         : ""
                     }`}
+                    onClick={() => navigate("/games/snakegame")}
                     src={IconSnakeGame}
                     alt="IconSnakeGame"
                   />
@@ -440,6 +444,7 @@ const HomePage = ({
                         ? "game-info-open"
                         : ""
                     }`}
+                    onClick={() => navigate("/games/nonogram")}
                     src={IconNonogram}
                     alt="IconNonogram"
                   />

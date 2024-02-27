@@ -73,7 +73,7 @@
     gap: 15px;
     align-items: center;
     justify-content: center;
-
+    transform: translateY(5px);
 }
 
 .game-info-button>img {
@@ -89,12 +89,17 @@
 .game-info-button>div {
     height: 70px;
     height: 70px;
-    transform: translateY(12px);
+    transform: translateY(20px);
 }
 
 .game-info-button>img.game-info-open {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
+    transition: transform 0.1s ease-in-out;
+}
+
+.game-info-button>img.game-info-open:hover {
+    transform: translate(-60px, 20px) scale(1.2);
 }
 
 .game-info-text {
