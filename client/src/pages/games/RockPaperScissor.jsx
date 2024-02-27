@@ -8,12 +8,12 @@ import {
 
 const RockPaperScissor = ({ browserWindowWidth }) => {
   const [handSize, setHandSize] = useState(
-    browserWindowWidth >= 768 ? 300 : 180
+    browserWindowWidth >= 768 ? 300 : 160
   );
   const handStrokeSize = 1;
 
   useEffect(() => {
-    const tempSize = browserWindowWidth >= 768 ? 300 : 180;
+    const tempSize = browserWindowWidth >= 768 ? 300 : 160;
     setHandSize(tempSize);
   }, [browserWindowWidth]);
 
