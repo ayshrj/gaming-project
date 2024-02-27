@@ -49,6 +49,11 @@
     gap: 15px;
 }
 
+.icon-no-can-do-path {
+    fill: var(--div-font-color);
+    transform: translateY(-5px);
+}
+
 .leftpane-options {
     flex: 10;
     font-size: 17px;
