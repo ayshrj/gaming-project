@@ -5,6 +5,25 @@
   position: relative;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-color);
+}
+
 /* .leftpane-open-close-button {
   position: fixed;
   left: 5px;

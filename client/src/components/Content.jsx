@@ -34,6 +34,7 @@ const Content = ({
               currentStreak={currentStreak}
               highestStreak={highestStreak}
               targetStreak={targetStreak}
+              browserWindowWidth={browserWindowWidth}
             />
           }
         />

@@ -49,14 +49,72 @@
     align-self: start;
 }
 
-.game {
+.game-container {
     border: 1px solid var(--background-color);
     border-radius: var(--border-radius);
     padding: 10px;
     transition: border-radius 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
-.game:hover {
+.game-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.game-info-button {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.game-info-button>img {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-60px, 18px);
+    z-index: 10;
+}
+
+.game-info-button>div {
+    height: 70px;
+    height: 70px;
+    transform: translateY(12px);
+}
+
+.game-info-button>img.game-info-open {
+    width: 250px;
+    height: 250px;
+}
+
+.game-info-text {
+    margin-right: 300px;
+}
+
+.game-info-text.game-info-right-margin {
+    margin-right: 0;
+}
+
+.game-container.game-info-open, .game-container:hover {
     border-radius: var(--hover-border-radius);
     border: 1px dashed var(--border-color);
+}
+
+.game-container.game-info-open>.game-header {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.no-display {
+    display: none;
 }
