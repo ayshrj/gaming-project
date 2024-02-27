@@ -6,6 +6,7 @@ import IconSnakeGame from "../assets/games-icon/IconSnakeGame.svg";
 import IconSudoku from "../assets/games-icon/IconSudoku.svg";
 import IconTetris from "../assets/games-icon/IconTetris.svg";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
+import "./GamesColumn.css";
 
 const GamesColumn = ({ browserWindowWidth }) => {
   const navigate = useNavigate();
