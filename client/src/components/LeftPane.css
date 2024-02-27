@@ -22,6 +22,7 @@
     min-width: 300px;
     height: 100%;
     overflow: auto;
+    padding-top: 15px;
     /* background-image: var(--background-image);
     background-blend-mode: var(--background-blend-mode); */
     border-image: var(--border-image);
