@@ -1,3 +1,8 @@
+:root {
+    --rps-hand-size: 300px;
+    --rps-score-label-gap-size: 440px;
+}
+
 .rps-container {
     text-align: center;
     align-content: center;
@@ -31,8 +36,8 @@
 
 .rps-hand {
     border: 1px solid var(--border-color);
-    height: 300px;
-    width: 300px;
+    height: var(--rps-hand-size);
+    width: var(--rps-hand-size);
 }
 
 .rps-option:hover {
@@ -50,7 +55,7 @@
 .rps-score-label {
     display: flex;
     justify-content: center;
-    gap: 440px;
+    gap: var(--rps-score-label-gap-size);
 }
 
 .rps-score-label div {
@@ -76,5 +81,17 @@
 
     100% {
         transform: rotate(0deg);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .rps-hand {
+        height: calc(0.6*var(--rps-hand-size));
+        width: calc(0.6*var(--rps-hand-size));
+    }
+
+    .rps-score-label {
+        gap: calc(0.45*var(--rps-score-label-gap-size));
     }
 }

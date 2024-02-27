@@ -6,9 +6,16 @@ import {
   IconHandGrab,
 } from "@tabler/icons-react";
 
-const RockPaperScissor = () => {
-  const handSize = 300;
+const RockPaperScissor = ({ browserWindowWidth }) => {
+  const [handSize, setHandSize] = useState(
+    browserWindowWidth >= 768 ? 300 : 180
+  );
   const handStrokeSize = 1;
+
+  useEffect(() => {
+    const tempSize = browserWindowWidth >= 768 ? 300 : 180;
+    setHandSize(tempSize);
+  }, [browserWindowWidth]);
 
   const [currentHandSelected, setCurrentHandSelected] = useState(
     <IconHandGrab
@@ -130,7 +137,7 @@ const RockPaperScissor = () => {
         <div className="rps-hand rps-hand-left">
           <div style={{ animation: isShaking ? "shakeHand 0.6s" : "none" }}>
             {isShaking ? (
-              <IconHandGrab size={300} strokeWidth={1} />
+              <IconHandGrab size={handSize} strokeWidth={handStrokeSize} />
             ) : (
               currentHandSelected
             )}

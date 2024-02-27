@@ -56,7 +56,10 @@ const Content = ({
           path="games/snakegame"
           element={<SnakeGame browserWindowWidth={browserWindowWidth} />}
         />
-        <Route path="games/rockpaperscissor" element={<RockPaperScissor />} />
+        <Route
+          path="games/rockpaperscissor"
+          element={<RockPaperScissor browserWindowWidth={browserWindowWidth} />}
+        />
       </Routes>
     </div>
   );
