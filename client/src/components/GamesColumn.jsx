@@ -5,6 +5,7 @@ import IconNonogram from "../assets/games-icon/IconNonogram.svg";
 import IconSnakeGame from "../assets/games-icon/IconSnakeGame.svg";
 import IconSudoku from "../assets/games-icon/IconSudoku.svg";
 import IconTetris from "../assets/games-icon/IconTetris.svg";
+import IconRockPaperScissor from "../assets/games-icon/IconRockPaperScissor.svg";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import "./GamesColumn.css";
 
@@ -16,6 +17,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
     tetris: false,
     snakeGame: false,
     nonogram: false,
+    rockpaperscissor: false,
   });
 
   const handleGameInfo = (currentGameSelected) => {
@@ -26,6 +28,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
       tetris: false,
       snakeGame: false,
       nonogram: false,
+      rockpaperscissor: false,
       [currentGameSelected]: !prevState[currentGameSelected],
     }));
   };
@@ -352,6 +355,84 @@ const GamesColumn = ({ browserWindowWidth }) => {
                   continuous runs, separated by at least one blank square.
                 </li>
                 <li> Solve the puzzle by discovering the hidden image.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`game-container ${
+            gameInfoOpen.rockpaperscissor ? "game-info-open" : ""
+          }`}
+          onClick={() => handleGameInfo("rockpaperscissor")}
+        >
+          <div className="game-header">
+            <div onClick={() => navigate("/games/rockpaperscissor")}>
+              Rock Paper Scissor
+            </div>
+            <div
+              className={`game-info-button ${
+                gameInfoOpen.nonogram ? "game-info-open" : ""
+              }`}
+            >
+              <img
+                className={`${
+                  gameInfoOpen.rockpaperscissor && browserWindowWidth > 1000
+                    ? "game-info-open"
+                    : ""
+                }`}
+                onClick={() => navigate("/games/rockpaperscissor")}
+                src={IconRockPaperScissor}
+                alt="IconRockPaperScissor"
+              />
+              <div>
+                {gameInfoOpen.rockpaperscissor ? (
+                  <IconChevronUp />
+                ) : (
+                  <IconChevronDown />
+                )}
+              </div>
+            </div>
+          </div>
+          <div
+            className={`game-info-text ${
+              !gameInfoOpen.rockpaperscissor ? "no-display" : ""
+            } ${browserWindowWidth < 1000 ? "game-info-right-margin" : ""}`}
+          >
+            <div>
+              Rock Paper Scissors is a simple hand game usually played between
+              two people, where each player simultaneously forms one of three
+              shapes with an outstretched hand. The possible shapes are rock (a
+              fist), paper (an open hand), and scissors (a fist with the index
+              and middle fingers extended, forming a V). It has a simple set of
+              rules that relies on the power dynamic between the shapes.
+            </div>
+            <div>
+              <br />
+              Instructions:
+              <ol>
+                <li>
+                  Each player chooses one of the three shapes to form with their
+                  hand, either rock, paper, or scissors. The choice is made at
+                  the same time to keep the selection fair and random.
+                </li>
+                <li>
+                  The winner is determined by the rules:
+                  <ul>
+                    <li>Rock crushes scissors (Rock wins against scissors).</li>
+                    <li>Scissors cuts paper (Scissors win against paper).</li>
+                    <li>Paper covers rock (Paper wins against rock).</li>
+                  </ul>
+                </li>
+                <li>
+                  {" "}
+                  If both players choose the same shape, the game is tied, and
+                  you may choose to play again.
+                </li>
+                <li>
+                  {" "}
+                  Decide in advance how many rounds you will play or set a win
+                  condition (e.g., best of three or first to five wins).
+                </li>
               </ol>
             </div>
           </div>
