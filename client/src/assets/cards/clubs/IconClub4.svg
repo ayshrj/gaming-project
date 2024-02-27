@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-crop-portrait" width="400" height="400" viewBox="0 0 35 35" stroke-width="1.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 6m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v18a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"/>
+<!--top left letter-->
+  <g transform="translate(9.7, 7) scale(0.1)" stroke-width="2">
+    <path d="M15 20v-15l-8 11h10"/>
+  </g>
+<!--top left card type-->
+  <g transform="translate(9.7, 9) scale(0.1)">
+    <path d="M12 3a4 4 0 0 1 3.164 6.447a4 4 0 1 1 -1.164 6.198v1.355l1 4h-6l1 -4l0 -1.355a4 4 0 1 1 -1.164 -6.199a4 4 0 0 1 3.163 -6.446z"/>
+  </g>
+<!--bottom right letter-->
+  <g transform="rotate(180, 15, 15) translate(3.7, 1) scale(0.1)" stroke-width="2">
+    <path d="M15 20v-15l-8 11h10"/>
+  </g>
+<!--bottom right card type-->
+  <g transform="rotate(180, 15, 15) translate(3.7, 3) scale(0.1)">
+    <path d="M12 3a4 4 0 0 1 3.164 6.447a4 4 0 1 1 -1.164 6.198v1.355l1 4h-6l1 -4l0 -1.355a4 4 0 1 1 -1.164 -6.199a4 4 0 0 1 3.163 -6.446z"/>
+  </g>
+<!--card type top 1st-->
+  <g transform="translate(18.5, 8) scale(0.2)">
+    <path d="M12 3a4 4 0 0 1 3.164 6.447a4 4 0 1 1 -1.164 6.198v1.355l1 4h-6l1 -4l0 -1.355a4 4 0 1 1 -1.164 -6.199a4 4 0 0 1 3.163 -6.446z"/>
+  </g>
+<!--card type top 2nd-->
+  <g transform="translate(12.5, 8) scale(0.2)">
+    <path d="M12 3a4 4 0 0 1 3.164 6.447a4 4 0 1 1 -1.164 6.198v1.355l1 4h-6l1 -4l0 -1.355a4 4 0 1 1 -1.164 -6.199a4 4 0 0 1 3.163 -6.446z"/>
+  </g>
+<!--card type bottom 1st-->
+  <g transform="rotate(180, 15, 15) translate(12.75, 2) scale(0.2)">
+    <path d="M12 3a4 4 0 0 1 3.164 6.447a4 4 0 1 1 -1.164 6.198v1.355l1 4h-6l1 -4l0 -1.355a4 4 0 1 1 -1.164 -6.199a4 4 0 0 1 3.163 -6.446z"/>
+  </g>
+<!--card type bottom 2nd-->
+  <g transform="rotate(180, 15, 15) translate(6.75, 2) scale(0.2)">
+    <path d="M12 3a4 4 0 0 1 3.164 6.447a4 4 0 1 1 -1.164 6.198v1.355l1 4h-6l1 -4l0 -1.355a4 4 0 1 1 -1.164 -6.199a4 4 0 0 1 3.163 -6.446z"/>
+  </g>
+</svg>
