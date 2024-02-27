@@ -25,21 +25,22 @@ const Streak = ({
     setAnimatedDelta(animatedDelta);
 
     let interval;
+    const speed = 20;
 
     if (Δ > animatedDelta) {
       interval = setInterval(() => {
         setAnimatedDelta((prevDelta) => {
-          const newDelta = prevDelta + π / 30;
+          const newDelta = prevDelta + π / 180;
           return newDelta < Δ ? newDelta : Δ;
         });
-      }, 20);
+      }, speed);
     } else {
       interval = setInterval(() => {
         setAnimatedDelta((prevDelta) => {
-          const newDelta = prevDelta - π / 30;
+          const newDelta = prevDelta - π / 180;
           return newDelta > Δ ? newDelta : Δ;
         });
-      }, 20);
+      }, speed);
     }
 
     return () => clearInterval(interval); // Cleanup interval on component unmount or Δ change
