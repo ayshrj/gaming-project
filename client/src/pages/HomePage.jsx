@@ -36,8 +36,8 @@ const HomePage = ({
         <h2>
           Welcome
           {currentUser && currentUser.displayName
-            ? `back, ${currentUser.displayName}`
-            : " guest"}
+            ? `back, ${currentUser.displayName}!`
+            : " Guest!"}
         </h2>
         <p>{randomFact.fact}</p>
       </div>
