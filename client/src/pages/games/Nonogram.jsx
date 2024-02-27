@@ -38,7 +38,7 @@ const Nonogram = ({ browserWindowWidth }) => {
           touches.clientX,
           touches.clientY
         );
-        if (targetElement && row !== undefined && col !== undefined) {
+        if (targetElement) {
           row = targetElement.getAttribute("row");
           col = targetElement.getAttribute("col");
         }
