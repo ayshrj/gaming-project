@@ -7,6 +7,7 @@ import Chess from "../pages/games/Chess";
 import Tetris from "../pages/games/Tetris";
 import SnakeGame from "../pages/games/SnakeGame";
 import RockPaperScissor from "../pages/games/RockPaperScissor";
+import CardGame from "../pages/games/CardGame";
 import Games from "../pages/Games";
 import { Routes, Route, Link } from "react-router-dom";
 
@@ -60,6 +61,7 @@ const Content = ({
           path="games/rockpaperscissor"
           element={<RockPaperScissor browserWindowWidth={browserWindowWidth} />}
         />
+        <Route path="games/cardgame" element={<CardGame />} />
       </Routes>
     </div>
   );

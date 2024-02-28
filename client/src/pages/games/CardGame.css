@@ -1,0 +1,12 @@
+.card {
+    transition: transform 0.1s ease-in-out;
+    margin: 2px;
+}
+
+.card.card-default {
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
