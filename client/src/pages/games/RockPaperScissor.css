@@ -48,6 +48,10 @@
     transform: rotate(90deg);
 }
 
+.rps-hand-left svg, .rps-hand-right svg {
+    stroke: var(--para-color);
+}
+
 .rps-hand-right {
     transform: rotate(270deg) scaleX(-1);
 }

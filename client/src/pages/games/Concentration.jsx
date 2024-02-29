@@ -59,6 +59,9 @@ const Concentration = () => {
   const [alreadyDismissedCards, setAlreadyDismissedCards] = useState(
     Array.from({ length: totalCards }, (_, i) => false)
   );
+  const [cardsLeft, setCardsLeft] = useState(() => {
+    totalCards / 2;
+  });
 
   const shuffleArray = ({ array, pos }) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -104,12 +107,35 @@ const Concentration = () => {
           newDismissedCards[selectedCard.first] = true;
           newDismissedCards[cardSelected] = true;
           setAlreadyDismissedCards(newDismissedCards);
+          setCardsLeft(() => {
+            cardsLeft - 1;
+          });
         }
 
         setSelectedCard({ first: -1, second: -1 });
         console.log("alreadyDismissedCards: ", alreadyDismissedCards);
       }, 1000);
     }
+  };
+
+  const handleReset = () => {
+    const tempPos = Array.from(
+      { length: totalCards },
+      (_, i) => i % (totalCards / 2)
+    );
+    const tempCards = generateUniqueCards(totalCards / 2);
+    shuffleArray({
+      array: [...tempCards, ...tempCards],
+      pos: tempPos,
+    });
+
+    setAlreadyDismissedCards(
+      Array.from({ length: totalCards }, (_, i) => false)
+    );
+
+    setCardsLeft(() => {
+      totalCards / 2;
+    });
   };
 
   return (
@@ -137,6 +163,12 @@ const Concentration = () => {
           </div>
         ))}
       </div>
+      <div className="concentration-options">
+        <div className="concentration-option" onClick={handleReset}>
+          Reset
+        </div>
+      </div>
+      <div>{cardsLeft === 0 && "You Won!"}</div>
     </div>
   );
 };

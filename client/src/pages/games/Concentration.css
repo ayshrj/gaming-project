@@ -1,3 +1,14 @@
+:root {
+    --concentration-options-buttons-width: 160px;
+    --concentration-size-buttons-width: 105px;
+    --concentration-board-button-width: 160px;
+    --concentration-buttons-gap: 5px;
+    --concentration-cell-border-width: 1px;
+    --concentration-button-height: 50px;
+    --concentration-button-font-size: 20px;
+    --concentration-button-border-radius: 15px;
+}
+
 .concentration-container {
     display: flex;
     text-align: center;
@@ -47,4 +58,20 @@
     fill: var(--background-color);
     stroke: var(--background-color);
     transition: fill 0.3s ease-in-out, stroke 0.3s ease-in-out;
+}
+
+.concentration-options {
+    display: flex;
+    margin: auto;
+}
+
+.concentration-option {
+    width: var(--concentration-options-buttons-width);
+    padding: 10px;
+    border: 1px solid var(--para-color);
+    border-radius: var(--concentration-button-border-radius);
+}
+
+.concentration-option:hover {
+    border-style: dashed;
 }
