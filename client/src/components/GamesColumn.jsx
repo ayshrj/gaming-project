@@ -6,6 +6,7 @@ import IconSnakeGame from "../assets/games-icon/IconSnakeGame.svg";
 import IconSudoku from "../assets/games-icon/IconSudoku.svg";
 import IconTetris from "../assets/games-icon/IconTetris.svg";
 import IconRockPaperScissor from "../assets/games-icon/IconRockPaperScissor.svg";
+import IconConcentration from "../assets/games-icon/IconConcentration.svg";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import "./GamesColumn.css";
 
@@ -18,6 +19,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
     snakeGame: false,
     nonogram: false,
     rockpaperscissor: false,
+    concentration: false,
   });
 
   const handleGameInfo = (currentGameSelected) => {
@@ -29,6 +31,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
       snakeGame: false,
       nonogram: false,
       rockpaperscissor: false,
+      concentration: false,
       [currentGameSelected]: !prevState[currentGameSelected],
     }));
   };
@@ -432,6 +435,92 @@ const GamesColumn = ({ browserWindowWidth }) => {
                   {" "}
                   Decide in advance how many rounds you will play or set a win
                   condition (e.g., best of three or first to five wins).
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`game-container ${
+            gameInfoOpen.concentration ? "game-info-open" : ""
+          }`}
+          onClick={() => handleGameInfo("concentration")}
+        >
+          <div className="game-header">
+            <div onClick={() => navigate("/games/concentration")}>
+              Concentration
+            </div>
+            <div
+              className={`game-info-button ${
+                gameInfoOpen.concentration ? "game-info-open" : ""
+              }`}
+            >
+              <img
+                className={`${
+                  gameInfoOpen.concentration && browserWindowWidth > 1000
+                    ? "game-info-open"
+                    : ""
+                }`}
+                onClick={() => navigate("/games/concentration")}
+                src={IconConcentration}
+                alt="IconConcentration"
+              />
+              <div>
+                {gameInfoOpen.concentration ? (
+                  <IconChevronUp />
+                ) : (
+                  <IconChevronDown />
+                )}
+              </div>
+            </div>
+          </div>
+          <div
+            className={`game-info-text ${
+              !gameInfoOpen.concentration ? "no-display" : ""
+            } ${browserWindowWidth < 1000 ? "game-info-right-margin" : ""}`}
+          >
+            <div>
+              Concentration, also known as Memory, Match Up, or Pairs, is a card
+              game where all of the cards are laid face down on a surface, and
+              two cards are flipped face up over each turn. The objective of the
+              game is to turn over pairs of matching cards. It's a simple memory
+              game that can be played by a single player.
+            </div>
+            <div>
+              <br />
+              Instructions:
+              <ol>
+                <li>
+                  {" "}
+                  Start with all cards laid face down on the playing surface.
+                </li>
+                <li>
+                  On each turn, the player flips over two cards, one at a time,
+                  trying to make a match.
+                </li>
+                <li>
+                  If the cards match (for example, two aces or two kings), they
+                  are removed from the play area, and the player gets another
+                  turn.
+                </li>
+                <li>
+                  If the cards do not match, they are turned back face down, and
+                  it's the next player's turn (in a multiplayer game) or the
+                  same player's turn again (in a single-player version).
+                </li>
+                <li>
+                  The objective is to remember the locations and positions of
+                  cards that have been revealed to match pairs more easily.
+                </li>
+                <li>
+                  The game is over when all pairs have been found. The goal is
+                  to collect as many pairs as possible.
+                </li>
+                <li>
+                  In a single-player game, you can challenge yourself by timing
+                  your game and trying to find all pairs in the shortest time
+                  possible or by reducing the number of turns it takes to
+                  complete the game.
                 </li>
               </ol>
             </div>

@@ -1,0 +1,50 @@
+.concentration-container {
+    display: flex;
+    text-align: center;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.concentration {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 924px;
+    margin: auto;
+}
+
+.card {
+    transition: transform 0.1s ease-in-out;
+    margin: 2px;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+.card.card-default {
+    cursor: pointer;
+}
+
+.card.card-selected {
+    cursor: default;
+}
+
+.card.card-selected:hover {
+    transform: scale(1);
+}
+
+.card.not-hoverable {
+    cursor: default;
+}
+
+.card.not-hoverable:hover {
+    transform: scale(1);
+}
+
+.concentration svg.not-hoverable path {
+    fill: var(--background-color);
+    stroke: var(--background-color);
+    transition: fill 0.3s ease-in-out, stroke 0.3s ease-in-out;
+}
