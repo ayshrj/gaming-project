@@ -81,7 +81,7 @@ const Register = ({
           value={displayName}
           onChange={(e) => {
             const inputValue = e.target.value;
-            const filteredValue = inputValue.replace(/[^a-zA-Z0-9\s]/g, "");
+            const filteredValue = inputValue.replace(/[^a-zA-Z0-9]/g, "");
             setDisplayName(filteredValue);
           }}
           required
