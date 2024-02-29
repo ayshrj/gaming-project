@@ -39,6 +39,7 @@ const BadgeColumn = ({ highestStreak }) => {
       {highestStreak ? (
         <>
           <img src={badge} alt="" />
+          <h3>{badgeName}</h3>
           <div>{`Highest Streak: ${highestStreak} Day${
             highestStreak > 1 ? "s" : ""
           }`}</div>
