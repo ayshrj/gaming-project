@@ -1,25 +1,35 @@
 import { createContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { getDoc, doc, onSnapshot } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
+  const [userDoc, setUserDoc] = useState(null);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
+    const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
-      console.log(user);
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const unsubscribeDoc = onSnapshot(userDocRef, (docSnap) => {
+          if (docSnap.exists()) {
+            setUserDoc(docSnap.data());
+          }
+        });
+        return () => unsubscribeDoc();
+      } else {
+        setUserDoc(null);
+      }
     });
 
-    return () => {
-      unsub();
-    };
+    return () => unsubscribeAuth();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={{ currentUser, userDoc }}>
       {children}
     </AuthContext.Provider>
   );

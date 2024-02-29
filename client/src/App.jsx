@@ -20,16 +20,14 @@ function App() {
   const [targetStreak, setTargetStreak] = useState(null);
   const [authenticationBoxOpen, setAuthenticationBoxOpen] = useState(false);
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, userDoc } = useContext(AuthContext);
 
   useEffect(() => {
-    // Define an async function inside useEffect
     const fetchData = async () => {
       if (currentUser) {
         const userDoc = await getDoc(doc(db, "users", currentUser.uid));
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          // console.log("User Data:", userData);
 
           setCurrentStreak(userData.currentStreak);
           setTargetStreak(userData.targetStreak);
@@ -38,9 +36,8 @@ function App() {
       }
     };
 
-    // Call the async function
     fetchData();
-  }, [currentUser]); // Dependencies array to re-run the effect when currentUser changes
+  }, [currentUser]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -61,7 +58,7 @@ function App() {
   }, [isMobileViewport]);
 
   useEffect(() => {
-    console.log(currentStreak);
+    console.log("Current Streak Updated:", currentStreak);
   }, ["Current Streak:", currentStreak]);
 
   return (

@@ -44,7 +44,6 @@
 
 .search-users-info {
     background-color: aliceblue;
-
     display: flex;
     position: absolute;
     top: 30px;
@@ -54,7 +53,14 @@
     padding: 10px;
 }
 
-.search-user-info {
+.search-user-option {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.search-user {
     padding: 5px;
     width: 100%;
     border-radius: var(--border-radius);
@@ -62,8 +68,12 @@
     gap: 5px;
 }
 
-.search-user-info:hover {
+.search-user:hover {
     background-color: aqua;
+}
+
+.search-user-add {
+    cursor: pointer;
 }
 
 @media (max-width: 1148px) {

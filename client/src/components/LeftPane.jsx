@@ -37,8 +37,6 @@ const LeftPane = ({
     }
   }, [isLeftPaneOpen, isMobileViewport]);
 
-  console.log(isLeftPaneOpen);
-
   const Option = ({ icon, children, onClick }) => (
     <div className="leftpane-option" onClick={onClick}>
       <div style={{ display: "flex", alignContent: "center", gap: "10px" }}>
