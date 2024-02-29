@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Streak from "./Streak";
 
 const StreakColumn = ({ currentStreak, targetStreak, darkMode }) => {
+  const [showStreak, setShowStreak] = useState(
+    currentStreak !== null && targetStreak !== null ? true : false
+  );
+  useEffect(() => {
+    const tempShowStreak =
+      currentStreak !== null && targetStreak !== null ? true : false;
+    setShowStreak(tempShowStreak);
+  }, [currentStreak, targetStreak]);
   return (
     <div className="column">
       <div className="column-text">Streak</div>
-      {currentStreak !== null && targetStreak !== null ? (
+      {showStreak ? (
         <Streak
           cx={150}
           cy={135}

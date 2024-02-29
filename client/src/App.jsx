@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
 import Dashboard from "./pages/Dashboard";
 import ProfilePic from "./assets/ProfilePic.jfif";
 import Navbar from "./components/Navbar";
+import { AuthContext } from "./context/AuthContext";
+import { getDoc, doc } from "firebase/firestore";
+import { auth, db } from "./firebase";
 
 function App() {
   const [isMobileViewport, setIsMobileViewport] = useState(false);
@@ -16,6 +19,28 @@ function App() {
   const [highestStreak, setHighestStreak] = useState(null);
   const [targetStreak, setTargetStreak] = useState(null);
   const [authenticationBoxOpen, setAuthenticationBoxOpen] = useState(false);
+
+  const { currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    // Define an async function inside useEffect
+    const fetchData = async () => {
+      if (currentUser) {
+        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          // console.log("User Data:", userData);
+
+          setCurrentStreak(userData.currentStreak);
+          setTargetStreak(userData.targetStreak);
+          setHighestStreak(userData.highestStreak);
+        }
+      }
+    };
+
+    // Call the async function
+    fetchData();
+  }, [currentUser]); // Dependencies array to re-run the effect when currentUser changes
 
   useEffect(() => {
     const handleResize = () => {

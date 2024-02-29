@@ -79,7 +79,11 @@ const Register = ({
           placeholder="Username"
           type="text"
           value={displayName}
-          onChange={(e) => setDisplayName(e.target.value)}
+          onChange={(e) => {
+            const inputValue = e.target.value;
+            const filteredValue = inputValue.replace(/[^a-zA-Z0-9\s]/g, "");
+            setDisplayName(filteredValue);
+          }}
           required
           className="authentication-box-input"
         />
