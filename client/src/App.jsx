@@ -11,6 +11,9 @@ function App() {
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [isLeftPaneOpen, setIsLeftPaneOpen] = useState(false);
   const [browserWindowWidth, setBrowserWindowWidth] = useState(null);
+  const [leftpaneWidth, setLeftPaneWidth] = useState(null);
+  const [leftPaneContainerWidth, setLeftPaneContainerWidth] = useState(0);
+
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "false" ? false : true
   );
@@ -49,6 +52,10 @@ function App() {
   }, [isMobileViewport]);
 
   useEffect(() => {
+    console.log(leftpaneWidth);
+  }, [leftpaneWidth]);
+
+  useEffect(() => {
     console.log("Current Streak Updated:", currentStreak);
   }, ["Current Streak:", currentStreak]);
 
@@ -67,6 +74,8 @@ function App() {
           setTargetStreak={setTargetStreak}
           authenticationBoxOpen={authenticationBoxOpen}
           setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+          browserWindowWidth={browserWindowWidth}
+          leftPaneContainerWidth={leftPaneContainerWidth}
         />
 
         <Dashboard
@@ -78,6 +87,9 @@ function App() {
           highestStreak={highestStreak}
           targetStreak={targetStreak}
           setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+          setLeftPaneWidth={setLeftPaneWidth}
+          leftPaneContainerWidth={leftPaneContainerWidth}
+          setLeftPaneContainerWidth={setLeftPaneContainerWidth}
         />
       </div>
     </>

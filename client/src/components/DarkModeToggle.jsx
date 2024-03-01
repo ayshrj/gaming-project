@@ -16,9 +16,9 @@ const DarkModeToggle = ({ darkMode, setDarkMode }) => {
   };
 
   return darkMode ? (
-    <IconToggleLeft onClick={toggleDarkMode} />
+    <IconToggleLeft onClick={toggleDarkMode} style={{ cursor: "pointer" }} />
   ) : (
-    <IconToggleRight onClick={toggleDarkMode} />
+    <IconToggleRight onClick={toggleDarkMode} style={{ cursor: "pointer" }} />
   );
 };
 

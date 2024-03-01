@@ -13,9 +13,9 @@ const Dashboard = ({
   highestStreak,
   targetStreak,
   setAuthenticationBoxOpen,
+  leftPaneContainerWidth,
+  setLeftPaneContainerWidth,
 }) => {
-  const [leftPaneContainerWidth, setLeftPaneContainerWidth] = useState(0);
-
   return (
     <BrowserRouter>
       <div className="dashboard">

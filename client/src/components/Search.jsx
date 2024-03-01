@@ -4,7 +4,9 @@ import {
   IconArrowNarrowRight,
   IconPlus,
   IconMinus,
+  IconChecks,
   IconCheck,
+  IconX,
 } from "@tabler/icons-react";
 import { db } from "../firebase";
 import {
@@ -19,9 +21,18 @@ import {
 import "./Search.css";
 import { AuthContext } from "../context/AuthContext";
 
-const Search = () => {
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+const Search = ({
+  searchBarWidth,
+  searchOpen,
+  setSearchOpen,
+  setOpenNotif,
+  searchUsersInfoOpen,
+  setSearchUsersInfoOpen,
+  searchQuery,
+  setSearchQuery,
+  acceptRequest,
+  rejectRequest,
+}) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(false);
 
@@ -55,9 +66,9 @@ const Search = () => {
     }
   };
 
-  const sendFriendRequest = async (userId) => {
+  const sendFriendRequest = async ({ id, photoURL, displayName }) => {
     try {
-      const otherUserRef = doc(db, "users", userId);
+      const otherUserRef = doc(db, "users", id);
       const otherUserDoc = await getDoc(otherUserRef);
       if (!otherUserDoc.exists()) {
         throw new Error("User not found");
@@ -65,7 +76,14 @@ const Search = () => {
       const otherUserData = otherUserDoc.data();
 
       await updateDoc(otherUserRef, {
-        pendingRequests: [...otherUserData.pendingRequests, currentUser.uid],
+        pendingRequests: [
+          ...otherUserData.pendingRequests,
+          {
+            id: currentUser.uid,
+            photoURL: currentUser.photoURL,
+            displayName: currentUser.displayName,
+          },
+        ],
       });
 
       const currentUserRef = doc(db, "users", currentUser.uid);
@@ -75,7 +93,10 @@ const Search = () => {
       }
       const currentUserData = currentUserDoc.data();
       await updateDoc(currentUserRef, {
-        sentRequests: [...currentUserData.sentRequests, userId],
+        sentRequests: [
+          ...currentUserData.sentRequests,
+          { id, photoURL, displayName },
+        ],
       });
     } catch (err) {
       console.error("Error sending friend request:", err);
@@ -92,24 +113,25 @@ const Search = () => {
       }
       const otherUserData = otherUserDoc.data();
 
-      // Remove current user's ID from recipient's pending requests
       const updatedPendingRequests = otherUserData.pendingRequests.filter(
-        (requestUserId) => requestUserId !== currentUser.uid
+        (request) => request.id !== currentUser.uid
       );
+
       await updateDoc(otherUserRef, {
         pendingRequests: updatedPendingRequests,
       });
 
-      // Remove recipient's ID from current user's sent requests
       const currentUserRef = doc(db, "users", currentUser.uid);
       const currentUserDoc = await getDoc(currentUserRef);
       if (!currentUserDoc.exists()) {
         throw new Error("Current user not found");
       }
       const currentUserData = currentUserDoc.data();
+
       const updatedSentRequests = currentUserData.sentRequests.filter(
-        (sentUserId) => sentUserId !== userId
+        (request) => request.id !== userId
       );
+
       await updateDoc(currentUserRef, {
         sentRequests: updatedSentRequests,
       });
@@ -120,20 +142,16 @@ const Search = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      console.log(user);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (userDoc) {
-      console.log("sent req: ", userDoc.sentRequests);
-    }
-  }, [userDoc]);
-
-  useEffect(() => {
     handleSearch();
   }, [searchQuery]);
+
+  useEffect(() => {
+    console.log("seartc searchOpen", searchOpen);
+  }, [searchOpen]);
+
+  useEffect(() => {
+    setSearchUsersInfoOpen(user?.length > 0);
+  }, [user]);
 
   return (
     <>
@@ -149,17 +167,27 @@ const Search = () => {
             setSearchQuery(e.target.value);
           }}
           disabled={currentUser ? false : true}
+          style={{ width: searchOpen ? searchBarWidth : 0, maxWidth: "530px" }}
         />
         <IconSearch
           className={`search-icon  ${searchOpen ? "search-icon-open" : ""}`}
           onClick={() => {
-            setSearchOpen(!searchOpen);
+            if (!searchOpen) {
+              setSearchOpen(true);
+              setOpenNotif(false);
+            } else {
+              setSearchOpen(false);
+              setSearchQuery("");
+            }
           }}
         />
       </div>
-      {searchOpen && user?.length > 0 && (
-        <div className="search-users-info">
-          {user.map(({ id, photoURL, displayName }) => (
+      {searchUsersInfoOpen && (
+        <div
+          className="search-users-info"
+          style={{ width: searchOpen ? searchBarWidth : 0, maxWidth: "530px" }}
+        >
+          {user?.map(({ id, photoURL, displayName }) => (
             <div key={id} className="search-user-option">
               <div className="search-user">
                 <img
@@ -170,16 +198,47 @@ const Search = () => {
                 <div className="search-user-name">{displayName}</div>
               </div>
               <div>
-                {userDoc && userDoc.sentRequests.includes(id) ? (
-                  <IconMinus
+                {userDoc &&
+                userDoc.friends.some((friend) => friend.id === id) ? (
+                  <div className="search-user-add-remove">
+                    <IconChecks size={20} />
+                  </div>
+                ) : userDoc.pendingRequests &&
+                  userDoc.pendingRequests.some(
+                    (request) => request.id === id
+                  ) ? (
+                  <>
+                    <div
+                      className="search-user-add-remove"
+                      onClick={() => acceptRequest(id, photoURL, displayName)}
+                    >
+                      <IconCheck size={20} />
+                    </div>
+                    <div
+                      className="search-user-add-remove"
+                      onClick={() => rejectRequest(id)}
+                    >
+                      <IconX size={20} />
+                    </div>
+                  </>
+                ) : userDoc.sentRequests.some(
+                    (sentRequest) => sentRequest.id === id
+                  ) ? (
+                  <div
                     className="search-user-add-remove"
                     onClick={() => removeFriendRequest(id)}
-                  />
+                  >
+                    <IconMinus size={20} />
+                  </div>
                 ) : (
-                  <IconPlus
+                  <div
                     className="search-user-add-remove"
-                    onClick={() => sendFriendRequest(id)}
-                  />
+                    onClick={() =>
+                      sendFriendRequest({ id, photoURL, displayName })
+                    }
+                  >
+                    <IconPlus size={20} />
+                  </div>
                 )}
               </div>
             </div>

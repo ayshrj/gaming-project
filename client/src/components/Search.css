@@ -26,14 +26,15 @@
 
 }
 
-.search-open, .search-users-info {
+/* .search-open, .search-users-info {
     width: 500px;
-}
+} */
 
 .search-icon {
     position: absolute;
     transform: none;
     left: 7px;
+    cursor: pointer;
 }
 
 .search-open, .search-icon-open, .search-users-info {
@@ -78,12 +79,24 @@
 }
 
 .search-user-add-remove {
-    padding-right: 20px;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding: 5px;
+    margin-right: 20px;
     cursor: pointer;
 }
 
 
-@media (max-width: 1148px) {
+.search-user-add-remove:hover {
+    background-color: rgb(225, 118, 68);
+}
+
+
+/* @media (max-width: 1148px) {
     .search-open, .search-users-info {
         width: 460px;
     }
@@ -93,4 +106,4 @@
     .search-open, .search-users-info {
         width: 80px;
     }
-}
+} */

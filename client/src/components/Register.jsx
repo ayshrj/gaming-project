@@ -58,6 +58,7 @@ const Register = ({
         targetStreak: 7,
         pendingRequests: [],
         sentRequests: [],
+        friends: [],
       });
 
       await setDoc(doc(db, "userChats", res.user.uid), {});
