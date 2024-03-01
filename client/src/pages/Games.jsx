@@ -1,9 +1,10 @@
 import React from "react";
+import GamesColumn from "../components/GamesColumn";
 
 const Games = () => {
   return (
     <div>
-      <h1>Games</h1>
+      <GamesColumn />
     </div>
   );
 };

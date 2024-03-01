@@ -74,7 +74,7 @@
 }
 
 .authentication-box.authentication-box-user {
-    height: 100px;
+    height: 250px;
 }
 
 .authentication-sign-out-button {
@@ -90,7 +90,6 @@
 .authentication-sign-out-button:hover {
     background-color: rgb(202, 104, 58);
 }
-
 
 .authentication-button {
     display: flex;
@@ -127,4 +126,8 @@
 
 .content-user-top-right-options img:hover {
     box-shadow: var(--shadow-elevation-medium);
+}
+
+.display-none {
+    display: none;
 }

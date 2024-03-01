@@ -37,7 +37,11 @@ const GamesColumn = ({ browserWindowWidth }) => {
   };
   return (
     <div className="column">
-      <div className="column-text" onClick={() => navigate("/games")}>
+      <div
+        className="column-text"
+        onClick={() => navigate("/games")}
+        style={{ cursor: "pointer" }}
+      >
         Games
       </div>
 

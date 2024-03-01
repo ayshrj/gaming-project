@@ -215,7 +215,11 @@ const Navbar = ({
             >
               {/* <img src={ProfilePic} /> */}
               {currentUser && currentUser.photoURL ? (
-                <img src={currentUser.photoURL} alt="" />
+                <img
+                  src={currentUser.photoURL}
+                  alt=""
+                  style={{ overflow: "hidden" }}
+                />
               ) : (
                 <IconUser />
               )}
@@ -232,9 +236,9 @@ const Navbar = ({
                 }}
               >
                 {!authenticationBoxOpen ? (
-                  <IconChevronDown />
+                  <IconChevronDown style={{ cursor: "pointer" }} />
                 ) : (
-                  <IconChevronUp />
+                  <IconChevronUp style={{ cursor: "pointer" }} />
                 )}
               </div>
 
