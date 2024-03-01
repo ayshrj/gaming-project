@@ -4,6 +4,7 @@ import {
   IconArrowNarrowRight,
   IconPlus,
   IconMinus,
+  IconCheck,
 } from "@tabler/icons-react";
 import { db } from "../firebase";
 import {
@@ -23,6 +24,7 @@ const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [user, setUser] = useState(null);
   const [error, setError] = useState(false);
+  const [sentRequests, setSentRequests] = useState(null);
 
   const { currentUser, userDoc } = useContext(AuthContext);
 
@@ -82,6 +84,42 @@ const Search = () => {
     }
   };
 
+  const removeFriendRequest = async (userId) => {
+    try {
+      const otherUserRef = doc(db, "users", userId);
+      const otherUserDoc = await getDoc(otherUserRef);
+      if (!otherUserDoc.exists()) {
+        throw new Error("User not found");
+      }
+      const otherUserData = otherUserDoc.data();
+
+      // Remove current user's ID from recipient's pending requests
+      const updatedPendingRequests = otherUserData.pendingRequests.filter(
+        (requestUserId) => requestUserId !== currentUser.uid
+      );
+      await updateDoc(otherUserRef, {
+        pendingRequests: updatedPendingRequests,
+      });
+
+      // Remove recipient's ID from current user's sent requests
+      const currentUserRef = doc(db, "users", currentUser.uid);
+      const currentUserDoc = await getDoc(currentUserRef);
+      if (!currentUserDoc.exists()) {
+        throw new Error("Current user not found");
+      }
+      const currentUserData = currentUserDoc.data();
+      const updatedSentRequests = currentUserData.sentRequests.filter(
+        (sentUserId) => sentUserId !== userId
+      );
+      await updateDoc(currentUserRef, {
+        sentRequests: updatedSentRequests,
+      });
+    } catch (err) {
+      console.error("Error removing friend request:", err);
+      setError(true);
+    }
+  };
+
   useEffect(() => {
     if (user) {
       console.log(user);
@@ -89,7 +127,9 @@ const Search = () => {
   }, [user]);
 
   useEffect(() => {
-    console.log("user doc: ", userDoc);
+    if (userDoc) {
+      console.log("sent req: ", userDoc.sentRequests);
+    }
   }, [userDoc]);
 
   useEffect(() => {
@@ -112,43 +152,42 @@ const Search = () => {
           disabled={currentUser ? false : true}
         />
         <IconSearch
-          className="search-icon"
+          className={`search-icon  ${searchOpen ? "search-icon-open" : ""}`}
           onClick={() => {
             setSearchOpen(!searchOpen);
           }}
         />
-        {searchOpen && (
-          <IconArrowNarrowRight
-            className="search-send"
-            onClick={handleSearch}
-          />
-        )}
       </div>
-      {user && (
+      {searchOpen && user?.length > 0 && (
         <div className="search-users-info">
-          {user &&
-            user.map(({ id, photoURL, displayName }) => (
-              <div key={id} className="search-user-option">
-                <div className="search-user">
-                  <div>
-                    <img
-                      src={photoURL}
-                      alt={displayName}
-                      className="search-user-photo"
-                    />
-                  </div>
-                  <div className="search-user-name">{displayName}</div>
-                </div>
-                <div>
+          {user.map(({ id, photoURL, displayName }) => (
+            <div key={id} className="search-user-option">
+              <div className="search-user">
+                <img
+                  src={photoURL}
+                  alt={displayName}
+                  className="search-user-photo"
+                />
+                <div className="search-user-name">{displayName}</div>
+              </div>
+              <div>
+                {userDoc && userDoc.sentRequests.includes(id) ? (
+                  <IconMinus
+                    className="search-user-add-remove"
+                    onClick={() => removeFriendRequest(id)}
+                  />
+                ) : (
                   <IconPlus
-                    className="search-user-add"
+                    className="search-user-add-remove"
                     onClick={() => sendFriendRequest(id)}
                   />
-                </div>
+                )}
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       )}
+
       {error && (
         <div className="search-error">An error occurred during the search.</div>
       )}

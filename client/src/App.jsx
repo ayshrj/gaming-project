@@ -20,24 +20,15 @@ function App() {
   const [targetStreak, setTargetStreak] = useState(null);
   const [authenticationBoxOpen, setAuthenticationBoxOpen] = useState(false);
 
-  const { currentUser, userDoc } = useContext(AuthContext);
+  const { userDoc } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (currentUser) {
-        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-
-          setCurrentStreak(userData.currentStreak);
-          setTargetStreak(userData.targetStreak);
-          setHighestStreak(userData.highestStreak);
-        }
-      }
-    };
-
-    fetchData();
-  }, [currentUser]);
+    if (userDoc) {
+      setCurrentStreak(userDoc.currentStreak);
+      setTargetStreak(userDoc.targetStreak);
+      setHighestStreak(userDoc.highestStreak);
+    }
+  }, [userDoc]);
 
   useEffect(() => {
     const handleResize = () => {

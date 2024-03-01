@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Streak from "./Streak";
+import { AuthContext } from "../context/AuthContext";
 
 const StreakColumn = ({ currentStreak, targetStreak, darkMode }) => {
   const [showStreak, setShowStreak] = useState(
     currentStreak !== null && targetStreak !== null ? true : false
   );
+
+  const { userDoc } = useContext(AuthContext);
+
   useEffect(() => {
     const tempShowStreak =
-      currentStreak !== null && targetStreak !== null ? true : false;
+      userDoc && userDoc.currentStreak !== null && userDoc.targetStreak !== null
+        ? true
+        : false;
     setShowStreak(tempShowStreak);
-  }, [currentStreak, targetStreak]);
+  }, [userDoc]);
+
   return (
     <div className="column">
       <div className="column-text">Streak</div>

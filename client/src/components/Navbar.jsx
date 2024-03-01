@@ -65,7 +65,9 @@ const Navbar = ({
         {isLeftPaneOpen ? <IconAlignJustified /> : <IconAlignLeft />}
       </div>
       <div className="content-user-top-right-options">
-        <Search />
+        <div>
+          <Search />
+        </div>
         <div>
           <IconBell />
         </div>

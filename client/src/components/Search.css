@@ -22,8 +22,8 @@
 .search-open {
     padding-left: 30px;
     background-color: var(--search-background-color);
-
     border: 1px solid var(--border-color);
+
 }
 
 .search-open, .search-users-info {
@@ -33,17 +33,21 @@
 .search-icon {
     position: absolute;
     transform: none;
-    left: 10px;
+    left: 7px;
 }
 
-.search-send {
+.search-open, .search-icon-open, .search-users-info {
+    transform: translateX(30px);
+}
+
+.search-not-open .search-send {
     position: absolute;
     right: 8px;
     cursor: pointer;
 }
 
 .search-users-info {
-    background-color: aliceblue;
+    background-color: var(--search-background-color);
     display: flex;
     position: absolute;
     top: 30px;
@@ -51,6 +55,7 @@
     border-radius: var(--border-radius);
     gap: 10px;
     padding: 10px;
+    border: 1px solid var(--border-color);
 }
 
 .search-user-option {
@@ -58,23 +63,25 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    border-radius: var(--border-radius);
 }
 
 .search-user {
-    padding: 5px;
+    padding: 10px;
     width: 100%;
-    border-radius: var(--border-radius);
     display: flex;
     gap: 5px;
 }
 
-.search-user:hover {
-    background-color: aqua;
+.search-user-option:hover {
+    background-color: var(--para-color);
 }
 
-.search-user-add {
+.search-user-add-remove {
+    padding-right: 20px;
     cursor: pointer;
 }
+
 
 @media (max-width: 1148px) {
     .search-open, .search-users-info {

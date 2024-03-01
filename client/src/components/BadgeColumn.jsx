@@ -12,6 +12,7 @@ import "./BadgeColumn.css";
 const BadgeColumn = ({ highestStreak }) => {
   const [badge, setBadge] = useState(null);
   const [badgeName, setBadgeName] = useState("");
+
   useEffect(() => {
     const badges = [
       { threshold: 7, badge: CurrentBadge1, name: "HAMLET" },
