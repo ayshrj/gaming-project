@@ -1,0 +1,15 @@
+.notification-icon {
+    position: relative;
+    display: inline-block;
+}
+
+
+.notification-red-dot {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: red;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+}

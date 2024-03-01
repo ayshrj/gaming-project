@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import {
   IconAlignLeft,
   IconAlignJustified,
-  IconSearch,
-  IconBell,
   IconChevronDown,
   IconChevronUp,
   IconUser,
@@ -14,7 +12,9 @@ import Search from "./Search";
 import Login from "./Login";
 import Register from "./Register";
 import User from "./User";
+import Notification from "./Notification";
 import { AuthContext } from "../context/AuthContext";
+
 const Navbar = ({
   setIsLeftPaneOpen,
   isLeftPaneOpen,
@@ -69,7 +69,7 @@ const Navbar = ({
           <Search />
         </div>
         <div>
-          <IconBell />
+          <Notification />
         </div>
         <div>
           <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />

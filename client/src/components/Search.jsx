@@ -24,7 +24,6 @@ const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [user, setUser] = useState(null);
   const [error, setError] = useState(false);
-  const [sentRequests, setSentRequests] = useState(null);
 
   const { currentUser, userDoc } = useContext(AuthContext);
 
