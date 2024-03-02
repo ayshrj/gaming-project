@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Content.css";
+import Games from "../pages/Games";
+import { Routes, Route, Link } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import Nonogram from "../pages/games/Nonogram";
 import Sudoku from "../pages/games/Sudoku";
@@ -8,8 +10,7 @@ import Tetris from "../pages/games/Tetris";
 import SnakeGame from "../pages/games/SnakeGame";
 import RockPaperScissor from "../pages/games/RockPaperScissor";
 import Concentration from "../pages/games/Concentration";
-import Games from "../pages/Games";
-import { Routes, Route, Link } from "react-router-dom";
+import MemoryGame from "../pages/games/MemoryGame";
 
 const Content = ({
   isMobileViewport,
@@ -62,6 +63,7 @@ const Content = ({
           element={<RockPaperScissor browserWindowWidth={browserWindowWidth} />}
         />
         <Route path="games/concentration" element={<Concentration />} />
+        <Route path="games/memorygame" element={<MemoryGame />} />
       </Routes>
     </div>
   );

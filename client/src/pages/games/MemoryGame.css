@@ -1,0 +1,15 @@
+.memory-game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.memory-game-container svg {
+    margin: 0 auto;
+}
+
+.progress-bar-filler {
+    fill: var(--background-color);
+    transition: fill 0.3s ease-in-out;
+}
