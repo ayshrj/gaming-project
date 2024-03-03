@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./MemoryGame.css";
 import TimerSVG from "../../util/TimerSVG";
+import FaceCreator from "../../util/FaceCreator";
 
 const MemoryGame = () => {
   // Initialize timer with 10000 milliseconds (10 seconds)
@@ -61,6 +62,7 @@ const MemoryGame = () => {
           Reset Timer
         </button>
       )}
+      <FaceCreator />
     </div>
   );
 };
