@@ -62,7 +62,6 @@ const MemoryGame = () => {
           Reset Timer
         </button>
       )}
-      <FaceCreator />
     </div>
   );
 };

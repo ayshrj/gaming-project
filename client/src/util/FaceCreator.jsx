@@ -1,23 +1,90 @@
 import React, { useState, useEffect } from "react";
 
 const FaceCreator = ({
-  hair = 1,
+  hair = 1, //From 0 to 9
+  height = null,
+  width = null,
   skinBorder = "#000000",
   skinColor = "#c39582",
   hairFill = "#000000",
-  hairStroke = "#808080",
-  shirt = 1,
+  hairStroke = "#131313",
+  shirt = 1, //From 0 to 7
   shirtFill = "#af2525",
   shirtStroke = "#00ff00",
   shirtDesign = "#ffffff",
-  mouth = 1,
+  mouth = 1, //From 0 to 6
   mouthFill = "#ff2993",
-  nose = 1,
-  eye = 1,
-  eyebrow = 1,
-  accessory = 3,
+  nose = 2, //From 0 to 7
+  eye = 1, //From 0 to 4
+  eyebrow = 1, //From 0 to 5
+  accessory = 1, //From 0 to 3
   accessoryStroke = "#7608fe",
 }) => {
+  const giveBodySvg = () => {
+    return (
+      <path
+        id="body"
+        fill={skinColor}
+        stroke={skinBorder}
+        strokeMiterlimit="100"
+        d="m35 115c0 0-1.6-25.3 21-22 0-3.6 0-6.1 0-7.9 2.6 0.1 7.4 0.2 12-0.1v8c0 0 18-5 20 22-52.8 0-53 0-53 0z"
+      />
+    );
+  };
+
+  const giveFaceSvg = () => {
+    return (
+      <path
+        id="main-face"
+        fill={skinColor}
+        stroke={skinBorder}
+        strokeMiterlimit="100"
+        d="m36 58c0 0-1.3-19.3 4-24 5.3-4.7 13.5-9 28-7 14.5 2 16 13 16 13-0.3 0.8-0.1 12 0 15 0.1 3-1.1 15-1 17 0.1 2-0.9 10.1-8 12-7.1 1.9-21 1-21 1 0 0-10.1-4.9-12-10-1.9-5.1-6-17-6-17z"
+      />
+    );
+  };
+
+  const giveEarSvg = () => {
+    return (
+      <>
+        <g id="left-ear">
+          <path
+            id="left-ear-edge"
+            fillRule="evenodd"
+            fill={skinColor}
+            stroke={skinBorder}
+            strokeMiterlimit="100"
+            d="m40 70c0 0-3.2 1.1-5 1-1.8-0.1-4.8-3.5-6-6-1.2-2.5 0.7-7 2-8 1.2-0.9 4.3-1 4.9-1 0 1.2 0.1 2 0.1 2 0 0 2.2 6.5 4.1 11.9q-0.1 0.1-0.1 0.1z"
+          />
+          <path
+            id="left-ear-line"
+            fill="none"
+            stroke={skinBorder}
+            strokeMiterlimit="100"
+            d="m36 60c0 0-3.7-0.2-4 3"
+          />
+        </g>
+        <g id="right-ear">
+          <path
+            id="right-ear-edge"
+            fillRule="evenodd"
+            fill={skinColor}
+            stroke={skinBorder}
+            strokeMiterlimit="100"
+            d="m84 56c0 0 7.8-0.2 8 3 0.2 3.2 0.4 7.1-2 9-2.3 1.8-6.4 2-6.9 2 0.2-3.7 0.8-10.8 0.9-14q0 0 0 0z"
+          />
+          <path
+            id="right-ear-line"
+            fill="none"
+            stroke={skinBorder}
+            strokeMiterlimit="100"
+            d="m84 60c0 0 5.8-0.8 6 2"
+          />
+        </g>
+      </>
+    );
+  };
+
   const giveHairSvg = () => {
     if (hair === 9) {
       return (
@@ -659,6 +726,9 @@ const FaceCreator = ({
     }
   };
 
+  const [faceSvg, setFaceSvg] = useState(() => giveFaceSvg());
+  const [bodySvg, setBodySvg] = useState(() => giveBodySvg());
+  const [earSvg, setEarSvg] = useState(() => giveEarSvg());
   const [hairSvg, setHairSvg] = useState(() => giveHairSvg());
   const [shirtSvg, setShirtSvg] = useState(() => giveShirtSvg());
   const [mouthSvg, setMouthSvg] = useState(() => giveMouthSvg());
@@ -668,16 +738,28 @@ const FaceCreator = ({
   const [accessorySvg, setAccessorySvg] = useState(() => giveAccessorySvg());
 
   useEffect(() => {
+    setFaceSvg(() => giveFaceSvg());
+  }, [skinBorder, skinColor]);
+
+  useEffect(() => {
+    setBodySvg(() => giveBodySvg());
+  }, [skinBorder, skinColor]);
+
+  useEffect(() => {
+    setEarSvg(() => giveEarSvg());
+  }, [skinBorder, skinColor]);
+
+  useEffect(() => {
     setHairSvg(() => giveHairSvg());
-  }, [hair]);
+  }, [hair, hairFill, hairStroke]);
 
   useEffect(() => {
     setShirtSvg(() => giveShirtSvg());
-  }, [shirt]);
+  }, [shirt, shirtFill, shirtStroke, shirtDesign]);
 
   useEffect(() => {
     setMouthSvg(() => giveMouthSvg());
-  }, [mouth]);
+  }, [mouth, mouthFill]);
 
   useEffect(() => {
     setNoseSvg(() => giveNoseSvg());
@@ -693,72 +775,33 @@ const FaceCreator = ({
 
   useEffect(() => {
     setAccessorySvg(() => giveAccessorySvg());
-  }, [accessory]);
+  }, [accessory, accessoryStroke]);
 
   return (
     <svg
       version="1.2"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 117 117"
-      width="500"
-      height="500"
+      width={
+        typeof width === "number"
+          ? width
+          : typeof height === "number"
+          ? height
+          : 300
+      }
+      height={
+        typeof height === "number"
+          ? height
+          : typeof width === "number"
+          ? width
+          : 300
+      }
     >
-      <g id="face">
-        <path
-          id="main-face"
-          fill={skinColor}
-          stroke={skinBorder}
-          strokeMiterlimit="100"
-          d="m36 58c0 0-1.3-19.3 4-24 5.3-4.7 13.5-9 28-7 14.5 2 16 13 16 13-0.3 0.8-0.1 12 0 15 0.1 3-1.1 15-1 17 0.1 2-0.9 10.1-8 12-7.1 1.9-21 1-21 1 0 0-10.1-4.9-12-10-1.9-5.1-6-17-6-17z"
-        />
-      </g>
+      <g id="face">{faceSvg}</g>
       <g id="hair">{hairSvg}</g>
-      <g id="body">
-        <path
-          id="body"
-          fill={skinColor}
-          stroke={skinBorder}
-          strokeMiterlimit="100"
-          d="m35 115c0 0-1.6-25.3 21-22 0-3.6 0-6.1 0-7.9 2.6 0.1 7.4 0.2 12-0.1v8c0 0 18-5 20 22-52.8 0-53 0-53 0z"
-        />
-      </g>
+      <g id="body">{bodySvg}</g>
       <g id="shirts">{shirtSvg}</g>
-      <g id="ears">
-        <g id="left-ear">
-          <path
-            id="left-ear-edge"
-            fillRule="evenodd"
-            fill={skinColor}
-            stroke={skinBorder}
-            strokeMiterlimit="100"
-            d="m40 70c0 0-3.2 1.1-5 1-1.8-0.1-4.8-3.5-6-6-1.2-2.5 0.7-7 2-8 1.2-0.9 4.3-1 4.9-1 0 1.2 0.1 2 0.1 2 0 0 2.2 6.5 4.1 11.9q-0.1 0.1-0.1 0.1z"
-          />
-          <path
-            id="left-ear-line"
-            fill="none"
-            stroke={skinBorder}
-            strokeMiterlimit="100"
-            d="m36 60c0 0-3.7-0.2-4 3"
-          />
-        </g>
-        <g id="right-ear">
-          <path
-            id="right-ear-edge"
-            fillRule="evenodd"
-            fill={skinColor}
-            stroke={skinBorder}
-            strokeMiterlimit="100"
-            d="m84 56c0 0 7.8-0.2 8 3 0.2 3.2 0.4 7.1-2 9-2.3 1.8-6.4 2-6.9 2 0.2-3.7 0.8-10.8 0.9-14q0 0 0 0z"
-          />
-          <path
-            id="right-ear-line"
-            fill="none"
-            stroke={skinBorder}
-            strokeMiterlimit="100"
-            d="m84 60c0 0 5.8-0.8 6 2"
-          />
-        </g>
-      </g>
+      <g id="ears">{earSvg}</g>
       <g id="mouth">{mouthSvg}</g>
       <g id="nose">{noseSvg}</g>
       <g id="eye">{eyeSvg}</g>

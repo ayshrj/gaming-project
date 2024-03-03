@@ -1,0 +1,31 @@
+.avatar-maker-svg {
+    margin: 20px;
+}
+
+.avatar-maker-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.avatar-maker-settings-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.avatar-maker-settings {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.avatar-maker-setting {
+    display: flex;
+    align-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border: 1px dashed var(--border-color);
+}

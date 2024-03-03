@@ -11,6 +11,7 @@ import SnakeGame from "../pages/games/SnakeGame";
 import RockPaperScissor from "../pages/games/RockPaperScissor";
 import Concentration from "../pages/games/Concentration";
 import MemoryGame from "../pages/games/MemoryGame";
+import AvatarMaker from "../pages/AvatarMaker";
 
 const Content = ({
   isMobileViewport,
@@ -41,6 +42,7 @@ const Content = ({
           }
         />
         <Route path="/games" element={<Games />} />
+        <Route path="/profile/avatarmaker" element={<AvatarMaker />} />
         <Route
           path="games/nonogram"
           element={<Nonogram browserWindowWidth={browserWindowWidth} />}
