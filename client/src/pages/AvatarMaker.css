@@ -1,5 +1,7 @@
-.avatar-maker-svg {
-    margin: 20px;
+:root {
+    --avatar-maker-grid-width: 180px;
+    --avatar-maker-svg-width: 400px;
+    --avatar-maker-setting-margin-left: 185px;
 }
 
 .avatar-maker-container {
@@ -7,25 +9,81 @@
     align-items: center;
     flex-direction: column;
     height: 100%;
+
+}
+
+
+.avatar-maker-svg-container {
+    padding: 10px;
+    width: var(--avatar-maker-svg-width);
+    position: fixed;
+    background-color: var(--background-color);
+    display: grid;
+    place-items: center;
+    z-index: 2;
+    top: 40px;
+    padding-bottom: 30px;
+}
+
+.avatar-maker-svg {
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
 }
 
 .avatar-maker-settings-container {
     display: flex;
+    margin-top: 350px;
     flex-direction: column;
-}
-
-.avatar-maker-settings {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    transform: translateX(-11px);
 }
 
 .avatar-maker-setting {
     display: flex;
     align-content: center;
+    justify-content: center;
     gap: 10px;
     width: 100%;
     padding: 10px;
     border: 1px dashed var(--border-color);
+    position: relative;
+}
+
+.avatar-maker-setting>label {
+    display: flex;
+    width: var(--avatar-maker-grid-width);
+    border-right: 1px solid var(--border-color);
+    align-items: center;
+}
+
+.avatar-maker-setting>input[type="color"] {
+    height: 50px;
+}
+
+.avatar-maker-setting>input {
+    width: var(--avatar-maker-grid-width);
+    border-right: 1px solid var(--border-color);
+}
+
+.avatar-maker-setting>p {
+    position: absolute;
+    margin-left: var(--avatar-maker-setting-margin-left);
+    user-select: none;
+}
+
+@media (max-width: 1000px) {
+    .avatar-maker-svg {
+        width: 300px;
+    }
+
+    .avatar-maker-setting>label {
+        width: 131px;
+    }
+
+    .avatar-maker-setting>input {
+        width: 131px;
+    }
+
+    .avatar-maker-setting>p {
+        margin-left: 140px;
+    }
 }
