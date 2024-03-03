@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import FaceCreator from "../util/FaceCreator";
 import "./AvatarMaker.css";
 
@@ -24,17 +24,7 @@ const AvatarMaker = () => {
     accessoryStroke: "#7608fe",
   });
 
-  const hairStrokeInputRef = useRef(null);
-  const hairFillInputRef = useRef(null);
-  const skinColorInputRef = useRef(null);
-  const mouthFillInputRef = useRef(null);
-  const shirtFillInputRef = useRef(null);
-  const shirtStrokeInputRef = useRef(null);
-  const shirtDesignInputRef = useRef(null);
-  const accessoryStrokeInputRef = useRef(null);
-
   const handleSettingsChange = (key, value) => {
-    console.log("skin color", avatarSettings.skinColor);
     setAvatarSettings({ ...avatarSettings, [key]: value });
   };
 
@@ -62,21 +52,10 @@ const AvatarMaker = () => {
         <div className="avatar-maker-setting">
           <label>Hair Outline</label>
           <input
-            ref={hairStrokeInputRef}
             type="color"
             value={avatarSettings.hairStroke}
             onChange={(e) => handleSettingsChange("hairStroke", e.target.value)}
           />
-          <p
-            onClick={() => {
-              if (hairStrokeInputRef.current) {
-                hairStrokeInputRef.current.focus();
-              }
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            {avatarSettings.hairStroke}
-          </p>
         </div>
 
         <div className="avatar-maker-setting">
@@ -86,7 +65,6 @@ const AvatarMaker = () => {
             value={avatarSettings.hairFill}
             onChange={(e) => handleSettingsChange("hairFill", e.target.value)}
           />
-          <p>{avatarSettings.hairFill}</p>
         </div>
 
         <div className="avatar-maker-setting">
@@ -98,7 +76,6 @@ const AvatarMaker = () => {
               handleSettingsChange("skinColor", e.target.value);
             }}
           />
-          <p>{avatarSettings.skinColor}</p>
         </div>
 
         <div className="avatar-maker-setting">
@@ -127,22 +104,20 @@ const AvatarMaker = () => {
           />
         </div>
 
-        <div className="avatar-maker-setting">
-          <label>Mouth Color</label>
-          <input
-            type="color"
-            value={avatarSettings.mouthFill}
-            onChange={(e) => {
-              handleSettingsChange("mouthFill", e.target.value);
-            }}
-            disabled={
-              avatarSettings.mouth !== 3 &&
-              avatarSettings.mouth !== 4 &&
-              avatarSettings.mouth !== 5
-            }
-          />
-          <p>{avatarSettings.mouthFill}</p>
-        </div>
+        {(avatarSettings.mouth === 3 ||
+          avatarSettings.mouth === 4 ||
+          avatarSettings.mouth === 5) && (
+          <div className="avatar-maker-setting">
+            <label>Mouth Color</label>
+            <input
+              type="color"
+              value={avatarSettings.mouthFill}
+              onChange={(e) => {
+                handleSettingsChange("mouthFill", e.target.value);
+              }}
+            />
+          </div>
+        )}
 
         <div className="avatar-maker-setting">
           <label>Eyebrow</label>
@@ -192,7 +167,6 @@ const AvatarMaker = () => {
               handleSettingsChange("shirtFill", e.target.value);
             }}
           />
-          <p>{avatarSettings.shirtFill}</p>
         </div>
 
         <div className="avatar-maker-setting">
@@ -204,21 +178,20 @@ const AvatarMaker = () => {
               handleSettingsChange("shirtStroke", e.target.value);
             }}
           />
-          <p>{avatarSettings.shirtStroke}</p>
         </div>
 
-        <div className="avatar-maker-setting">
-          <label>Shirt Design</label>
-          <input
-            type="color"
-            value={avatarSettings.shirtDesign}
-            onChange={(e) => {
-              handleSettingsChange("shirtDesign", e.target.value);
-            }}
-            disabled={avatarSettings.shirt !== 1 && avatarSettings.shirt !== 5}
-          />
-          <p>{avatarSettings.shirtDesign}</p>
-        </div>
+        {(avatarSettings.shirt === 1 || avatarSettings.shirt === 5) && (
+          <div className="avatar-maker-setting">
+            <label>Shirt Design</label>
+            <input
+              type="color"
+              value={avatarSettings.shirtDesign}
+              onChange={(e) => {
+                handleSettingsChange("shirtDesign", e.target.value);
+              }}
+            />
+          </div>
+        )}
 
         <div className="avatar-maker-setting">
           <label>Accessory</label>
@@ -233,18 +206,18 @@ const AvatarMaker = () => {
           />
         </div>
 
-        <div className="avatar-maker-setting">
-          <label>Accessory Color</label>
-          <input
-            type="color"
-            value={avatarSettings.accessoryStroke}
-            onChange={(e) => {
-              handleSettingsChange("accessoryStroke", e.target.value);
-            }}
-            disabled={avatarSettings.accessory === 0}
-          />
-          <p>{avatarSettings.accessoryStroke}</p>
-        </div>
+        {avatarSettings.accessory !== 0 && (
+          <div className="avatar-maker-setting">
+            <label>Accessory Color</label>
+            <input
+              type="color"
+              value={avatarSettings.accessoryStroke}
+              onChange={(e) => {
+                handleSettingsChange("accessoryStroke", e.target.value);
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

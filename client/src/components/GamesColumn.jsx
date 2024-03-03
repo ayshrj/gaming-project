@@ -39,7 +39,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
     <div className="column">
       <div
         className="column-text"
-        onClick={() => navigate("/games")}
+        onClick={() => navigate("/profile/avatarmaker")}
         style={{ cursor: "pointer" }}
       >
         Games

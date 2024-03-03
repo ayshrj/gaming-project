@@ -57,17 +57,20 @@
 
 .avatar-maker-setting>input[type="color"] {
     height: 50px;
+    cursor: pointer;
 }
 
 .avatar-maker-setting>input {
     width: var(--avatar-maker-grid-width);
     border-right: 1px solid var(--border-color);
+    cursor: pointer;
 }
 
 .avatar-maker-setting>p {
     position: absolute;
     margin-left: var(--avatar-maker-setting-margin-left);
     user-select: none;
+    cursor: pointer;
 }
 
 @media (max-width: 1000px) {
