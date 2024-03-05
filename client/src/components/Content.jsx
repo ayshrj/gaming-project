@@ -15,6 +15,7 @@ import Profile from "../pages/Profile";
 import Authentication from "../pages/Authentication";
 import Settings from "../pages/Settings";
 import Friends from "../pages/Friends";
+import DriverLicense from "../pages/games/DriverLicense";
 
 const Content = ({
   isMobileViewport,
@@ -132,6 +133,7 @@ const Content = ({
         />
         <Route path="games/concentration" element={<Concentration />} />
         <Route path="games/memorygame" element={<MemoryGame />} />
+        <Route path="games/driverlicense" element={<DriverLicense />} />
       </Routes>
     </div>
   );

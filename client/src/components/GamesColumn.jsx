@@ -7,6 +7,7 @@ import IconSudoku from "../assets/games-icon/IconSudoku.svg";
 import IconTetris from "../assets/games-icon/IconTetris.svg";
 import IconRockPaperScissor from "../assets/games-icon/IconRockPaperScissor.svg";
 import IconConcentration from "../assets/games-icon/IconConcentration.svg";
+import IconDriverLicense from "../assets/games-icon/IconDriverLicense.svg";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import "./GamesColumn.css";
 
@@ -20,6 +21,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
     nonogram: false,
     rockpaperscissor: false,
     concentration: false,
+    driverlicense: false,
   });
 
   const handleGameInfo = (currentGameSelected) => {
@@ -32,6 +34,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
       nonogram: false,
       rockpaperscissor: false,
       concentration: false,
+      driverlicense: false,
       [currentGameSelected]: !prevState[currentGameSelected],
     }));
   };
@@ -526,6 +529,56 @@ const GamesColumn = ({ browserWindowWidth }) => {
                   possible or by reducing the number of turns it takes to
                   complete the game.
                 </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`game-container ${
+            gameInfoOpen.concentration ? "game-info-open" : ""
+          }`}
+          onClick={() => handleGameInfo("driverlicense")}
+        >
+          <div className="game-header">
+            <div onClick={() => navigate("/games/driverlicense")}>
+              Driver License
+            </div>
+            <div
+              className={`game-info-button ${
+                gameInfoOpen.driverlicense ? "game-info-open" : ""
+              }`}
+            >
+              <img
+                className={`${
+                  gameInfoOpen.driverlicense && browserWindowWidth > 1000
+                    ? "game-info-open"
+                    : "game-info-closed"
+                }`}
+                onClick={() => navigate("/games/driverlicense")}
+                src={IconDriverLicense}
+                alt="IconDriverLicense"
+              />
+              <div>
+                {gameInfoOpen.driverlicense ? (
+                  <IconChevronUp />
+                ) : (
+                  <IconChevronDown />
+                )}
+              </div>
+            </div>
+          </div>
+          <div
+            className={`game-info-text ${
+              !gameInfoOpen.driverlicense ? "no-display" : ""
+            } ${browserWindowWidth < 1000 ? "game-info-right-margin" : ""}`}
+          >
+            <div>Game General Info</div>
+            <div>
+              <br />
+              Instructions:
+              <ol>
+                <li>Step 1</li>
+                <li>Step 2</li>
               </ol>
             </div>
           </div>
