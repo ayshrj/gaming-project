@@ -23,6 +23,8 @@ const LeftPane = ({
   setCurrentStreak,
   setHighestStreak,
   setTargetStreak,
+  setUser,
+  setSearchQuery,
 }) => {
   const leftpaneContainerRef = useRef(null);
   const navigate = useNavigate();
@@ -34,6 +36,9 @@ const LeftPane = ({
     setCurrentStreak(null);
     setHighestStreak(null);
     setTargetStreak(null);
+    setUser(null);
+    setSearchQuery("");
+    setSearchOpen(false);
   };
   useEffect(() => {
     if (leftpaneContainerRef.current) {
@@ -88,8 +93,26 @@ const LeftPane = ({
           >
             Profile
           </Option>
-          <Option icon={<IconUsersGroup />}>Friends</Option>
-          <Option icon={<IconSettings2 />}>Options</Option>
+          <Option
+            icon={<IconUsersGroup />}
+            onClick={() => {
+              currentUser
+                ? navigate("/friends")
+                : setAuthenticationBoxOpen(true);
+            }}
+          >
+            Friends
+          </Option>
+          <Option
+            icon={<IconSettings2 />}
+            onClick={() => {
+              currentUser
+                ? navigate("/settings")
+                : setAuthenticationBoxOpen(true);
+            }}
+          >
+            Settings
+          </Option>
         </div>
         <div className="leftpane-user">
           <Option>Help</Option>

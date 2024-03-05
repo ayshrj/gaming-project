@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { IconBell, IconCheck, IconX } from "@tabler/icons-react";
 import { AuthContext } from "../context/AuthContext";
 import "./Notification.css";
+import FaceCreator from "../util/FaceCreator";
 
 const Notification = ({
   openNotif,
@@ -56,11 +57,22 @@ const Notification = ({
                 <div key={request.id} className="notification-item">
                   <div className="notification-user-detail">
                     <div>
-                      <img
-                        src={request.photoURL}
-                        alt={request.displayName}
-                        className="notification-avatar"
-                      />
+                      {request.photoURL !== "" ? (
+                        <img
+                          src={request.photoURL}
+                          alt={request.displayName}
+                          className="notification-avatar"
+                          onClick={() => {
+                            console.log(request);
+                          }}
+                        />
+                      ) : (
+                        <FaceCreator
+                          {...request.avatar}
+                          height={30}
+                          width={30}
+                        />
+                      )}
                     </div>
                     <div className="notification-text">
                       <p>
@@ -76,7 +88,8 @@ const Notification = ({
                         acceptRequest(
                           request.id,
                           request.photoURL,
-                          request.displayName
+                          request.displayName,
+                          request.avatar
                         )
                       }
                     />

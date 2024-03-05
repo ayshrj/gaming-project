@@ -1,0 +1,37 @@
+.setting-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.setting {
+    border: 1px solid var(--para-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    width: 90%;
+    height: 50px;
+}
+
+.setting:hover {
+    border: 1px dashed var(--para-color);
+}
+
+.setting>div {
+    font-size: 35px;
+}
+
+
+.setting>div>img {
+    height: 50px;
+    width: 50px;
+}
+
+.setting>div:has(>img) {
+    display: flex;
+    border: 1px solid var(--border-color);
+}

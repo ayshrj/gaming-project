@@ -13,6 +13,8 @@ import Concentration from "../pages/games/Concentration";
 import MemoryGame from "../pages/games/MemoryGame";
 import Profile from "../pages/Profile";
 import Authentication from "../pages/Authentication";
+import Settings from "../pages/Settings";
+import Friends from "../pages/Friends";
 
 const Content = ({
   isMobileViewport,
@@ -27,6 +29,9 @@ const Content = ({
   setHighestStreak,
   setTargetStreak,
   setAuthenticationBoxOpen,
+  setUser,
+  setSearchQuery,
+  setSearchOpen,
 }) => {
   return (
     <div
@@ -74,7 +79,36 @@ const Content = ({
             />
           }
         />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <Profile
+              setUser={setUser}
+              setSearchQuery={setSearchQuery}
+              setSearchOpen={setSearchOpen}
+            />
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <Settings
+              setUser={setUser}
+              setSearchQuery={setSearchQuery}
+              setSearchOpen={setSearchOpen}
+            />
+          }
+        />
+        <Route
+          path="/friends"
+          element={
+            <Friends
+              setUser={setUser}
+              setSearchQuery={setSearchQuery}
+              setSearchOpen={setSearchOpen}
+            />
+          }
+        />
         <Route
           path="games/nonogram"
           element={<Nonogram browserWindowWidth={browserWindowWidth} />}

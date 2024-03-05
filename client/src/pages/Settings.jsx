@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from "react";
-import "./Profile.css";
+import "./Settings.css";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { IconPencil } from "@tabler/icons-react";
 import FaceCreator from "../util/FaceCreator";
 
-const Profile = ({ setUser, setSearchQuery, setSearchOpen }) => {
+const Settings = ({ setUser, setSearchQuery, setSearchOpen }) => {
   const navigate = useNavigate();
   const { userDoc } = useContext(AuthContext);
   useEffect(() => {
@@ -22,21 +23,33 @@ const Profile = ({ setUser, setSearchQuery, setSearchOpen }) => {
   }, []);
 
   return (
-    <div className="profile-container">
-      <h1>Profile</h1>
+    <div className="setting-container">
+      <h1>Settings</h1>
       {userDoc && (
         <>
-          <div className="profile-page-profile-photo-container">
-            <div className="profile-page-profile-photo">
+          <div className="setting">
+            <div>
               {userDoc.photoURL !== "" ? (
                 <img src={userDoc.photoURL} alt="" />
               ) : (
-                <FaceCreator {...userDoc.avatar} />
+                <FaceCreator {...userDoc.avatar} height={60} width={60} />
               )}
             </div>
+            <div>
+              <IconPencil />
+            </div>
           </div>
-          <div className="profile-page-username">
+          <div className="setting">
             <div>{userDoc.displayName}</div>
+            <div>
+              <IconPencil />
+            </div>
+          </div>
+          <div className="setting">
+            <div>{userDoc.email}</div>
+            {/* <div>
+              <IconPencil />
+            </div> */}
           </div>
         </>
       )}
@@ -44,4 +57,4 @@ const Profile = ({ setUser, setSearchQuery, setSearchOpen }) => {
   );
 };
 
-export default Profile;
+export default Settings;

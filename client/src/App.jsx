@@ -14,6 +14,9 @@ function App() {
   const [browserWindowWidth, setBrowserWindowWidth] = useState(null);
   const [leftpaneWidth, setLeftPaneWidth] = useState(null);
   const [leftPaneContainerWidth, setLeftPaneContainerWidth] = useState(0);
+  const [searchUsersInfoOpen, setSearchUsersInfoOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [user, setUser] = useState(null);
 
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "false" ? false : true
@@ -23,6 +26,7 @@ function App() {
   const [highestStreak, setHighestStreak] = useState(null);
   const [targetStreak, setTargetStreak] = useState(null);
   const [authenticationBoxOpen, setAuthenticationBoxOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const { userDoc } = useContext(AuthContext);
 
@@ -78,6 +82,14 @@ function App() {
             setAuthenticationBoxOpen={setAuthenticationBoxOpen}
             browserWindowWidth={browserWindowWidth}
             leftPaneContainerWidth={leftPaneContainerWidth}
+            searchUsersInfoOpen={searchUsersInfoOpen}
+            setSearchUsersInfoOpen={setSearchUsersInfoOpen}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            user={user}
+            setUser={setUser}
+            searchOpen={searchOpen}
+            setSearchOpen={setSearchOpen}
           />
 
           <Dashboard
@@ -95,6 +107,9 @@ function App() {
             setCurrentStreak={setCurrentStreak}
             setHighestStreak={setHighestStreak}
             setTargetStreak={setTargetStreak}
+            setUser={setUser}
+            setSearchQuery={setSearchQuery}
+            setSearchOpen={setSearchOpen}
           />
         </div>
       </BrowserRouter>

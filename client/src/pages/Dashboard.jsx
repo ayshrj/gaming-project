@@ -19,6 +19,9 @@ const Dashboard = ({
   setCurrentStreak,
   setHighestStreak,
   setTargetStreak,
+  setUser,
+  setSearchQuery,
+  setSearchOpen,
 }) => {
   return (
     <div className="dashboard">
@@ -27,6 +30,8 @@ const Dashboard = ({
         setLeftPaneContainerWidth={setLeftPaneContainerWidth}
         isLeftPaneOpen={isLeftPaneOpen}
         setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+        setUser={setUser}
+        setSearchQuery={setSearchQuery}
       />
       <Content
         isMobileViewport={isMobileViewport}
@@ -41,6 +46,9 @@ const Dashboard = ({
         setHighestStreak={setHighestStreak}
         setTargetStreak={setTargetStreak}
         setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+        setUser={setUser}
+        setSearchQuery={setSearchQuery}
+        setSearchOpen={setSearchOpen}
       />
     </div>
   );

@@ -20,6 +20,7 @@ import {
 } from "firebase/firestore";
 import "./Search.css";
 import { AuthContext } from "../context/AuthContext";
+import FaceCreator from "../util/FaceCreator";
 
 const Search = ({
   searchBarWidth,
@@ -32,8 +33,9 @@ const Search = ({
   setSearchQuery,
   acceptRequest,
   rejectRequest,
+  user,
+  setUser,
 }) => {
-  const [user, setUser] = useState(null);
   const [error, setError] = useState(false);
 
   const { currentUser, userDoc } = useContext(AuthContext);
@@ -66,25 +68,36 @@ const Search = ({
     }
   };
 
-  const sendFriendRequest = async ({ id, photoURL, displayName }) => {
+  const sendFriendRequest = async ({ id, photoURL, displayName, avatar }) => {
+    // console.log("id:", id);
+    // console.log("photoURL:", typeof photoURL);
+    // console.log("displayName:", displayName);
+    // console.log("avatar:", avatar);
     try {
       const otherUserRef = doc(db, "users", id);
+
       const otherUserDoc = await getDoc(otherUserRef);
       if (!otherUserDoc.exists()) {
         throw new Error("User not found");
       }
+
       const otherUserData = otherUserDoc.data();
 
+      const updatedPendingRequests = [
+        ...otherUserData.pendingRequests,
+        {
+          id: userDoc.uid,
+          photoURL: userDoc.photoURL,
+          displayName: userDoc.displayName,
+          avatar: userDoc.avatar,
+        },
+      ];
+
+      console.log(updatedPendingRequests);
+
       await updateDoc(otherUserRef, {
-        pendingRequests: [
-          ...otherUserData.pendingRequests,
-          {
-            id: currentUser.uid,
-            photoURL: currentUser.photoURL,
-            displayName: currentUser.displayName,
-          },
-        ],
-      });
+        pendingRequests: updatedPendingRequests,
+      }).then(console.log("Updated"));
 
       const currentUserRef = doc(db, "users", currentUser.uid);
       const currentUserDoc = await getDoc(currentUserRef);
@@ -95,7 +108,7 @@ const Search = ({
       await updateDoc(currentUserRef, {
         sentRequests: [
           ...currentUserData.sentRequests,
-          { id, photoURL, displayName },
+          { id, photoURL, displayName, avatar },
         ],
       });
     } catch (err) {
@@ -143,7 +156,7 @@ const Search = ({
 
   useEffect(() => {
     handleSearch();
-  }, [searchQuery]);
+  }, [searchQuery, userDoc]);
 
   useEffect(() => {
     console.log("seartc searchOpen", searchOpen);
@@ -187,22 +200,29 @@ const Search = ({
           className="search-users-info"
           style={{ width: searchOpen ? searchBarWidth : 0, maxWidth: "530px" }}
         >
-          {user?.map(({ id, photoURL, displayName }) => (
+          {user?.map(({ id, photoURL, displayName, avatar }) => (
             <div key={id} className="search-user-option">
               <div className="search-user">
-                <img
-                  src={photoURL}
-                  alt={displayName}
-                  className="search-user-photo"
-                />
+                {photoURL !== "" ? (
+                  <img
+                    src={photoURL}
+                    alt={displayName}
+                    className="search-user-photo"
+                  />
+                ) : (
+                  <FaceCreator {...avatar} height={30} width={30} />
+                )}
                 <div className="search-user-name">{displayName}</div>
               </div>
               <div>
                 {userDoc &&
-                userDoc.friends.some((friend) => friend.id === id) ? (
-                  <div className="search-user-add-remove">
-                    <IconChecks size={20} />
-                  </div>
+                userDoc.friends &&
+                userDoc.friends.some((request) => request.id === id) ? (
+                  <>
+                    <div className="search-user-add-remove">
+                      <IconChecks size={20} />
+                    </div>
+                  </>
                 ) : userDoc.pendingRequests &&
                   userDoc.pendingRequests.some(
                     (request) => request.id === id
@@ -210,7 +230,9 @@ const Search = ({
                   <>
                     <div
                       className="search-user-add-remove"
-                      onClick={() => acceptRequest(id, photoURL, displayName)}
+                      onClick={() =>
+                        acceptRequest(id, photoURL, displayName, avatar)
+                      }
                     >
                       <IconCheck size={20} />
                     </div>
@@ -221,7 +243,9 @@ const Search = ({
                       <IconX size={20} />
                     </div>
                   </>
-                ) : userDoc.sentRequests.some(
+                ) : userDoc &&
+                  userDoc.sentRequests &&
+                  userDoc.sentRequests.some(
                     (sentRequest) => sentRequest.id === id
                   ) ? (
                   <div
@@ -234,7 +258,7 @@ const Search = ({
                   <div
                     className="search-user-add-remove"
                     onClick={() =>
-                      sendFriendRequest({ id, photoURL, displayName })
+                      sendFriendRequest({ id, photoURL, displayName, avatar })
                     }
                   >
                     <IconPlus size={20} />

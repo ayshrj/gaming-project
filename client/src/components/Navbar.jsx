@@ -41,15 +41,19 @@ const Navbar = ({
   leftPaneContainerWidth,
   isUserRegistered,
   setIsUserRegistered,
+  searchQuery,
+  setSearchQuery,
+  searchUsersInfoOpen,
+  setSearchUsersInfoOpen,
+  user,
+  setUser,
+  searchOpen,
+  setSearchOpen,
 }) => {
   const [isAtTop, setIsAtTop] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-
   const [searchBarWidth, setSearchBarWidth] = useState(0);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [openNotif, setOpenNotif] = useState(false);
-  const [searchUsersInfoOpen, setSearchUsersInfoOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
   const { userDoc, currentUser } = useContext(AuthContext);
   const currentUserRef = useRef(null);
@@ -93,7 +97,7 @@ const Navbar = ({
     setIsHovered(false);
   };
 
-  const acceptRequest = async (id, photoURL, displayName) => {
+  const acceptRequest = async (id, photoURL, displayName, avatar) => {
     try {
       const updatedPendingRequests = userDoc.pendingRequests.filter(
         (request) => request.id !== id
@@ -105,7 +109,12 @@ const Navbar = ({
 
       const updatedFriends = [
         ...userDoc.friends,
-        { id: id, photoURL: photoURL, displayName: displayName },
+        {
+          id: id,
+          photoURL: photoURL,
+          displayName: displayName,
+          avatar: avatar,
+        },
       ];
 
       console.log("type of currentUser.uid", typeof currentUser.uid);
@@ -126,9 +135,10 @@ const Navbar = ({
         const updatedSenderFriends = [
           ...senderData.friends,
           {
-            id: currentUser.uid,
-            photoURL: currentUser.photoURL,
-            displayName: currentUser.displayName,
+            id: userDoc.uid,
+            photoURL: userDoc.photoURL,
+            displayName: userDoc.displayName,
+            avatar: userDoc.avatar,
           },
         ];
 
@@ -197,6 +207,8 @@ const Navbar = ({
             setSearchQuery={setSearchQuery}
             acceptRequest={acceptRequest}
             rejectRequest={rejectRequest}
+            user={user}
+            setUser={setUser}
           />
         </div>
         {(browserWindowWidth >= 768 || !searchOpen) && (
@@ -260,6 +272,9 @@ const Navbar = ({
                     setCurrentStreak={setCurrentStreak}
                     setHighestStreak={setHighestStreak}
                     setTargetStreak={setTargetStreak}
+                    setUser={setUser}
+                    setSearchQuery={setSearchQuery}
+                    setSearchOpen={setSearchOpen}
                   />
                 ) : (
                   <LoginButton

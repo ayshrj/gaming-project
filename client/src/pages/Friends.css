@@ -1,0 +1,30 @@
+.friends-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.friend {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    width: 90%;
+    height: 30px;
+    border-radius: var(--border-radius);
+    gap: 30px;
+}
+
+.friend:hover {
+    border-style: dashed;
+}
+
+.friend>div>img {
+    height: 50px;
+}
+
+.friend>div {
+    font-size: 20px;
+}

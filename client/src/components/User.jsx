@@ -4,7 +4,14 @@ import { signOut } from "firebase/auth";
 import { AuthContext } from "../context/AuthContext";
 import FaceCreator from "../util/FaceCreator";
 
-const User = ({ setCurrentStreak, setHighestStreak, setTargetStreak }) => {
+const User = ({
+  setCurrentStreak,
+  setHighestStreak,
+  setTargetStreak,
+  setUser,
+  setSearchQuery,
+  setSearchOpen,
+}) => {
   const { userDoc, currentUser } = useContext(AuthContext);
 
   const handleSignOut = () => {
@@ -12,6 +19,9 @@ const User = ({ setCurrentStreak, setHighestStreak, setTargetStreak }) => {
     setCurrentStreak(null);
     setHighestStreak(null);
     setTargetStreak(null);
+    setUser(null);
+    setSearchQuery("");
+    setSearchOpen(false);
   };
   return (
     <div className="authentication-box authentication-box-user">

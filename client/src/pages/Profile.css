@@ -3,6 +3,7 @@
     flex-direction: column;
     text-align: center;
     align-items: center;
+    gap: 20px;
 }
 
 
@@ -10,9 +11,13 @@
     display: flex;
     justify-content: center;
     border-radius: 50%;
-    border: 1px solid var(--para-color);
+    border: 5px solid var(--para-color);
     overflow: hidden;
     object-fit: cover;
+
+}
+
+.profile-page-profile-photo-container {
     position: relative;
 }
 
@@ -22,6 +27,18 @@
 
 .profile-page-profile-photo-edit {
     position: absolute;
-    margin-left: 170px;
-    margin-top: 30px;
+    top: 0;
+    right: 0;
+}
+
+.profile-page-username {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    font-size: 30px;
+    gap: 10px;
+}
+
+.profile-page-username {
+    transform: translateX(15px);
 }
