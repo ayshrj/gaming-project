@@ -8,11 +8,9 @@
 
 .friend {
     display: flex;
-    align-items: center;
     border: 1px solid var(--border-color);
     padding: 20px;
     width: 90%;
-    height: 30px;
     border-radius: var(--border-radius);
     gap: 30px;
 }
@@ -21,10 +19,26 @@
     border-style: dashed;
 }
 
-.friend>div>img {
+.friend {
+    display: flex;
+    flex-direction: column;
+}
+
+.friend-info>div>img {
     height: 50px;
 }
 
-.friend>div {
+.friend-info>div:has(>img), .friend-info>div:has(>svg) {
+    display: flex;
     font-size: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--para-color);
+}
+
+.friend-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: row;
 }

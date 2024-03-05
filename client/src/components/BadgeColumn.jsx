@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import CurrentBadge1 from "../assets/badges-old/hierarchical/1-Hamlet.png";
 import CurrentBadge2 from "../assets/badges-old/hierarchical/2-Barony.png";
 import CurrentBadge3 from "../assets/badges-old/hierarchical/3-Domain.png";
