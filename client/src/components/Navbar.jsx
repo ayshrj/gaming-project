@@ -23,6 +23,7 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
+import FaceCreator from "../util/FaceCreator";
 
 const Navbar = ({
   setIsLeftPaneOpen,
@@ -167,6 +168,12 @@ const Navbar = ({
     }
   };
 
+  useEffect(() => {
+    if (authenticationBoxOpen === true && openNotif === true) {
+      setOpenNotif(false);
+    }
+  }, [authenticationBoxOpen]);
+
   return (
     <div className="navbar">
       <div
@@ -203,6 +210,8 @@ const Navbar = ({
                 setSearchQuery={setSearchQuery}
                 acceptRequest={acceptRequest}
                 rejectRequest={rejectRequest}
+                setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+                authenticationBoxOpen={authenticationBoxOpen}
               />
             </div>
             <div>
@@ -215,14 +224,16 @@ const Navbar = ({
               onMouseLeave={handleMouseLeave}
             >
               {/* <img src={ProfilePic} /> */}
-              {currentUser && currentUser.photoURL ? (
+              {userDoc === null ? (
+                <IconUser />
+              ) : userDoc.photoURL !== "" ? (
                 <img
                   src={currentUser.photoURL}
                   alt=""
                   style={{ overflow: "hidden" }}
                 />
               ) : (
-                <IconUser />
+                <FaceCreator {...userDoc.avatar} height={30} width={30} />
               )}
               {!isMobileViewport && (isAtTop || isHovered) && (
                 <div className="display-name">

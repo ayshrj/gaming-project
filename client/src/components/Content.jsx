@@ -11,7 +11,7 @@ import SnakeGame from "../pages/games/SnakeGame";
 import RockPaperScissor from "../pages/games/RockPaperScissor";
 import Concentration from "../pages/games/Concentration";
 import MemoryGame from "../pages/games/MemoryGame";
-import AvatarMaker from "../pages/AvatarMaker";
+import Profile from "../pages/Profile";
 import Authentication from "../pages/Authentication";
 
 const Content = ({
@@ -74,7 +74,7 @@ const Content = ({
             />
           }
         />
-        <Route path="/profile/avatarmaker" element={<AvatarMaker />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="games/nonogram"
           element={<Nonogram browserWindowWidth={browserWindowWidth} />}

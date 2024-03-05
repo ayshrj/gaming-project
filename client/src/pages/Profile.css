@@ -1,0 +1,27 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+
+.profile-page-profile-photo {
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--para-color);
+    overflow: hidden;
+    object-fit: cover;
+    position: relative;
+}
+
+.profile-page-profile-photo>img {
+    height: 200px;
+}
+
+.profile-page-profile-photo-edit {
+    position: absolute;
+    margin-left: 170px;
+    margin-top: 30px;
+}

@@ -11,6 +11,8 @@ const Notification = ({
   acceptRequest,
   rejectRequest,
   setSearchQuery,
+  setAuthenticationBoxOpen,
+  authenticationBoxOpen,
 }) => {
   const { currentUser, userDoc } = useContext(AuthContext);
   const [pendingRequests, setPendingRequests] = useState([]);
@@ -20,6 +22,12 @@ const Notification = ({
       setPendingRequests(userDoc.pendingRequests);
     }
   }, [userDoc]);
+
+  useEffect(() => {
+    if (openNotif === true && authenticationBoxOpen === true) {
+      setAuthenticationBoxOpen(false);
+    }
+  }, [openNotif]);
 
   return (
     <>

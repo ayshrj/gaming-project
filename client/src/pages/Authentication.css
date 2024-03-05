@@ -5,7 +5,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 80%;
     gap: 10px;
     position: relative;
 }
@@ -19,6 +18,17 @@
 
 .authentication-page-logo>div {
     font-size: 40px;
+}
+
+.authentication-avatar-creator {
+    display: flex;
+    align-items: center;
+}
+
+.authentication-avatar-creator-avatar {
+    display: flex;
+    height: 100%;
+    border: 1px solid var(--para-color);
 }
 
 .authentication-container>input {
@@ -37,27 +47,27 @@
     cursor: pointer;
 }
 
-.authentication-avatar-adder {
+.authentication-photo-adder {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
 }
 
-.authentication-avatar-adder>label>div {
+.authentication-photo-adder>label>div {
     display: flex;
     border-radius: 4px;
     border: 1px solid var(--para-color);
 }
 
-.authentication-avatar-adder>label>div>img {
+.authentication-photo-adder>label>div>img {
     width: 60px;
     height: 60px;
     object-fit: cover;
     border-radius: 3px;
 }
 
-.authentication-avatar-adder>label {
+.authentication-photo-adder>label {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,4 +80,139 @@
     padding: 13px;
     border-radius: 4px;
     width: 300px;
+    cursor: pointer;
+}
+
+:root {
+    --avatar-maker-grid-width: 180px;
+    --avatar-maker-svg-width: 400px;
+    --avatar-maker-setting-margin-left: 185px;
+}
+
+.avatar-maker-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+
+}
+
+
+.avatar-maker-svg-container {
+    padding: 10px;
+    width: var(--avatar-maker-svg-width);
+    position: fixed;
+    background-color: var(--background-color);
+    display: grid;
+    place-items: center;
+    z-index: 2;
+    top: 40px;
+    padding-bottom: 30px;
+}
+
+.avatar-maker-save-button {
+    display: flex;
+    gap: 10px;
+    margin: 5px;
+}
+
+.avatar-maker-save-button>div {
+    padding: 10px;
+    border-radius: 4px;
+    width: 100px;
+}
+
+
+.avatar-maker-save-button>div:nth-child(1) {
+    background-color: var(--para-color);
+}
+
+.avatar-maker-save-button>div:nth-child(1):hover {
+    background-color: rgb(210, 107, 59);
+}
+
+.avatar-maker-save-button>div:nth-child(2) {
+    border: 1px solid var(--para-color);
+}
+
+.avatar-maker-save-button>div:nth-child(2):hover {
+    border: 1px dashed rgb(210, 107, 59);
+}
+
+.authentication-avatar-creator-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.avatar-maker-svg {
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+}
+
+.avatar-maker-settings-container {
+    display: flex;
+    margin-top: 390px;
+    flex-direction: column;
+    transform: translateX(-11px);
+}
+
+.avatar-added {
+    display: flex;
+    border-radius: 2px;
+    border: 1px solid var(--para-color);
+}
+
+.avatar-maker-setting {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border: 1px dashed var(--border-color);
+    position: relative;
+}
+
+.avatar-maker-setting>label {
+    display: flex;
+    width: var(--avatar-maker-grid-width);
+    border-right: 1px solid var(--border-color);
+    align-items: center;
+}
+
+.avatar-maker-setting>input[type="color"] {
+    height: 50px;
+    cursor: pointer;
+}
+
+.avatar-maker-setting>input {
+    width: var(--avatar-maker-grid-width);
+    border-right: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.avatar-maker-setting>p {
+    position: absolute;
+    margin-left: var(--avatar-maker-setting-margin-left);
+    user-select: none;
+    cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+    .avatar-maker-svg {
+        width: 300px;
+    }
+
+    .avatar-maker-setting>label {
+        width: 131px;
+    }
+
+    .avatar-maker-setting>input {
+        width: 131px;
+    }
+
+    .avatar-maker-setting>p {
+        margin-left: 140px;
+    }
 }

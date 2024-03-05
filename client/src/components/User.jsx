@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { AuthContext } from "../context/AuthContext";
+import FaceCreator from "../util/FaceCreator";
 
 const User = ({ setCurrentStreak, setHighestStreak, setTargetStreak }) => {
-  const { currentUser } = useContext(AuthContext);
+  const { userDoc, currentUser } = useContext(AuthContext);
 
   const handleSignOut = () => {
     signOut(auth);
@@ -15,14 +16,23 @@ const User = ({ setCurrentStreak, setHighestStreak, setTargetStreak }) => {
   return (
     <div className="authentication-box authentication-box-user">
       <div>
-        <img
-          src={currentUser?.photoURL}
-          alt=""
-          style={{ height: "50px", width: "50px", overflow: "hidden" }}
-        />
+        {userDoc.photoURL !== "" ? (
+          <img
+            src={currentUser?.photoURL}
+            alt=""
+            style={{
+              height: "100px",
+              width: "100px",
+              overflow: "hidden",
+              objectFit: "cover",
+            }}
+          />
+        ) : (
+          <FaceCreator {...userDoc.avatar} height={100} width={100} />
+        )}
       </div>
-      <div>{currentUser?.displayName}</div>
-      <p style={{ fontSize: "10px" }}>{currentUser?.email}</p>
+      <div style={{ fontSize: "20px" }}>{currentUser?.displayName}</div>
+      {/* <p style={{ fontSize: "10px" }}>{currentUser?.email}</p> */}
       <div onClick={handleSignOut} className="authentication-sign-out-button">
         Sign Out
       </div>

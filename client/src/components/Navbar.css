@@ -32,9 +32,12 @@
 
 .content-user-top-right-options img {
     width: 30px;
+    height: 30px;
     border-radius: 50%;
     transition: box-shadow 0.3s ease-in-out;
     cursor: pointer;
+    overflow: hidden;
+    object-fit: cover;
 }
 
 
@@ -122,6 +125,10 @@
 }
 
 .content-user-top-right-options img:hover {
+    box-shadow: var(--shadow-elevation-medium);
+}
+
+.content-user-top-right-options>svg:hover {
     box-shadow: var(--shadow-elevation-medium);
 }
 

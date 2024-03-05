@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useContext } from "react";
 import "./LeftPane.css";
 import {
+  IconUserSquare,
   IconDeviceGamepad,
   IconUsersGroup,
   IconSettings2,
@@ -12,16 +13,21 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { AuthContext } from "../context/AuthContext";
 import IconNoCanDo from "../assets/IconNoCanDo.svg";
+import { useNavigate } from "react-router-dom";
 
 const LeftPane = ({
   isMobileViewport,
   setLeftPaneContainerWidth,
   isLeftPaneOpen,
   setAuthenticationBoxOpen,
+  setCurrentStreak,
+  setHighestStreak,
+  setTargetStreak,
 }) => {
   const leftpaneContainerRef = useRef(null);
+  const navigate = useNavigate();
 
-  const { currentUser } = useContext(AuthContext);
+  const { userDoc, currentUser } = useContext(AuthContext);
 
   const handleSignOut = () => {
     signOut(auth);
@@ -72,6 +78,16 @@ const LeftPane = ({
           </Link>
         </div>
         <div className="leftpane-options">
+          <Option
+            icon={<IconUserSquare />}
+            onClick={() => {
+              currentUser
+                ? navigate("/profile")
+                : setAuthenticationBoxOpen(true);
+            }}
+          >
+            Profile
+          </Option>
           <Option icon={<IconUsersGroup />}>Friends</Option>
           <Option icon={<IconSettings2 />}>Options</Option>
         </div>
@@ -84,7 +100,7 @@ const LeftPane = ({
               Logout
             </Option>
           ) : (
-            <Option onClick={() => setAuthenticationBoxOpen(true)}>
+            <Option onClick={() => navigate("/login")}>
               <IconLogin />
               Login
             </Option>

@@ -24,9 +24,9 @@ const HomePage = ({
     setRandomFact(GetRandomFact());
   }, []);
 
-  useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
+  // useEffect(() => {
+  //   console.log(currentUser);
+  // }, [currentUser]);
 
   // const targetStreak = 100;
 
