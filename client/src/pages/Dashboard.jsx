@@ -15,27 +15,34 @@ const Dashboard = ({
   setAuthenticationBoxOpen,
   leftPaneContainerWidth,
   setLeftPaneContainerWidth,
+  setIsUserRegistered,
+  setCurrentStreak,
+  setHighestStreak,
+  setTargetStreak,
 }) => {
   return (
-    <BrowserRouter>
-      <div className="dashboard">
-        <LeftPane
-          isMobileViewport={isMobileViewport}
-          setLeftPaneContainerWidth={setLeftPaneContainerWidth}
-          isLeftPaneOpen={isLeftPaneOpen}
-          setAuthenticationBoxOpen={setAuthenticationBoxOpen}
-        />
-        <Content
-          isMobileViewport={isMobileViewport}
-          leftPaneContainerWidth={leftPaneContainerWidth}
-          darkMode={darkMode}
-          browserWindowWidth={browserWindowWidth}
-          currentStreak={currentStreak}
-          highestStreak={highestStreak}
-          targetStreak={targetStreak}
-        />
-      </div>
-    </BrowserRouter>
+    <div className="dashboard">
+      <LeftPane
+        isMobileViewport={isMobileViewport}
+        setLeftPaneContainerWidth={setLeftPaneContainerWidth}
+        isLeftPaneOpen={isLeftPaneOpen}
+        setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+      />
+      <Content
+        isMobileViewport={isMobileViewport}
+        leftPaneContainerWidth={leftPaneContainerWidth}
+        darkMode={darkMode}
+        browserWindowWidth={browserWindowWidth}
+        currentStreak={currentStreak}
+        highestStreak={highestStreak}
+        targetStreak={targetStreak}
+        setIsUserRegistered={setIsUserRegistered}
+        setCurrentStreak={setCurrentStreak}
+        setHighestStreak={setHighestStreak}
+        setTargetStreak={setTargetStreak}
+        setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+      />
+    </div>
   );
 };
 

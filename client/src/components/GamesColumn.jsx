@@ -63,7 +63,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
                 className={`${
                   gameInfoOpen.sudoku && browserWindowWidth > 1000
                     ? "game-info-open"
-                    : ""
+                    : "game-info-closed"
                 }`}
                 onClick={() => navigate("/games/sudoku")}
                 src={IconSudoku}
@@ -121,7 +121,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
                 className={`${
                   gameInfoOpen.chess && browserWindowWidth > 1000
                     ? "game-info-open"
-                    : ""
+                    : "game-info-closed"
                 }`}
                 onClick={() => navigate("/games/chess")}
                 src={IconChessBoard}
@@ -203,7 +203,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
                 className={`${
                   gameInfoOpen.tetris && browserWindowWidth > 1000
                     ? "game-info-open"
-                    : ""
+                    : "game-info-closed"
                 }`}
                 onClick={() => navigate("/games/tetris")}
                 src={IconTetris}
@@ -262,7 +262,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
                 className={`${
                   gameInfoOpen.snakeGame && browserWindowWidth > 1000
                     ? "game-info-open"
-                    : ""
+                    : "game-info-closed"
                 }`}
                 onClick={() => navigate("/games/snakegame")}
                 src={IconSnakeGame}
@@ -319,7 +319,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
                 className={`${
                   gameInfoOpen.nonogram && browserWindowWidth > 1000
                     ? "game-info-open"
-                    : ""
+                    : "game-info-closed"
                 }`}
                 onClick={() => navigate("/games/nonogram")}
                 src={IconNonogram}
@@ -385,7 +385,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
                 className={`${
                   gameInfoOpen.rockpaperscissor && browserWindowWidth > 1000
                     ? "game-info-open"
-                    : ""
+                    : "game-info-closed"
                 }`}
                 onClick={() => navigate("/games/rockpaperscissor")}
                 src={IconRockPaperScissor}
@@ -463,7 +463,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
                 className={`${
                   gameInfoOpen.concentration && browserWindowWidth > 1000
                     ? "game-info-open"
-                    : ""
+                    : "game-info-closed"
                 }`}
                 onClick={() => navigate("/games/concentration")}
                 src={IconConcentration}

@@ -1,3 +1,7 @@
 .column h3 {
     letter-spacing: 5px;
 }
+
+.column-badge>img {
+    height: 210px;
+}

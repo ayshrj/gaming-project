@@ -6,21 +6,21 @@ const AvatarMaker = () => {
   const [avatarSettings, setAvatarSettings] = useState({
     height: 300,
     width: 300,
-    hair: 1, //From 0 to 9
+    hair: 6, //From 0 to 9
     hairFill: "#000000",
-    hairStroke: "#131313",
+    hairStroke: "#1C1C1C",
     skinBorder: "#000000",
-    skinColor: "#c39582",
-    shirt: 1, //From 0 to 7
-    shirtFill: "#af2525",
-    shirtStroke: "#00ff00",
-    shirtDesign: "#ffffff",
-    mouth: 1, //From 0 to 6
+    skinColor: "#755243",
+    shirt: 4, //From 0 to 7
+    shirtFill: "#AE3737",
+    shirtStroke: "#321A1A",
+    shirtDesign: "grey",
+    mouth: 2, //From 0 to 6
     mouthFill: "#ff2993",
-    nose: 2, //From 0 to 7
+    nose: 1, //From 0 to 7
     eye: 1, //From 0 to 4
     eyebrow: 1, //From 0 to 5
-    accessory: 1, //From 0 to 3
+    accessory: 0, //From 0 to 3
     accessoryStroke: "#7608fe",
   });
 

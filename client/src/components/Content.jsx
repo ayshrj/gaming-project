@@ -12,6 +12,7 @@ import RockPaperScissor from "../pages/games/RockPaperScissor";
 import Concentration from "../pages/games/Concentration";
 import MemoryGame from "../pages/games/MemoryGame";
 import AvatarMaker from "../pages/AvatarMaker";
+import Authentication from "../pages/Authentication";
 
 const Content = ({
   isMobileViewport,
@@ -21,6 +22,11 @@ const Content = ({
   currentStreak,
   highestStreak,
   targetStreak,
+  setIsUserRegistered,
+  setCurrentStreak,
+  setHighestStreak,
+  setTargetStreak,
+  setAuthenticationBoxOpen,
 }) => {
   return (
     <div
@@ -42,6 +48,32 @@ const Content = ({
           }
         />
         <Route path="/games" element={<Games />} />
+        <Route
+          path="/login"
+          element={
+            <Authentication
+              type={"Login"}
+              setIsUserRegistered={setIsUserRegistered}
+              setCurrentStreak={setCurrentStreak}
+              setHighestStreak={setHighestStreak}
+              setTargetStreak={setTargetStreak}
+              setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+            />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Authentication
+              type={"Register"}
+              setIsUserRegistered={setIsUserRegistered}
+              setCurrentStreak={setCurrentStreak}
+              setHighestStreak={setHighestStreak}
+              setTargetStreak={setTargetStreak}
+              setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+            />
+          }
+        />
         <Route path="/profile/avatarmaker" element={<AvatarMaker />} />
         <Route
           path="games/nonogram"

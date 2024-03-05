@@ -39,6 +39,5 @@
 } */
 
 .column img {
-    height: 210px;
     filter: var(--image-invert-filter)
 }

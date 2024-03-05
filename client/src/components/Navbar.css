@@ -37,6 +37,7 @@
     cursor: pointer;
 }
 
+
 .current-user {
     gap: 10px;
     position: relative;
@@ -63,10 +64,6 @@
 
 .authentication-box-input {
     color: black;
-}
-
-.authentication-box.authentication-box-register {
-    height: 300px;
 }
 
 .authentication-box.authentication-box-login {

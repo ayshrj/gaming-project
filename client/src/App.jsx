@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import { AuthContext } from "./context/AuthContext";
 import { getDoc, doc } from "firebase/firestore";
 import { auth, db } from "./firebase";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   const [isMobileViewport, setIsMobileViewport] = useState(false);
@@ -61,37 +62,42 @@ function App() {
 
   return (
     <>
-      <div className="app">
-        <Navbar
-          isLeftPaneOpen={isLeftPaneOpen}
-          setIsLeftPaneOpen={setIsLeftPaneOpen}
-          isMobileViewport={isMobileViewport}
-          ProfilePic={ProfilePic}
-          darkMode={darkMode}
-          setDarkMode={setDarkMode}
-          setCurrentStreak={setCurrentStreak}
-          setHighestStreak={setHighestStreak}
-          setTargetStreak={setTargetStreak}
-          authenticationBoxOpen={authenticationBoxOpen}
-          setAuthenticationBoxOpen={setAuthenticationBoxOpen}
-          browserWindowWidth={browserWindowWidth}
-          leftPaneContainerWidth={leftPaneContainerWidth}
-        />
+      <BrowserRouter>
+        <div className="app">
+          <Navbar
+            isLeftPaneOpen={isLeftPaneOpen}
+            setIsLeftPaneOpen={setIsLeftPaneOpen}
+            isMobileViewport={isMobileViewport}
+            ProfilePic={ProfilePic}
+            darkMode={darkMode}
+            setDarkMode={setDarkMode}
+            setCurrentStreak={setCurrentStreak}
+            setHighestStreak={setHighestStreak}
+            setTargetStreak={setTargetStreak}
+            authenticationBoxOpen={authenticationBoxOpen}
+            setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+            browserWindowWidth={browserWindowWidth}
+            leftPaneContainerWidth={leftPaneContainerWidth}
+          />
 
-        <Dashboard
-          isMobileViewport={isMobileViewport}
-          isLeftPaneOpen={isLeftPaneOpen}
-          darkMode={darkMode}
-          browserWindowWidth={browserWindowWidth}
-          currentStreak={currentStreak}
-          highestStreak={highestStreak}
-          targetStreak={targetStreak}
-          setAuthenticationBoxOpen={setAuthenticationBoxOpen}
-          setLeftPaneWidth={setLeftPaneWidth}
-          leftPaneContainerWidth={leftPaneContainerWidth}
-          setLeftPaneContainerWidth={setLeftPaneContainerWidth}
-        />
-      </div>
+          <Dashboard
+            isMobileViewport={isMobileViewport}
+            isLeftPaneOpen={isLeftPaneOpen}
+            darkMode={darkMode}
+            browserWindowWidth={browserWindowWidth}
+            currentStreak={currentStreak}
+            highestStreak={highestStreak}
+            targetStreak={targetStreak}
+            setAuthenticationBoxOpen={setAuthenticationBoxOpen}
+            setLeftPaneWidth={setLeftPaneWidth}
+            leftPaneContainerWidth={leftPaneContainerWidth}
+            setLeftPaneContainerWidth={setLeftPaneContainerWidth}
+            setCurrentStreak={setCurrentStreak}
+            setHighestStreak={setHighestStreak}
+            setTargetStreak={setTargetStreak}
+          />
+        </div>
+      </BrowserRouter>
     </>
   );
 }

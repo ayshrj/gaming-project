@@ -9,8 +9,7 @@ import {
 import "./Navbar.css";
 import DarkModeToggle from "./DarkModeToggle";
 import Search from "./Search";
-import Login from "./Login";
-import Register from "./Register";
+import LoginButton from "./LoginButton";
 import User from "./User";
 import Notification from "./Notification";
 import { AuthContext } from "../context/AuthContext";
@@ -39,10 +38,12 @@ const Navbar = ({
   setAuthenticationBoxOpen,
   browserWindowWidth,
   leftPaneContainerWidth,
+  isUserRegistered,
+  setIsUserRegistered,
 }) => {
   const [isAtTop, setIsAtTop] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  const [isUserRegistered, setIsUserRegistered] = useState(true);
+
   const [searchBarWidth, setSearchBarWidth] = useState(0);
   const [searchOpen, setSearchOpen] = useState(false);
   const [openNotif, setOpenNotif] = useState(false);
@@ -249,21 +250,9 @@ const Navbar = ({
                     setHighestStreak={setHighestStreak}
                     setTargetStreak={setTargetStreak}
                   />
-                ) : isUserRegistered ? (
-                  <Login
-                    setIsUserRegistered={setIsUserRegistered}
-                    setAuthenticationBoxOpen={setAuthenticationBoxOpen}
-                    setCurrentStreak={setCurrentStreak}
-                    setHighestStreak={setHighestStreak}
-                    setTargetStreak={setTargetStreak}
-                  />
                 ) : (
-                  <Register
-                    setIsUserRegistered={setIsUserRegistered}
+                  <LoginButton
                     setAuthenticationBoxOpen={setAuthenticationBoxOpen}
-                    setCurrentStreak={setCurrentStreak}
-                    setHighestStreak={setHighestStreak}
-                    setTargetStreak={setTargetStreak}
                   />
                 ))}
             </div>

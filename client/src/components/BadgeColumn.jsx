@@ -35,7 +35,7 @@ const BadgeColumn = ({ highestStreak }) => {
   }, [highestStreak]);
 
   return (
-    <div className="column">
+    <div className="column column-badge">
       <div className="column-text">Badge</div>
       {highestStreak ? (
         <>
