@@ -303,7 +303,11 @@ const DriverLicense = ({ browserWindowWidth }) => {
         birthDate.getDate()
       );
     } else {
-      return ["Age does not fit the specified ranges.", ""];
+      startDate = new Date(
+        birthDate.getFullYear() + 55,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      );
     }
 
     const daysBetween = (today - startDate) / (1000 * 60 * 60 * 24);
@@ -331,7 +335,20 @@ const DriverLicense = ({ browserWindowWidth }) => {
         randomDate.getMonth(),
         randomDate.getDate()
       );
-    } else if (age >= 50) {
+    } else if (age >= 50 && age < 55) {
+      const potentialAnotherDate = new Date(
+        randomDate.getFullYear() + 5,
+        randomDate.getMonth(),
+        randomDate.getDate()
+      );
+      const age60Date = new Date(
+        birthDate.getFullYear() + 60,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      );
+      anotherDate =
+        potentialAnotherDate > age60Date ? age60Date : potentialAnotherDate;
+    } else {
       anotherDate = new Date(
         randomDate.getFullYear() + 5,
         randomDate.getMonth(),
@@ -418,6 +435,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
                         : avatar.signature
                     }
                     givenColor={"rgb(219,219,219)"}
+                    givenStrokeWidth={1.5}
                   />
                 </div>
               </div>
@@ -443,6 +461,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
                         : avatar.address
                     }
                     givenColor={"rgb(219,219,219)"}
+                    givenStrokeWidth={1.5}
                   />
                 </div>
                 <div>

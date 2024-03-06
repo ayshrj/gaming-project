@@ -25,13 +25,13 @@ const RandomZigZag = ({
         let newY;
         if (goingUp) {
           newY = lastPoint.y + Math.random() * (height - lastPoint.y);
-          if (newY > height) {
-            newY = height;
+          if (newY > height - givenStrokeWidth) {
+            newY = height - givenStrokeWidth;
           }
         } else {
           newY = lastPoint.y - Math.random() * lastPoint.y;
-          if (newY < 0) {
-            newY = 0;
+          if (newY < givenStrokeWidth) {
+            newY = givenStrokeWidth;
           }
         }
 
