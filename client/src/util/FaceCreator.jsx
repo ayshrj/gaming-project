@@ -740,43 +740,43 @@ const FaceCreator = ({
 
   useEffect(() => {
     setFaceSvg(() => giveFaceSvg());
-  }, [skinBorder, skinColor]);
+  }, [skinBorder, skinColor, width, height]);
 
   useEffect(() => {
     setBodySvg(() => giveBodySvg());
-  }, [skinBorder, skinColor]);
+  }, [skinBorder, skinColor, width, height]);
 
   useEffect(() => {
     setEarSvg(() => giveEarSvg());
-  }, [skinBorder, skinColor]);
+  }, [skinBorder, skinColor, width, height]);
 
   useEffect(() => {
     setHairSvg(() => giveHairSvg());
-  }, [hair, hairFill, hairStroke]);
+  }, [hair, hairFill, hairStroke, width, height]);
 
   useEffect(() => {
     setShirtSvg(() => giveShirtSvg());
-  }, [shirt, shirtFill, shirtStroke, shirtDesign]);
+  }, [shirt, shirtFill, shirtStroke, shirtDesign, width, height]);
 
   useEffect(() => {
     setMouthSvg(() => giveMouthSvg());
-  }, [mouth, mouthFill]);
+  }, [mouth, mouthFill, width, height]);
 
   useEffect(() => {
     setNoseSvg(() => giveNoseSvg());
-  }, [nose]);
+  }, [nose, width, height]);
 
   useEffect(() => {
     setEyeSvg(() => giveEyeSvg());
-  }, [eye]);
+  }, [eye, width, height]);
 
   useEffect(() => {
     setEyebrowSvg(() => giveEyebrowSvg());
-  }, [eyebrow]);
+  }, [eyebrow, width, height]);
 
   useEffect(() => {
     setAccessorySvg(() => giveAccessorySvg());
-  }, [accessory, accessoryStroke]);
+  }, [accessory, accessoryStroke, width, height]);
 
   return (
     <svg

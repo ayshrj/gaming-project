@@ -133,7 +133,10 @@ const Content = ({
         />
         <Route path="games/concentration" element={<Concentration />} />
         <Route path="games/memorygame" element={<MemoryGame />} />
-        <Route path="games/driverlicense" element={<DriverLicense />} />
+        <Route
+          path="games/driverlicense"
+          element={<DriverLicense browserWindowWidth={browserWindowWidth} />}
+        />
       </Routes>
     </div>
   );

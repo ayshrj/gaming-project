@@ -3,7 +3,7 @@ import "./DriverLicense.css";
 import RandomZigZag from "../../util/RandomZigZag";
 import FaceCreator from "../../util/FaceCreator";
 
-const DriverLicense = () => {
+const DriverLicense = ({ browserWindowWidth }) => {
   const [avatar, setAvatar] = useState(null);
 
   const human = {
@@ -297,7 +297,13 @@ const DriverLicense = () => {
               </div>
               <div>
                 <span>{`Address: `}</span>
-                <RandomZigZag givenWidth={avatar.address} />
+                <RandomZigZag
+                  givenWidth={
+                    browserWindowWidth <= 768
+                      ? avatar.address * 0.7
+                      : avatar.address
+                  }
+                />
               </div>
               <div>
                 <span>{`Height: `}</span>

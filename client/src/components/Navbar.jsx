@@ -85,9 +85,9 @@ const Navbar = ({
     }
   }, [browserWindowWidth, leftPaneContainerWidth, currentUserRef]);
 
-  useEffect(() => {
-    console.log("search bar width", searchBarWidth);
-  }, [searchBarWidth]);
+  // useEffect(() => {
+  //   console.log("search bar width", searchBarWidth);
+  // }, [searchBarWidth]);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
