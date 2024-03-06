@@ -1,7 +1,7 @@
 :root {
     --dl-card-width: 500px;
     --dl-card-height: 300px;
-    --dl-card-info-font-size: 15px;
+    --dl-card-info-font-size: 13px;
     --dl-card-info-padding: 30px;
     --dl-card-info-gap: 10px;
     --dl-card-reduction: 0.7;
@@ -11,6 +11,8 @@
     --dl-card-title-font-size: 23px;
     --dl-card-photo-signature-font-size: 12px;
     --dl-card-photo-container-margin: 20px;
+    --dl-card-issued-expiry-container-font-size: 12px;
+    --dl-card-issued-expiry-container-margin-top: 20px;
 }
 
 .dl-container {
@@ -85,6 +87,19 @@
     color: var(--para-color);
 }
 
+.dl-card-issued-expiry-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    font-size: var(--dl-card-issued-expiry-container-font-size);
+    margin-top: var(--dl-card-issued-expiry-container-margin-top);
+}
+
+.dl-card-issued-expiry-container>div>span {
+    color: var(--para-color)
+}
+
 @media (max-width: 630px) {
     .dl-card-photo>svg {
         width: calc(var(--dl-card-reduction)*150px);
@@ -117,6 +132,11 @@
     .dl-card-info {
         font-size: calc(var(--dl-card-reduction)*var(--dl-card-info-font-size));
         padding: calc(var(--dl-card-reduction)*var(--dl-card-info-padding)) 0px;
-        gap: calc(var(--dl-card-reduction)*var(--dl-card-info-gap))
+        gap: calc(var(--dl-card-reduction)*var(--dl-card-info-gap));
+    }
+
+    .dl-card-issued-expiry-container {
+        font-size: calc(var(--dl-card-reduction)*var(--dl-card-issued-expiry-container-font-size));
+        margin-top: calc(var(--dl-card-reduction)*var(--dl-card-issued-expiry-container-margin-top));
     }
 }

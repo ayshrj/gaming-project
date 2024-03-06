@@ -187,14 +187,33 @@ const DriverLicense = ({ browserWindowWidth }) => {
   }
 
   function generateRandomCharacter(gender) {
-    function generateRandomColor() {
-      let color = "#";
+    function generateRandomColor(amount) {
+      //0 to 100
 
-      for (let i = 0; i < 6; i++) {
-        color += ((Math.random() * 16) | 0).toString(16);
-      }
-      return color;
+      const r = getRandom(0, 255);
+      const g = getRandom(0, 255);
+      const b = getRandom(0, 255);
+
+      amount = Math.max(0, Math.min(100, amount));
+
+      let lightenedR = r;
+      let lightenedG = g;
+      let lightenedB = b;
+
+      let adjust = Math.floor((amount / 100) * 255);
+
+      lightenedR = Math.min(255, lightenedR + adjust);
+      lightenedG = Math.min(255, lightenedG + adjust);
+      lightenedB = Math.min(255, lightenedB + adjust);
+
+      lightenedR = lightenedR.toString(16).padStart(2, "0");
+      lightenedG = lightenedG.toString(16).padStart(2, "0");
+      lightenedB = lightenedB.toString(16).padStart(2, "0");
+
+      return [`#${r}${g}${b}`, `#${lightenedR}${lightenedG}${lightenedB}`];
     }
+
+    const [shirtFill, shirtStroke] = generateRandomColor(20);
 
     const character = {
       hair:
@@ -209,8 +228,8 @@ const DriverLicense = ({ browserWindowWidth }) => {
         gender === 0
           ? human.maleCloth[getRandom(0, human.maleCloth.length - 1)]
           : human.femaleCloth[getRandom(0, human.femaleCloth.length - 1)],
-      shirtFill: generateRandomColor(),
-      shirtStroke: generateRandomColor(),
+      shirtFill: shirtFill,
+      shirtStroke: shirtStroke,
       shirtDesign: generateRandomColor(),
       mouth: getRandom(1, 6),
       mouthFill: "#ff2993",
@@ -221,7 +240,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
           : human.femaleEye[getRandom(0, human.femaleEye.length - 1)],
       eyebrow: getRandom(1, 5),
       accessory: gender === 0 ? 0 : getRandom(0, 3),
-      accessoryStroke: "#7608fe",
+      accessoryStroke: generateRandomColor(),
     };
 
     return character;
@@ -250,6 +269,97 @@ const DriverLicense = ({ browserWindowWidth }) => {
     return formattedDate;
   }
 
+  function generateDates(birthDateString) {
+    // based on https://parivahan.gov.in/parivahan//en/content/what-validity-driving-license
+    const birthDate = new Date(birthDateString);
+    const today = new Date();
+    const age =
+      today.getFullYear() -
+      birthDate.getFullYear() -
+      (today.getMonth() < birthDate.getMonth() ||
+      (today.getMonth() === birthDate.getMonth() &&
+        today.getDate() < birthDate.getDate())
+        ? 1
+        : 0);
+    let startDate;
+    let randomDate, anotherDate;
+
+    if (age < 30) {
+      startDate = new Date(
+        birthDate.getFullYear() + 18,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      );
+    } else if (age >= 30 && age < 50) {
+      startDate = new Date(
+        birthDate.getFullYear() + 30,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      );
+    } else if (age >= 50 && age < 55) {
+      startDate = new Date(
+        birthDate.getFullYear() + 50,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      );
+    } else {
+      return ["Age does not fit the specified ranges.", ""];
+    }
+
+    const daysBetween = (today - startDate) / (1000 * 60 * 60 * 24);
+    const randomNumberOfDays = Math.floor(Math.random() * daysBetween);
+    randomDate = new Date(
+      startDate.getTime() + randomNumberOfDays * (1000 * 60 * 60 * 24)
+    );
+
+    if (age < 30) {
+      const potentialAnotherDate = new Date(
+        randomDate.getFullYear() + 20,
+        randomDate.getMonth(),
+        randomDate.getDate()
+      );
+      const age40Date = new Date(
+        birthDate.getFullYear() + 40,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      );
+      anotherDate =
+        potentialAnotherDate > age40Date ? age40Date : potentialAnotherDate;
+    } else if (age >= 30 && age < 50) {
+      anotherDate = new Date(
+        randomDate.getFullYear() + 10,
+        randomDate.getMonth(),
+        randomDate.getDate()
+      );
+    } else if (age >= 50) {
+      anotherDate = new Date(
+        randomDate.getFullYear() + 5,
+        randomDate.getMonth(),
+        randomDate.getDate()
+      );
+    }
+
+    return [
+      age,
+      randomDate.toISOString().split("T")[0],
+      anotherDate.toISOString().split("T")[0],
+    ];
+  }
+
+  function calculateAge(birthDateString) {
+    var today = new Date();
+    var birthDate = new Date(birthDateString);
+
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+
   const handleChangeChar = () => {
     const gender = getRandom(0, 1);
     const randomChar = generateRandomCharacter(gender);
@@ -260,6 +370,9 @@ const DriverLicense = ({ browserWindowWidth }) => {
       firstName = getRandom(0, human.femaleFirstName.length - 1);
     }
     const lastName = getRandom(0, human.lastName.length - 1);
+
+    const dob = getRandomDate();
+    const [age, issuedDate, expiryDate] = generateDates(dob);
     setAvatar({
       avatarSettings: randomChar,
       gender: gender,
@@ -267,14 +380,13 @@ const DriverLicense = ({ browserWindowWidth }) => {
       lastName: lastName,
       address: getRandom(100, 200),
       height: getRandom(59, 73),
-      dob: getRandomDate(),
+      dob: dob,
+      age: age,
       signature: getRandom(50, 100),
+      issuedDate: issuedDate,
+      expiryDate: expiryDate,
     });
   };
-
-  useEffect(() => {
-    console.log(avatar);
-  }, [avatar]);
 
   useEffect(() => {
     handleChangeChar();
@@ -287,61 +399,77 @@ const DriverLicense = ({ browserWindowWidth }) => {
         <div className="dl-card-title">Driver License</div>
         <div className="dl-card-divider"></div>
         {avatar && (
-          <div className="dl-card-photo-info">
-            <div className="dl-card-photo-container">
-              <div className="dl-card-photo">
-                <FaceCreator
-                  {...avatar.avatarSettings}
-                  height={150}
-                  width={150}
-                />
+          <>
+            <div className="dl-card-photo-info">
+              <div className="dl-card-photo-container">
+                <div className="dl-card-photo">
+                  <FaceCreator
+                    {...avatar.avatarSettings}
+                    height={150}
+                    width={150}
+                  />
+                </div>
+                <div className="dl-card-photo-signature">
+                  {`Sign: `}
+                  <RandomZigZag
+                    givenWidth={
+                      browserWindowWidth <= 768
+                        ? avatar.signature * 0.7
+                        : avatar.signature
+                    }
+                    givenColor={"rgb(219,219,219)"}
+                  />
+                </div>
               </div>
-              <div className="dl-card-photo-signature">
-                {`Sign: `}
-                <RandomZigZag
-                  givenWidth={
-                    browserWindowWidth <= 768
-                      ? avatar.signature * 0.7
-                      : avatar.signature
-                  }
-                  givenColor={"rgb(219,219,219)"}
-                />
+              <div className="dl-card-info">
+                <div>
+                  <span>Name:</span>
+                  {` ${
+                    avatar.gender === 0
+                      ? human.maleFirstName[avatar.firstName]
+                      : human.femaleFirstName[avatar.firstName]
+                  } ${human.lastName[avatar.lastName]}`}
+                </div>
+                <div>
+                  <span>Gender:</span>
+                  {` ${avatar.gender === 0 ? "Male" : "Female"}`}
+                </div>
+                <div>
+                  <span>{`Address: `}</span>
+                  <RandomZigZag
+                    givenWidth={
+                      browserWindowWidth <= 768
+                        ? avatar.address * 0.7
+                        : avatar.address
+                    }
+                    givenColor={"rgb(219,219,219)"}
+                  />
+                </div>
+                <div>
+                  <span>{`Height: `}</span>
+                  {`${Math.floor(avatar.height / 12)}'${avatar.height % 12}"`}
+                </div>
+                <div>
+                  <span>{`DOB: `}</span>
+                  {avatar.dob}
+                </div>
+                <div>
+                  <span>{`Age: `}</span>
+                  {avatar.age}
+                </div>
               </div>
             </div>
-            <div className="dl-card-info">
+            <div className="dl-card-issued-expiry-container">
               <div>
-                <span>Name:</span>
-                {` ${
-                  avatar.gender === 0
-                    ? human.maleFirstName[avatar.firstName]
-                    : human.femaleFirstName[avatar.firstName]
-                } ${human.lastName[avatar.lastName]}`}
+                <span>{`Issued Date: `}</span>
+                {avatar.issuedDate}
               </div>
               <div>
-                <span>Gender:</span>
-                {` ${avatar.gender === 0 ? "Male" : "Female"}`}
-              </div>
-              <div>
-                <span>{`Address: `}</span>
-                <RandomZigZag
-                  givenWidth={
-                    browserWindowWidth <= 768
-                      ? avatar.address * 0.7
-                      : avatar.address
-                  }
-                  givenColor={"rgb(219,219,219)"}
-                />
-              </div>
-              <div>
-                <span>{`Height: `}</span>
-                {`${Math.floor(avatar.height / 12)}'${avatar.height % 12}"`}
-              </div>
-              <div>
-                <span>{`DOB: `}</span>
-                {avatar.dob}
+                <span>{`Expiry Date: `}</span>
+                {avatar.expiryDate}
               </div>
             </div>
-          </div>
+          </>
         )}
       </div>
       <div onClick={handleChangeChar}>Change</div>
