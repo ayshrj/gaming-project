@@ -27,6 +27,16 @@ const DriverLicense = ({ browserWindowWidth }) => {
       "#FFDABE",
       "#FFE5C8",
     ],
+    hairColor: [
+      "#000000", // Black
+      "#2B1D0E", // Dark Brown
+      "#5C3C20", // Medium Brown
+      "#A7856A", // Light Brown
+      "#DCD0BA", // Blonde
+      "#E9EDEF", // Platinum Blonde
+      "#A0522D", // Red
+      "#808080", // Grey
+    ],
     maleFirstName: [
       "Aarav",
       "Vihaan",
@@ -191,7 +201,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
         gender === 0
           ? human.maleHair[getRandom(0, human.maleHair.length - 1)]
           : human.femaleHair[getRandom(0, human.femaleHair.length - 1)],
-      hairFill: generateRandomColor(),
+      hairFill: human.hairColor[getRandom(0, human.hairColor.length - 1)],
       hairStroke: "#1C1C1C",
       skinColor: human.skinTypes[getRandom(0, human.skinTypes.length - 1)],
       skinBorder: "#000000",
@@ -258,6 +268,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
       address: getRandom(100, 200),
       height: getRandom(59, 73),
       dob: getRandomDate(),
+      signature: getRandom(50, 100),
     });
   };
 
@@ -273,14 +284,29 @@ const DriverLicense = ({ browserWindowWidth }) => {
     <div className="dl-container">
       <h1>Driver License</h1>
       <div className="dl-card">
+        <div className="dl-card-title">Driver License</div>
+        <div className="dl-card-divider"></div>
         {avatar && (
-          <>
-            <div className="dl-card-photo">
-              <FaceCreator
-                {...avatar.avatarSettings}
-                height={200}
-                width={200}
-              />
+          <div className="dl-card-photo-info">
+            <div className="dl-card-photo-container">
+              <div className="dl-card-photo">
+                <FaceCreator
+                  {...avatar.avatarSettings}
+                  height={150}
+                  width={150}
+                />
+              </div>
+              <div className="dl-card-photo-signature">
+                {`Sign: `}
+                <RandomZigZag
+                  givenWidth={
+                    browserWindowWidth <= 768
+                      ? avatar.signature * 0.7
+                      : avatar.signature
+                  }
+                  givenColor={"rgb(219,219,219)"}
+                />
+              </div>
             </div>
             <div className="dl-card-info">
               <div>
@@ -303,6 +329,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
                       ? avatar.address * 0.7
                       : avatar.address
                   }
+                  givenColor={"rgb(219,219,219)"}
                 />
               </div>
               <div>
@@ -314,7 +341,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
                 {avatar.dob}
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
       <div onClick={handleChangeChar}>Change</div>
