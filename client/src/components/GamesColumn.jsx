@@ -51,6 +51,79 @@ const GamesColumn = ({ browserWindowWidth }) => {
       <div className="games">
         <div
           className={`game-container ${
+            gameInfoOpen.driverlicense ? "game-info-open" : ""
+          }`}
+          onClick={() => handleGameInfo("driverlicense")}
+        >
+          <div className="game-header">
+            <div onClick={() => navigate("/games/driverlicense")}>
+              Driver License
+            </div>
+            <div
+              className={`game-info-button ${
+                gameInfoOpen.driverlicense ? "game-info-open" : ""
+              }`}
+            >
+              <img
+                className={`${
+                  gameInfoOpen.driverlicense && browserWindowWidth > 1000
+                    ? "game-info-open"
+                    : "game-info-closed"
+                }`}
+                onClick={() => navigate("/games/driverlicense")}
+                src={IconDriverLicense}
+                alt="IconDriverLicense"
+              />
+              <div>
+                {gameInfoOpen.driverlicense ? (
+                  <IconChevronUp />
+                ) : (
+                  <IconChevronDown />
+                )}
+              </div>
+            </div>
+          </div>
+          <div
+            className={`game-info-text ${
+              !gameInfoOpen.driverlicense ? "no-display" : ""
+            } ${browserWindowWidth < 1000 ? "game-info-right-margin" : ""}`}
+          >
+            <div>Game General Info</div>
+            <div>
+              <br />
+              Driver License Quiz is an engaging game that challenges players'
+              observation and memory skills.
+              <ol>
+                <li>
+                  Study the driver license presented at the beginning of each
+                  level.
+                </li>
+                <li>
+                  After viewing the license, answer questions based on the
+                  details from the current and previous licenses shown.
+                </li>
+                <li>
+                  Use your memory to recall information such as the driver's
+                  name, date of birth, license number, or any other relevant
+                  details.
+                </li>
+                <li>
+                  Progress through levels by answering questions correctly.
+                </li>
+                <li>
+                  Remember, selecting the wrong option will result in the game
+                  ending.
+                </li>
+                <li>
+                  Be sharp and attentive to detail to avoid pitfalls and advance
+                  successfully.
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`game-container ${
             gameInfoOpen.sudoku ? "game-info-open" : ""
           }`}
           onClick={() => handleGameInfo("sudoku")}
@@ -529,56 +602,6 @@ const GamesColumn = ({ browserWindowWidth }) => {
                   possible or by reducing the number of turns it takes to
                   complete the game.
                 </li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        <div
-          className={`game-container ${
-            gameInfoOpen.driverlicense ? "game-info-open" : ""
-          }`}
-          onClick={() => handleGameInfo("driverlicense")}
-        >
-          <div className="game-header">
-            <div onClick={() => navigate("/games/driverlicense")}>
-              Driver License
-            </div>
-            <div
-              className={`game-info-button ${
-                gameInfoOpen.driverlicense ? "game-info-open" : ""
-              }`}
-            >
-              <img
-                className={`${
-                  gameInfoOpen.driverlicense && browserWindowWidth > 1000
-                    ? "game-info-open"
-                    : "game-info-closed"
-                }`}
-                onClick={() => navigate("/games/driverlicense")}
-                src={IconDriverLicense}
-                alt="IconDriverLicense"
-              />
-              <div>
-                {gameInfoOpen.driverlicense ? (
-                  <IconChevronUp />
-                ) : (
-                  <IconChevronDown />
-                )}
-              </div>
-            </div>
-          </div>
-          <div
-            className={`game-info-text ${
-              !gameInfoOpen.driverlicense ? "no-display" : ""
-            } ${browserWindowWidth < 1000 ? "game-info-right-margin" : ""}`}
-          >
-            <div>Game General Info</div>
-            <div>
-              <br />
-              Instructions:
-              <ol>
-                <li>Step 1</li>
-                <li>Step 2</li>
               </ol>
             </div>
           </div>
