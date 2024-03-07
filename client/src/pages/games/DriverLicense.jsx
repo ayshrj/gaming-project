@@ -127,13 +127,11 @@ const DriverLicense = ({ browserWindowWidth }) => {
   function generateQuestionWithOptions() {
     const person = avatarDataset[getRandom(0, avatarDataset.length - 1)];
     const randomProperty = getRandom(0, 5);
-    let question, currentCorrectOption, options, answerType;
-
-    console.log("person.gender", person.gender);
+    let questionText, currentCorrectOption, options, answerType;
 
     switch (randomProperty) {
       case 0:
-        question = `What is the age of ${
+        questionText = `What is the age of ${
           person.gender === 0
             ? human.maleFirstName[person.firstName]
             : human.femaleFirstName[person.firstName]
@@ -143,13 +141,13 @@ const DriverLicense = ({ browserWindowWidth }) => {
         answerType = "age";
         break;
       case 1:
-        question = `What was the expiry date of the license of the person whose age was ${person.age} years old?`;
+        questionText = `What was the expiry date of the license of the person whose age was ${person.age} years old?`;
         options = [person.expiryDate];
         currentCorrectOption = person.expiryDate;
         answerType = "date";
         break;
       case 2:
-        question = `What was the expiry date of the license of ${
+        questionText = `What was the expiry date of the license of ${
           person.gender === 0
             ? human.maleFirstName[person.firstName]
             : human.femaleFirstName[person.firstName]
@@ -159,13 +157,13 @@ const DriverLicense = ({ browserWindowWidth }) => {
         answerType = "date";
         break;
       case 3:
-        question = `What was the issued date of the license of the person whose age was ${person.age} years old?`;
+        questionText = `What was the issued date of the license of the person whose age was ${person.age} years old?`;
         options = [person.issuedDate];
         currentCorrectOption = person.issuedDate;
         answerType = "date";
         break;
       case 4:
-        question = `What was the issued date of the license of ${
+        questionText = `What was the issued date of the license of ${
           person.gender === 0
             ? human.maleFirstName[person.firstName]
             : human.femaleFirstName[person.firstName]
@@ -175,7 +173,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
         answerType = "date";
         break;
       case 5:
-        question = `What is the DOB of ${
+        questionText = `What is the DOB of ${
           person.gender === 0
             ? human.maleFirstName[person.firstName]
             : human.femaleFirstName[person.firstName]
@@ -185,7 +183,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
         answerType = "date";
         break;
       case 6:
-        question = `What is the month ${
+        questionText = `What is the month ${
           person.gender === 0
             ? human.maleFirstName[person.firstName]
             : human.femaleFirstName[person.firstName]
@@ -220,19 +218,32 @@ const DriverLicense = ({ browserWindowWidth }) => {
 
     for (let i = 0; i < 4; ++i) {
       if (options[(i + randomStartPoint) % 4] === currentCorrectOption) {
-        if (answerIndex !== -1) {
-          if (answerType === "age") {
-            options[(i + randomStartPoint) % 4] =
-              options[(i + randomStartPoint) % 4] +
-              (Math.random() < 0.5 ? -1 : 1) * getRandom(1, 3);
-          } else if (answerType === "date" || answerType === "month") {
-            options[(i + randomStartPoint) % 4] = getRandomDate({
-              firstDate: options[(i + randomStartPoint) % 4],
-              dateFromNow: (Math.random() < 0.5 ? -1 : 1) * getRandom(1, 5),
-            });
+        answerIndex = (i + randomStartPoint) % 4;
+      }
+
+      const checkBefore = () => {
+        for (let j = 0; j < i; ++j) {
+          if (
+            options[(j + randomStartPoint) % 4] ===
+            options[(i + randomStartPoint) % 4]
+          ) {
+            return false;
           }
-        } else {
-          answerIndex = (i + randomStartPoint) % 4;
+        }
+
+        return true;
+      };
+
+      while (checkBefore() === false) {
+        if (answerType === "age") {
+          options[(i + randomStartPoint) % 4] =
+            options[(i + randomStartPoint) % 4] +
+            (Math.random() < 0.5 ? -1 : 1) * getRandom(1, 3);
+        } else if (answerType === "date" || answerType === "month") {
+          options[(i + randomStartPoint) % 4] = getRandomDate({
+            firstDate: options[(i + randomStartPoint) % 4],
+            dateFromNow: (Math.random() < 0.5 ? -1 : 1) * getRandom(1, 5),
+          });
         }
       }
 
@@ -242,7 +253,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
       }
     }
 
-    return { question, options, answer: answerIndex };
+    return { question: questionText, options, answer: answerIndex };
   }
 
   useEffect(() => {
