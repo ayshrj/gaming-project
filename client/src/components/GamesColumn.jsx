@@ -88,7 +88,6 @@ const GamesColumn = ({ browserWindowWidth }) => {
               !gameInfoOpen.driverlicense ? "no-display" : ""
             } ${browserWindowWidth < 1000 ? "game-info-right-margin" : ""}`}
           >
-            <div>Game General Info</div>
             <div>
               <br />
               Driver License Quiz is an engaging game that challenges players'
