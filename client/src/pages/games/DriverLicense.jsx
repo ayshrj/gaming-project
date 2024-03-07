@@ -25,14 +25,14 @@ const Questionnaire = ({
     setCurrentPage(currentPage + 1);
     setFeedback(null);
     setSelectedOption(null);
-    if (currentPage + 1 === questionDataset.length - 1) {
-      setShowDLNextButton(true); // Show the button on the second last question
-    }
   };
 
   const handleOptionChange = (event) => {
     const selectedOptionIndex = parseInt(event.target.value);
     setSelectedOption(selectedOptionIndex);
+    if (currentPage === questionDataset.length - 1) {
+      setShowDLNextButton(true);
+    }
 
     const correctAnswerIndex = questionDataset[currentPage].answer;
     if (selectedOptionIndex === correctAnswerIndex) {
@@ -43,11 +43,11 @@ const Questionnaire = ({
   };
 
   return (
-    <div>
+    <div className="dl-questionnaire-container">
       <div>
         <p>{questionDataset[currentPage].question}</p>
         {questionDataset[currentPage].options.map((option, optionIndex) => (
-          <div key={optionIndex}>
+          <div className="dl-questionnaire-container-options" key={optionIndex}>
             <input
               type="radio"
               id={`option${optionIndex}`}
@@ -55,16 +55,23 @@ const Questionnaire = ({
               value={optionIndex}
               checked={selectedOption === optionIndex} // Set checked based on selectedOption
               onChange={handleOptionChange}
+              hidden={true}
             />
-            <label htmlFor={`option${optionIndex}`}>{option}</label>
+            <label
+              className="dl-questionnaire-container-option"
+              htmlFor={`option${optionIndex}`}
+            >
+              {option}
+            </label>
           </div>
         ))}
         {feedback && <p>{feedback}</p>}
       </div>
-      <div>
-        {selectedOption !== null &&
+      <div className="dl-questionnaire-next-button-container">
+        {feedback !== "Game Over" &&
+          selectedOption !== null &&
           currentPage < questionDataset.length - 1 && (
-            <div className="dl-next-button" onClick={handleNext}>
+            <div className="dl-questionnaire-next-button" onClick={handleNext}>
               Next
             </div>
           )}
@@ -78,16 +85,12 @@ const DriverLicense = ({ browserWindowWidth }) => {
   const [avatarDataset, setAvatarDataset] = useState([]);
   const [questionDataset, setQuestionDataset] = useState([]);
   const [currentLevel, setCurrentLevel] = useState(0);
-  const [currentStreak, setCurrentStreak] = useState(0);
   const [showDriverLicense, setShowDriverLicense] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [showDLNextButton, setShowDLNextButton] = useState(true);
   const [selectedOption, setSelectedOption] = useState(null);
   const [feedback, setFeedback] = useState(null);
-
-  useEffect(() => {
-    setShowDriverLicense(true);
-  }, []);
+  const [currentStreak, setCurrentStreak] = useState(0);
 
   const handleShowDriverLicense = () => {
     if (showDriverLicense === true) {
@@ -99,6 +102,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
       setCurrentPage(0);
       setFeedback(null);
       setSelectedOption(null);
+      setCurrentLevel(currentLevel + 1);
     }
   };
 
@@ -106,7 +110,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
     const licenseGenerated = completeDriverLicense();
     setNewAvatar(licenseGenerated);
 
-    setAvatarDataset((prev) => [...avatarDataset, licenseGenerated]);
+    setAvatarDataset((prev) => [...prev, licenseGenerated]);
   };
 
   useEffect(() => {
@@ -122,13 +126,15 @@ const DriverLicense = ({ browserWindowWidth }) => {
 
   function generateQuestionWithOptions() {
     const person = avatarDataset[getRandom(0, avatarDataset.length - 1)];
-    const randomProperty = getRandom(0, 2);
+    const randomProperty = getRandom(0, 5);
     let question, currentCorrectOption, options, answerType;
+
+    console.log("person.gender", person.gender);
 
     switch (randomProperty) {
       case 0:
         question = `What is the age of ${
-          human.gender === 0
+          person.gender === 0
             ? human.maleFirstName[person.firstName]
             : human.femaleFirstName[person.firstName]
         } ${human.lastName[person.lastName]}?`;
@@ -137,14 +143,14 @@ const DriverLicense = ({ browserWindowWidth }) => {
         answerType = "age";
         break;
       case 1:
-        question = `What was the expiry date of the person whose age was ${person.age}?`;
+        question = `What was the expiry date of the license of the person whose age was ${person.age} years old?`;
         options = [person.expiryDate];
         currentCorrectOption = person.expiryDate;
         answerType = "date";
         break;
       case 2:
-        question = `What was the expiry date of ${
-          human.gender === 0
+        question = `What was the expiry date of the license of ${
+          person.gender === 0
             ? human.maleFirstName[person.firstName]
             : human.femaleFirstName[person.firstName]
         } ${human.lastName[person.lastName]}?`;
@@ -153,14 +159,14 @@ const DriverLicense = ({ browserWindowWidth }) => {
         answerType = "date";
         break;
       case 3:
-        question = `What was the issued date of the person whose age was ${person.age}?`;
+        question = `What was the issued date of the license of the person whose age was ${person.age} years old?`;
         options = [person.issuedDate];
         currentCorrectOption = person.issuedDate;
         answerType = "date";
         break;
       case 4:
-        question = `What was the issued date of ${
-          human.gender === 0
+        question = `What was the issued date of the license of ${
+          person.gender === 0
             ? human.maleFirstName[person.firstName]
             : human.femaleFirstName[person.firstName]
         } ${human.lastName[person.lastName]}?`;
@@ -170,13 +176,23 @@ const DriverLicense = ({ browserWindowWidth }) => {
         break;
       case 5:
         question = `What is the DOB of ${
-          human.gender === 0
+          person.gender === 0
             ? human.maleFirstName[person.firstName]
             : human.femaleFirstName[person.firstName]
         } ${human.lastName[person.lastName]}?`;
         options = [person.dob];
         currentCorrectOption = person.dob;
         answerType = "date";
+        break;
+      case 6:
+        question = `What is the month ${
+          person.gender === 0
+            ? human.maleFirstName[person.firstName]
+            : human.femaleFirstName[person.firstName]
+        } ${human.lastName[person.lastName]} was born?`;
+        options = [person.dob];
+        currentCorrectOption = person.dob;
+        answerType = "month";
         break;
     }
 
@@ -187,9 +203,11 @@ const DriverLicense = ({ browserWindowWidth }) => {
         randomOption[
           randomProperty === 0
             ? "age"
-            : randomProperty === 1
+            : randomProperty === 1 || randomProperty === 2
             ? "expiryDate"
-            : "address"
+            : randomProperty === 3 || randomProperty === 4
+            ? "expiryDate"
+            : "dob"
         ]
       );
     }
@@ -198,21 +216,29 @@ const DriverLicense = ({ browserWindowWidth }) => {
     options.sort(() => Math.random() - 0.5);
 
     let answerIndex = -1;
+    const randomStartPoint = getRandom(0, 3);
 
     for (let i = 0; i < 4; ++i) {
-      if (options[i] === currentCorrectOption) {
+      if (options[(i + randomStartPoint) % 4] === currentCorrectOption) {
         if (answerIndex !== -1) {
-          if (answerType === "age" || answerType === "address") {
-            options[i] = (Math.random() < 0.5 ? -1 : 1) * getRandom(1, 9);
-          } else if (answerType === "date") {
-            options[i] = getRandomDate({
-              firstDate: options[i],
+          if (answerType === "age") {
+            options[(i + randomStartPoint) % 4] =
+              options[(i + randomStartPoint) % 4] +
+              (Math.random() < 0.5 ? -1 : 1) * getRandom(1, 3);
+          } else if (answerType === "date" || answerType === "month") {
+            options[(i + randomStartPoint) % 4] = getRandomDate({
+              firstDate: options[(i + randomStartPoint) % 4],
               dateFromNow: (Math.random() < 0.5 ? -1 : 1) * getRandom(1, 5),
             });
           }
         } else {
-          answerIndex = i;
+          answerIndex = (i + randomStartPoint) % 4;
         }
+      }
+
+      if (answerType === "month") {
+        options[(i + randomStartPoint) % 4] =
+          options[(i + randomStartPoint) % 4].split("-")[1];
       }
     }
 
@@ -225,23 +251,35 @@ const DriverLicense = ({ browserWindowWidth }) => {
     }
   }, [showDriverLicense]);
 
-  useEffect(() => {
+  const makeDataset = () => {
     if (avatarDataset.length !== 0) {
       let newQuestionDataset = [];
       let newQuestionDatasetSize;
 
       switch (currentLevel) {
         case 0:
-          newQuestionDatasetSize = 5;
+          newQuestionDatasetSize = 2;
           break;
         case 1:
-          newQuestionDatasetSize = 5;
+          newQuestionDatasetSize = 3;
           break;
         case 2:
-          newQuestionDatasetSize = 6;
+          newQuestionDatasetSize = 4;
           break;
         case 3:
+          newQuestionDatasetSize = 5;
+          break;
+        case 4:
           newQuestionDatasetSize = 6;
+          break;
+        case 5:
+          newQuestionDatasetSize = 7;
+          break;
+        case 6:
+          newQuestionDatasetSize = 8;
+          break;
+        case 7:
+          newQuestionDatasetSize = 9;
           break;
         default:
           break;
@@ -253,11 +291,25 @@ const DriverLicense = ({ browserWindowWidth }) => {
 
       setQuestionDataset(newQuestionDataset);
     }
+  };
+
+  useEffect(() => {
+    makeDataset();
   }, [avatarDataset]);
 
   useEffect(() => {
     console.log(questionDataset);
   }, [questionDataset]);
+
+  const handleReset = () => {
+    handleChangeChar();
+    setCurrentLevel(0);
+    setShowDriverLicense(true);
+    setCurrentPage(0);
+    setShowDLNextButton(true);
+    setSelectedOption(null);
+    setFeedback(null);
+  };
 
   return (
     <div className="dl-container">
@@ -357,9 +409,14 @@ const DriverLicense = ({ browserWindowWidth }) => {
           setFeedback={setFeedback}
         />
       )}
-      {showDLNextButton && (
+      {feedback !== "Game Over" && showDLNextButton && (
         <div className="dl-next-button" onClick={handleShowDriverLicense}>
           Next
+        </div>
+      )}
+      {feedback === "Game Over" && (
+        <div className="dl-next-button" onClick={handleReset}>
+          Reset
         </div>
       )}
     </div>

@@ -13,6 +13,10 @@
     --dl-card-photo-container-margin: 20px;
     --dl-card-issued-expiry-container-font-size: 12px;
     --dl-card-issued-expiry-container-margin-top: 20px;
+    --dl-buttons-width: 400px;
+    --dl-buttons-margin: 10px;
+    --dl-buttons-padding: 10px;
+    --dl-buttons-border-radius: 3px;
 }
 
 .dl-container {
@@ -104,15 +108,49 @@
     color: rgb(219, 219, 219)
 }
 
-.dl-next-button {
-    margin: 10px;
-    background-color: var(--para-color);
-    padding: 10px;
-    border-radius: 3px;
+
+.dl-questionnaire-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
-.dl-next-button:hover {
+.dl-questionnaire-container-options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dl-questionnaire-next-button, .dl-next-button, .dl-questionnaire-container-option {
+    margin: var(--dl-buttons-margin);
+    padding: var(--dl-buttons-padding);
+    border-radius: var(--dl-buttons-border-radius);
+    width: var(--dl-buttons-width);
+}
+
+.dl-questionnaire-next-button, .dl-next-button {
+    background-color: var(--para-color);
+}
+
+.dl-questionnaire-container-option {
+    background-color: var(--border-color);
+}
+
+.dl-questionnaire-container-option:hover {
+    background-color: hsl(0, 3%, 44%);
+}
+
+
+.dl-questionnaire-next-button:hover, .dl-next-button:hover {
     background-color: rgb(218, 115, 68);
+}
+
+.dl-questionnaire-next-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 630px) {
@@ -154,4 +192,12 @@
         font-size: calc(var(--dl-card-reduction)*var(--dl-card-issued-expiry-container-font-size));
         margin-top: calc(var(--dl-card-reduction)*var(--dl-card-issued-expiry-container-margin-top));
     }
+
+    .dl-questionnaire-next-button, .dl-next-button, .dl-questionnaire-container-option {
+        margin: calc(var(--dl-card-reduction)*var(--dl-buttons-margin));
+        padding: calc(var(--dl-card-reduction)*var(--dl-buttons-padding));
+        border-radius: calc(var(--dl-card-reduction)*var(--dl-buttons-border-radius));
+        width: calc(var(--dl-card-reduction)*var(--dl-buttons-width));
+    }
+
 }
