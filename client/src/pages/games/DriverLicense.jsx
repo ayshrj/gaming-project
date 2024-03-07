@@ -2,496 +2,366 @@ import React, { useEffect, useState } from "react";
 import "./DriverLicense.css";
 import RandomZigZag from "../../util/RandomZigZag";
 import FaceCreator from "../../util/FaceCreator";
+import {
+  human,
+  generateRandomCharacter,
+  getRandomDate,
+  generateDates,
+  completeDriverLicense,
+  getRandom,
+} from "../../util/games/DriverLicenseHumanProperties";
+
+const Questionnaire = ({
+  questionDataset,
+  currentPage,
+  setCurrentPage,
+  setShowDLNextButton,
+  selectedOption,
+  setSelectedOption,
+  feedback,
+  setFeedback,
+}) => {
+  const handleNext = () => {
+    setCurrentPage(currentPage + 1);
+    setFeedback(null);
+    setSelectedOption(null);
+    if (currentPage + 1 === questionDataset.length - 1) {
+      setShowDLNextButton(true); // Show the button on the second last question
+    }
+  };
+
+  const handleOptionChange = (event) => {
+    const selectedOptionIndex = parseInt(event.target.value);
+    setSelectedOption(selectedOptionIndex);
+
+    const correctAnswerIndex = questionDataset[currentPage].answer;
+    if (selectedOptionIndex === correctAnswerIndex) {
+      setFeedback("Correct");
+    } else {
+      setFeedback("Game Over");
+    }
+  };
+
+  return (
+    <div>
+      <div>
+        <p>{questionDataset[currentPage].question}</p>
+        {questionDataset[currentPage].options.map((option, optionIndex) => (
+          <div key={optionIndex}>
+            <input
+              type="radio"
+              id={`option${optionIndex}`}
+              name={`question${currentPage}`}
+              value={optionIndex}
+              checked={selectedOption === optionIndex} // Set checked based on selectedOption
+              onChange={handleOptionChange}
+            />
+            <label htmlFor={`option${optionIndex}`}>{option}</label>
+          </div>
+        ))}
+        {feedback && <p>{feedback}</p>}
+      </div>
+      <div>
+        {selectedOption !== null &&
+          currentPage < questionDataset.length - 1 && (
+            <div className="dl-next-button" onClick={handleNext}>
+              Next
+            </div>
+          )}
+      </div>
+    </div>
+  );
+};
 
 const DriverLicense = ({ browserWindowWidth }) => {
-  const [avatar, setAvatar] = useState(null);
+  const [newAvatar, setNewAvatar] = useState(null);
+  const [avatarDataset, setAvatarDataset] = useState([]);
+  const [questionDataset, setQuestionDataset] = useState([]);
+  const [currentLevel, setCurrentLevel] = useState(0);
+  const [currentStreak, setCurrentStreak] = useState(0);
+  const [showDriverLicense, setShowDriverLicense] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [showDLNextButton, setShowDLNextButton] = useState(true);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [feedback, setFeedback] = useState(null);
 
-  const human = {
-    skinTypes: [
-      "#2D221E",
-      "#3C2E28",
-      "#4B3932",
-      "#5A453C",
-      "#695046",
-      "#785C50",
-      "#87675A",
-      "#967264",
-      "#A57E6E",
-      "#B48A78",
-      "#C39582",
-      "#D2A18C",
-      "#E1AC96",
-      "#F0B8A0",
-      "#FFC3AA",
-      "#FFCEB4",
-      "#FFDABE",
-      "#FFE5C8",
-    ],
-    hairColor: [
-      "#000000", // Black
-      "#2B1D0E", // Dark Brown
-      "#5C3C20", // Medium Brown
-      "#A7856A", // Light Brown
-      "#DCD0BA", // Blonde
-      "#E9EDEF", // Platinum Blonde
-      "#A0522D", // Red
-      "#808080", // Grey
-    ],
-    maleFirstName: [
-      "Aarav",
-      "Vihaan",
-      "Ishaan",
-      "Surya",
-      "Arjun",
-      "Rohan",
-      "Aditya",
-      "Vikram",
-      "Rahul",
-      "Aryan",
-      "Dhruv",
-      "Nikhil",
-      "Anshul",
-      "Rajesh",
-      "Suresh",
-      "Mohan",
-      "Gaurav",
-      "Harish",
-      "Akash",
-      "Pranav",
-      "Kartik",
-      "Ajay",
-      "Ravi",
-      "Samar",
-      "Manish",
-      "Vivek",
-      "Kunal",
-      "Abhishek",
-      "Siddharth",
-      "Ankit",
-      "Vipul",
-      "Mayank",
-      "Amit",
-      "Varun",
-      "Pankaj",
-      "Naveen",
-      "Rajat",
-      "Sanket",
-      "Tarun",
-      "Uday",
-      "Vishal",
-      "Yash",
-      "Ayush",
-      "Sahil",
-      "Karan",
-      "Lokesh",
-      "Omkar",
-      "Prateek",
-      "Rishabh",
-      "Tanmay",
-    ],
-    femaleFirstName: [
-      "Aarya",
-      "Priya",
-      "Riya",
-      "Saanvi",
-      "Anika",
-      "Tanvi",
-      "Meera",
-      "Isha",
-      "Khushi",
-      "Palak",
-      "Divya",
-      "Kriti",
-      "Neha",
-      "Pooja",
-      "Ritu",
-      "Sanya",
-      "Tanya",
-      "Uma",
-      "Vani",
-      "Aisha",
-      "Bina",
-      "Chaya",
-      "Diya",
-      "Esha",
-      "Falak",
-      "Gauri",
-      "Hina",
-      "Indu",
-      "Jaya",
-      "Kavya",
-      "Lata",
-      "Mina",
-      "Naina",
-      "Ojasvi",
-      "Preeti",
-      "Falguni",
-      "Rashi",
-      "Simran",
-      "Trisha",
-      "Urvashi",
-      "Vidya",
-      "Rekha",
-      "Anita",
-      "Yamini",
-      "Zara",
-      "Anushka",
-      "Bhavna",
-      "Charu",
-      "Daksha",
-      "Ekta",
-    ],
-    lastName: [
-      "Sharma",
-      "Verma",
-      "Gupta",
-      "Mehta",
-      "Jain",
-      "Patel",
-      "Kumar",
-      "Singh",
-      "Bose",
-      "Mukherjee",
-      "Banerjee",
-      "Chatterjee",
-      "Iyer",
-      "Menon",
-      "Reddy",
-      "Srinivasan",
-      "Ghosh",
-      "Kulkarni",
-      "Raj",
-      "Dutta",
-      "Thakur",
-      "Pillai",
-      "Chopra",
-      "Malhotra",
-      "Rao",
-      "Naidu",
-      "Aggarwal",
-      "Goel",
-      "Trivedi",
-      "Chaturvedi",
-      "Varshney",
-    ],
-    maleCloth: [1, 3, 4, 6],
-    femaleCloth: [1, 2, 4, 5, 7],
-    maleHair: [1, 3, 4, 6, 8],
-    femaleHair: [2, 5, 7, 9],
-    maleEye: [1, 2],
-    femaleEye: [3, 4],
+  useEffect(() => {
+    setShowDriverLicense(true);
+  }, []);
+
+  const handleShowDriverLicense = () => {
+    if (showDriverLicense === true) {
+      setShowDriverLicense(false);
+    } else {
+      setShowDLNextButton(true);
+      handleChangeChar();
+      setShowDriverLicense(true);
+      setCurrentPage(0);
+      setFeedback(null);
+      setSelectedOption(null);
+    }
   };
-
-  function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  function generateRandomCharacter(gender) {
-    function generateRandomColor(amount) {
-      //0 to 100
-
-      const r = getRandom(0, 255);
-      const g = getRandom(0, 255);
-      const b = getRandom(0, 255);
-
-      amount = Math.max(0, Math.min(100, amount));
-
-      let lightenedR = r;
-      let lightenedG = g;
-      let lightenedB = b;
-
-      let adjust = Math.floor((amount / 100) * 255);
-
-      lightenedR = Math.min(255, lightenedR + adjust);
-      lightenedG = Math.min(255, lightenedG + adjust);
-      lightenedB = Math.min(255, lightenedB + adjust);
-
-      lightenedR = lightenedR.toString(16).padStart(2, "0");
-      lightenedG = lightenedG.toString(16).padStart(2, "0");
-      lightenedB = lightenedB.toString(16).padStart(2, "0");
-
-      return [`#${r}${g}${b}`, `#${lightenedR}${lightenedG}${lightenedB}`];
-    }
-
-    const [shirtFill, shirtStroke] = generateRandomColor(20);
-
-    const character = {
-      hair:
-        gender === 0
-          ? human.maleHair[getRandom(0, human.maleHair.length - 1)]
-          : human.femaleHair[getRandom(0, human.femaleHair.length - 1)],
-      hairFill: human.hairColor[getRandom(0, human.hairColor.length - 1)],
-      hairStroke: "#1C1C1C",
-      skinColor: human.skinTypes[getRandom(0, human.skinTypes.length - 1)],
-      skinBorder: "#000000",
-      shirt:
-        gender === 0
-          ? human.maleCloth[getRandom(0, human.maleCloth.length - 1)]
-          : human.femaleCloth[getRandom(0, human.femaleCloth.length - 1)],
-      shirtFill: shirtFill,
-      shirtStroke: shirtStroke,
-      shirtDesign: generateRandomColor(),
-      mouth: getRandom(1, 6),
-      mouthFill: "#ff2993",
-      nose: getRandom(1, 7),
-      eye:
-        gender === 0
-          ? human.maleEye[getRandom(0, human.maleEye.length - 1)]
-          : human.femaleEye[getRandom(0, human.femaleEye.length - 1)],
-      eyebrow: getRandom(1, 5),
-      accessory: gender === 0 ? 0 : getRandom(0, 3),
-      accessoryStroke: generateRandomColor(),
-    };
-
-    return character;
-  }
-
-  function getRandomDate() {
-    // Get current date
-    const currentDate = new Date();
-
-    const startDate = new Date("1969-01-07");
-
-    const endDate = new Date(
-      currentDate.getFullYear() - 18,
-      currentDate.getMonth(),
-      currentDate.getDate()
-    );
-
-    const randomTime =
-      startDate.getTime() +
-      Math.random() * (endDate.getTime() - startDate.getTime());
-
-    const randomDate = new Date(randomTime);
-
-    const formattedDate = randomDate.toISOString().split("T")[0];
-
-    return formattedDate;
-  }
-
-  function generateDates(birthDateString) {
-    // based on https://parivahan.gov.in/parivahan//en/content/what-validity-driving-license
-    const birthDate = new Date(birthDateString);
-    const today = new Date();
-    const age =
-      today.getFullYear() -
-      birthDate.getFullYear() -
-      (today.getMonth() < birthDate.getMonth() ||
-      (today.getMonth() === birthDate.getMonth() &&
-        today.getDate() < birthDate.getDate())
-        ? 1
-        : 0);
-    let startDate;
-    let randomDate, anotherDate;
-
-    if (age < 30) {
-      startDate = new Date(
-        birthDate.getFullYear() + 18,
-        birthDate.getMonth(),
-        birthDate.getDate()
-      );
-    } else if (age >= 30 && age < 50) {
-      startDate = new Date(
-        birthDate.getFullYear() + 30,
-        birthDate.getMonth(),
-        birthDate.getDate()
-      );
-    } else if (age >= 50 && age < 55) {
-      startDate = new Date(
-        birthDate.getFullYear() + 50,
-        birthDate.getMonth(),
-        birthDate.getDate()
-      );
-    } else {
-      startDate = new Date(
-        birthDate.getFullYear() + 55,
-        birthDate.getMonth(),
-        birthDate.getDate()
-      );
-    }
-
-    const daysBetween = (today - startDate) / (1000 * 60 * 60 * 24);
-    const randomNumberOfDays = Math.floor(Math.random() * daysBetween);
-    randomDate = new Date(
-      startDate.getTime() + randomNumberOfDays * (1000 * 60 * 60 * 24)
-    );
-
-    if (age < 30) {
-      const potentialAnotherDate = new Date(
-        randomDate.getFullYear() + 20,
-        randomDate.getMonth(),
-        randomDate.getDate()
-      );
-      const age40Date = new Date(
-        birthDate.getFullYear() + 40,
-        birthDate.getMonth(),
-        birthDate.getDate()
-      );
-      anotherDate =
-        potentialAnotherDate > age40Date ? age40Date : potentialAnotherDate;
-    } else if (age >= 30 && age < 50) {
-      anotherDate = new Date(
-        randomDate.getFullYear() + 10,
-        randomDate.getMonth(),
-        randomDate.getDate()
-      );
-    } else if (age >= 50 && age < 55) {
-      const potentialAnotherDate = new Date(
-        randomDate.getFullYear() + 5,
-        randomDate.getMonth(),
-        randomDate.getDate()
-      );
-      const age60Date = new Date(
-        birthDate.getFullYear() + 60,
-        birthDate.getMonth(),
-        birthDate.getDate()
-      );
-      anotherDate =
-        potentialAnotherDate > age60Date ? age60Date : potentialAnotherDate;
-    } else {
-      anotherDate = new Date(
-        randomDate.getFullYear() + 5,
-        randomDate.getMonth(),
-        randomDate.getDate()
-      );
-    }
-
-    return [
-      age,
-      randomDate.toISOString().split("T")[0],
-      anotherDate.toISOString().split("T")[0],
-    ];
-  }
-
-  function calculateAge(birthDateString) {
-    var today = new Date();
-    var birthDate = new Date(birthDateString);
-
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-
-    return age;
-  }
 
   const handleChangeChar = () => {
-    const gender = getRandom(0, 1);
-    const randomChar = generateRandomCharacter(gender);
-    let firstName;
-    if (gender === 0) {
-      firstName = getRandom(0, human.maleFirstName.length - 1);
-    } else {
-      firstName = getRandom(0, human.femaleFirstName.length - 1);
-    }
-    const lastName = getRandom(0, human.lastName.length - 1);
+    const licenseGenerated = completeDriverLicense();
+    setNewAvatar(licenseGenerated);
 
-    const dob = getRandomDate();
-    const [age, issuedDate, expiryDate] = generateDates(dob);
-    setAvatar({
-      avatarSettings: randomChar,
-      gender: gender,
-      firstName: firstName,
-      lastName: lastName,
-      address: getRandom(100, 200),
-      height: getRandom(59, 73),
-      dob: dob,
-      age: age,
-      signature: getRandom(50, 100),
-      issuedDate: issuedDate,
-      expiryDate: expiryDate,
-    });
+    setAvatarDataset((prev) => [...avatarDataset, licenseGenerated]);
   };
+
+  useEffect(() => {
+    console.log(newAvatar);
+  }, [newAvatar]);
+  useEffect(() => {
+    console.log(avatarDataset);
+  }, [avatarDataset]);
 
   useEffect(() => {
     handleChangeChar();
   }, []);
 
+  function generateQuestionWithOptions() {
+    const person = avatarDataset[getRandom(0, avatarDataset.length - 1)];
+    const randomProperty = getRandom(0, 2);
+    let question, currentCorrectOption, options, answerType;
+
+    switch (randomProperty) {
+      case 0:
+        question = `What is the age of ${
+          human.gender === 0
+            ? human.maleFirstName[person.firstName]
+            : human.femaleFirstName[person.firstName]
+        } ${human.lastName[person.lastName]}?`;
+        options = [person.age];
+        currentCorrectOption = person.age;
+        answerType = "age";
+        break;
+      case 1:
+        question = `What was the expiry date of the person whose age was ${person.age}?`;
+        options = [person.expiryDate];
+        currentCorrectOption = person.expiryDate;
+        answerType = "date";
+        break;
+      case 2:
+        question = `What was the expiry date of ${
+          human.gender === 0
+            ? human.maleFirstName[person.firstName]
+            : human.femaleFirstName[person.firstName]
+        } ${human.lastName[person.lastName]}?`;
+        options = [person.expiryDate];
+        currentCorrectOption = person.expiryDate;
+        answerType = "date";
+        break;
+      case 3:
+        question = `What was the issued date of the person whose age was ${person.age}?`;
+        options = [person.issuedDate];
+        currentCorrectOption = person.issuedDate;
+        answerType = "date";
+        break;
+      case 4:
+        question = `What was the issued date of ${
+          human.gender === 0
+            ? human.maleFirstName[person.firstName]
+            : human.femaleFirstName[person.firstName]
+        } ${human.lastName[person.lastName]}?`;
+        options = [person.issuedDate];
+        currentCorrectOption = person.issuedDate;
+        answerType = "date";
+        break;
+      case 5:
+        question = `What is the DOB of ${
+          human.gender === 0
+            ? human.maleFirstName[person.firstName]
+            : human.femaleFirstName[person.firstName]
+        } ${human.lastName[person.lastName]}?`;
+        options = [person.dob];
+        currentCorrectOption = person.dob;
+        answerType = "date";
+        break;
+    }
+
+    for (let i = 0; i < 3; i++) {
+      const randomOption =
+        avatarDataset[getRandom(0, avatarDataset.length - 1)];
+      options.push(
+        randomOption[
+          randomProperty === 0
+            ? "age"
+            : randomProperty === 1
+            ? "expiryDate"
+            : "address"
+        ]
+      );
+    }
+
+    // Shuffle options to randomize the order
+    options.sort(() => Math.random() - 0.5);
+
+    let answerIndex = -1;
+
+    for (let i = 0; i < 4; ++i) {
+      if (options[i] === currentCorrectOption) {
+        if (answerIndex !== -1) {
+          if (answerType === "age" || answerType === "address") {
+            options[i] = (Math.random() < 0.5 ? -1 : 1) * getRandom(1, 9);
+          } else if (answerType === "date") {
+            options[i] = getRandomDate({
+              firstDate: options[i],
+              dateFromNow: (Math.random() < 0.5 ? -1 : 1) * getRandom(1, 5),
+            });
+          }
+        } else {
+          answerIndex = i;
+        }
+      }
+    }
+
+    return { question, options, answer: answerIndex };
+  }
+
+  useEffect(() => {
+    if (!showDriverLicense) {
+      setShowDLNextButton(false);
+    }
+  }, [showDriverLicense]);
+
+  useEffect(() => {
+    if (avatarDataset.length !== 0) {
+      let newQuestionDataset = [];
+      let newQuestionDatasetSize;
+
+      switch (currentLevel) {
+        case 0:
+          newQuestionDatasetSize = 5;
+          break;
+        case 1:
+          newQuestionDatasetSize = 5;
+          break;
+        case 2:
+          newQuestionDatasetSize = 6;
+          break;
+        case 3:
+          newQuestionDatasetSize = 6;
+          break;
+        default:
+          break;
+      }
+      for (let i = 0; i < newQuestionDatasetSize; ++i) {
+        const newGeneratedQuestion = generateQuestionWithOptions();
+        newQuestionDataset.push(newGeneratedQuestion);
+      }
+
+      setQuestionDataset(newQuestionDataset);
+    }
+  }, [avatarDataset]);
+
+  useEffect(() => {
+    console.log(questionDataset);
+  }, [questionDataset]);
+
   return (
     <div className="dl-container">
       <h1>Driver License</h1>
-      <div className="dl-card">
-        <div className="dl-card-title">Driver License</div>
-        <div className="dl-card-divider"></div>
-        {avatar && (
-          <>
-            <div className="dl-card-photo-info">
-              <div className="dl-card-photo-container">
-                <div className="dl-card-photo">
-                  <FaceCreator
-                    {...avatar.avatarSettings}
-                    height={150}
-                    width={150}
-                  />
+      {showDriverLicense && (
+        <div className="dl-card">
+          <div className="dl-card-title">Driver License</div>
+          <div className="dl-card-divider"></div>
+          {newAvatar && (
+            <>
+              <div className="dl-card-photo-info">
+                <div className="dl-card-photo-container">
+                  <div className="dl-card-photo">
+                    <FaceCreator
+                      {...newAvatar.avatarSettings}
+                      height={150}
+                      width={150}
+                    />
+                  </div>
+                  <div className="dl-card-photo-signature">
+                    {`Sign: `}
+                    <RandomZigZag
+                      givenWidth={
+                        browserWindowWidth <= 768
+                          ? newAvatar.signature * 0.7
+                          : newAvatar.signature
+                      }
+                      givenColor={"rgb(219,219,219)"}
+                      givenStrokeWidth={1.5}
+                    />
+                  </div>
                 </div>
-                <div className="dl-card-photo-signature">
-                  {`Sign: `}
-                  <RandomZigZag
-                    givenWidth={
-                      browserWindowWidth <= 768
-                        ? avatar.signature * 0.7
-                        : avatar.signature
-                    }
-                    givenColor={"rgb(219,219,219)"}
-                    givenStrokeWidth={1.5}
-                  />
+                <div className="dl-card-info">
+                  <div>
+                    <span>Name:</span>
+                    {` ${
+                      newAvatar.gender === 0
+                        ? human.maleFirstName[newAvatar.firstName]
+                        : human.femaleFirstName[newAvatar.firstName]
+                    } ${human.lastName[newAvatar.lastName]}`}
+                  </div>
+                  <div>
+                    <span>Gender:</span>
+                    {` ${newAvatar.gender === 0 ? "Male" : "Female"}`}
+                  </div>
+                  <div>
+                    <span>{`Address: `}</span>
+                    <RandomZigZag
+                      givenWidth={
+                        browserWindowWidth <= 768
+                          ? newAvatar.address * 0.7
+                          : newAvatar.address
+                      }
+                      givenColor={"rgb(219,219,219)"}
+                      givenStrokeWidth={1.5}
+                    />
+                  </div>
+                  <div>
+                    <span>{`Height: `}</span>
+                    {`${Math.floor(newAvatar.height / 12)}'${
+                      newAvatar.height % 12
+                    }"`}
+                  </div>
+                  <div>
+                    <span>{`DOB: `}</span>
+                    {newAvatar.dob}
+                  </div>
+                  <div>
+                    <span>{`Age: `}</span>
+                    {newAvatar.age}
+                  </div>
                 </div>
               </div>
-              <div className="dl-card-info">
+              <div className="dl-card-issued-expiry-container">
                 <div>
-                  <span>Name:</span>
-                  {` ${
-                    avatar.gender === 0
-                      ? human.maleFirstName[avatar.firstName]
-                      : human.femaleFirstName[avatar.firstName]
-                  } ${human.lastName[avatar.lastName]}`}
+                  <span>{`Issued Date: `}</span>
+                  {newAvatar.issuedDate}
                 </div>
                 <div>
-                  <span>Gender:</span>
-                  {` ${avatar.gender === 0 ? "Male" : "Female"}`}
-                </div>
-                <div>
-                  <span>{`Address: `}</span>
-                  <RandomZigZag
-                    givenWidth={
-                      browserWindowWidth <= 768
-                        ? avatar.address * 0.7
-                        : avatar.address
-                    }
-                    givenColor={"rgb(219,219,219)"}
-                    givenStrokeWidth={1.5}
-                  />
-                </div>
-                <div>
-                  <span>{`Height: `}</span>
-                  {`${Math.floor(avatar.height / 12)}'${avatar.height % 12}"`}
-                </div>
-                <div>
-                  <span>{`DOB: `}</span>
-                  {avatar.dob}
-                </div>
-                <div>
-                  <span>{`Age: `}</span>
-                  {avatar.age}
+                  <span>{`Expiry Date: `}</span>
+                  {newAvatar.expiryDate}
                 </div>
               </div>
-            </div>
-            <div className="dl-card-issued-expiry-container">
-              <div>
-                <span>{`Issued Date: `}</span>
-                {avatar.issuedDate}
-              </div>
-              <div>
-                <span>{`Expiry Date: `}</span>
-                {avatar.expiryDate}
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-      <div onClick={handleChangeChar}>Change</div>
+            </>
+          )}
+        </div>
+      )}
+      {!showDriverLicense && questionDataset.length > 0 && (
+        <Questionnaire
+          questionDataset={questionDataset}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          setShowDLNextButton={setShowDLNextButton}
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          feedback={feedback}
+          setFeedback={setFeedback}
+        />
+      )}
+      {showDLNextButton && (
+        <div className="dl-next-button" onClick={handleShowDriverLicense}>
+          Next
+        </div>
+      )}
     </div>
   );
 };

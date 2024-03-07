@@ -100,6 +100,21 @@
     color: var(--para-color)
 }
 
+.dl-card-issued-expiry-container>div {
+    color: rgb(219, 219, 219)
+}
+
+.dl-next-button {
+    margin: 10px;
+    background-color: var(--para-color);
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.dl-next-button:hover {
+    background-color: rgb(218, 115, 68);
+}
+
 @media (max-width: 630px) {
     .dl-card-photo>svg {
         width: calc(var(--dl-card-reduction)*150px);

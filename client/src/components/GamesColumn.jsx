@@ -535,7 +535,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
         </div>
         <div
           className={`game-container ${
-            gameInfoOpen.concentration ? "game-info-open" : ""
+            gameInfoOpen.driverlicense ? "game-info-open" : ""
           }`}
           onClick={() => handleGameInfo("driverlicense")}
         >
