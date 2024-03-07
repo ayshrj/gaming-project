@@ -17,6 +17,7 @@
     --dl-buttons-margin: 10px;
     --dl-buttons-padding: 10px;
     --dl-buttons-border-radius: 3px;
+    --dl-questions-container-width: 440px;
 }
 
 .dl-container {
@@ -110,7 +111,7 @@
 
 
 .dl-questionnaire-container {
-    width: 100%;
+    width: var(--dl-questions-container-width);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -198,6 +199,10 @@
         padding: calc(var(--dl-card-reduction)*var(--dl-buttons-padding));
         border-radius: calc(var(--dl-card-reduction)*var(--dl-buttons-border-radius));
         width: calc(var(--dl-card-reduction)*var(--dl-buttons-width));
+    }
+
+    .dl-questionnaire-container {
+        width: calc(var(--dl-card-reduction)*var(--dl-questions-container-width));
     }
 
 }
