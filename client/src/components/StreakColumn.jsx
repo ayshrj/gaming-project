@@ -33,7 +33,7 @@ const StreakColumn = ({ currentStreak, targetStreak, darkMode }) => {
           fillColor={"none"}
           strokeWidth={20}
           strokeLinecap={"round"}
-          text={`${currentStreak}/${targetStreak}`}
+          text={`${currentStreak}/${targetStreak} Days`}
           darkMode={darkMode}
         />
       ) : (

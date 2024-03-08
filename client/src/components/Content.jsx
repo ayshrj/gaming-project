@@ -10,7 +10,6 @@ import Tetris from "../pages/games/Tetris";
 import SnakeGame from "../pages/games/SnakeGame";
 import RockPaperScissor from "../pages/games/RockPaperScissor";
 import Concentration from "../pages/games/Concentration";
-import MemoryGame from "../pages/games/MemoryGame";
 import Profile from "../pages/Profile";
 import Authentication from "../pages/Authentication";
 import Settings from "../pages/Settings";
@@ -132,7 +131,6 @@ const Content = ({
           element={<RockPaperScissor browserWindowWidth={browserWindowWidth} />}
         />
         <Route path="games/concentration" element={<Concentration />} />
-        <Route path="games/memorygame" element={<MemoryGame />} />
         <Route
           path="games/driverlicense"
           element={<DriverLicense browserWindowWidth={browserWindowWidth} />}

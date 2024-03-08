@@ -7,6 +7,7 @@ import { AuthContext } from "./context/AuthContext";
 import { getDoc, doc } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { BrowserRouter } from "react-router-dom";
+import CircleCursor from "./util/CircleCursor";
 
 function App() {
   const [isMobileViewport, setIsMobileViewport] = useState(false);
@@ -67,6 +68,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        {/* <CircleCursor circleSize={20} /> */}
         <div className="app">
           <Navbar
             isLeftPaneOpen={isLeftPaneOpen}

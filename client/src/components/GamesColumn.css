@@ -79,6 +79,14 @@
     display: none;
 }
 
+.game-header>div {
+    transition: color 0.2s ease-in-out;
+}
+
+.game-header>div:hover {
+    color: var(--para-color);
+}
+
 .games * {
     transition: border-color 0.3s ease-in-out, border-type 0.3s ease-in-out, border-width 0.3s ease-in-out;
 }

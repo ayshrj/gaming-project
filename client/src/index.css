@@ -45,6 +45,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
+  cursor: hidden;
   /* background-image: var(--background-image);
   background-blend-mode: var(--background-blend-mode); */
 }
