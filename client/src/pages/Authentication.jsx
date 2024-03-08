@@ -123,6 +123,12 @@ const Authentication = ({
           sentRequests: [],
           friends: [],
           avatar: avatarSettings,
+          highscore: {
+            driverLicense: 0,
+            tetris: 0,
+            snakeGame: 0,
+            rps: 0,
+          },
         }).then(() => {
           navigate("/");
         });

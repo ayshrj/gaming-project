@@ -1,6 +1,9 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState, useContext } from "react";
 import { TetrisUseBoard } from "../../util/games/TetrisUseBoard";
 import "./Tetris.css";
+import { db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { AuthContext } from "../../context/AuthContext";
 import {
   IconArrowLeft,
   IconArrowRight,
@@ -29,10 +32,45 @@ const Tetris = ({ browserWindowWidth }) => {
 
   const [highScore, setHighScore] = useState(0);
 
+  const { userDoc } = useContext(AuthContext);
+
   useEffect(() => {
-    if (score) {
-      const newHighScore = Math.max(score, highScore);
-      setHighScore(newHighScore);
+    try {
+      if (userDoc) {
+        setHighScore(userDoc.highscore.tetris);
+      } else {
+        console.log("User data not found.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, [userDoc]);
+
+  useEffect(() => {
+    if (score > highScore) {
+      setHighScore(score);
+      try {
+        if (userDoc && score > userDoc.highscore.tetris) {
+          const updatedHighscores = {
+            ...userDoc.highscore,
+            tetris: score,
+          };
+
+          updateDoc(doc(db, "users", userDoc.uid), {
+            highscore: updatedHighscores,
+          })
+            .then(() => {
+              console.log("Highscore updated successfully");
+            })
+            .catch((error) => {
+              console.error("Error updating highscore:", error);
+            });
+        } else {
+          console.log("User data not found.");
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   }, [score]);
 

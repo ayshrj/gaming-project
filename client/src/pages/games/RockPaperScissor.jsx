@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./RockPaperScissor.css";
 import {
   IconHandStop,
   IconHandTwoFingers,
   IconHandGrab,
 } from "@tabler/icons-react";
+import { db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { AuthContext } from "../../context/AuthContext";
 
 const RockPaperScissor = ({ browserWindowWidth }) => {
   const [handSize, setHandSize] = useState(
@@ -116,11 +119,52 @@ const RockPaperScissor = ({ browserWindowWidth }) => {
 
     if (winConditions[userHand] === botHand) {
       setCurrScore(currScore + 1);
-      setHighScore(Math.max(highScore, currScore + 1));
     } else {
       setCurrScore(0);
     }
   }, [currentHandSelected, botHandSelected]);
+
+  const { userDoc } = useContext(AuthContext);
+
+  useEffect(() => {
+    try {
+      if (userDoc) {
+        setHighScore(userDoc.highscore.rps);
+      } else {
+        console.log("User data not found.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, [userDoc]);
+
+  useEffect(() => {
+    if (currScore > highScore) {
+      setHighScore(currScore);
+      try {
+        if (userDoc && currScore > userDoc.highscore.rps) {
+          const updatedHighscores = {
+            ...userDoc.highscore,
+            rps: currScore,
+          };
+
+          updateDoc(doc(db, "users", userDoc.uid), {
+            highscore: updatedHighscores,
+          })
+            .then(() => {
+              console.log("Highscore updated successfully");
+            })
+            .catch((error) => {
+              console.error("Error updating highscore:", error);
+            });
+        } else {
+          console.log("User data not found.");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [currScore]);
 
   return (
     <div className="rps-container">

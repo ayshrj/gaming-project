@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./DriverLicense.css";
 import RandomZigZag from "../../util/RandomZigZag";
 import FaceCreator from "../../util/FaceCreator";
+import { db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
 import {
   human,
   generateRandomCharacter,
@@ -10,6 +12,7 @@ import {
   completeDriverLicense,
   getRandom,
 } from "../../util/games/DriverLicenseHumanProperties";
+import { AuthContext } from "../../context/AuthContext";
 
 const Questionnaire = ({
   questionDataset,
@@ -324,9 +327,45 @@ const DriverLicense = ({ browserWindowWidth }) => {
     console.log(questionDataset);
   }, [questionDataset]);
 
+  const { userDoc } = useContext(AuthContext);
+
+  useEffect(() => {
+    try {
+      if (userDoc) {
+        setHighestStreak(userDoc.highscore.driverLicense);
+      } else {
+        console.log("User data not found.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, [userDoc]);
+
   useEffect(() => {
     if (highestStreak < currentStreak) {
       setHighestStreak(currentStreak);
+      try {
+        if (userDoc && currentStreak > userDoc.highscore.driverLicense) {
+          const updatedHighscores = {
+            ...userDoc.highscore,
+            driverLicense: currentStreak,
+          };
+
+          updateDoc(doc(db, "users", userDoc.uid), {
+            highscore: updatedHighscores,
+          })
+            .then(() => {
+              console.log("Highscore updated successfully");
+            })
+            .catch((error) => {
+              console.error("Error updating highscore:", error);
+            });
+        } else {
+          console.log("User data not found.");
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   }, [currentStreak]);
 

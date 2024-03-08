@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useInterval } from "../../util/games/SnakeGameUseInterval";
 import {
   IconArrowLeft,
@@ -7,6 +7,9 @@ import {
   IconArrowDown,
 } from "@tabler/icons-react";
 import "./SnakeGame.css";
+import { db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { AuthContext } from "../../context/AuthContext";
 
 const SnakeGame = ({ browserWindowWidth }) => {
   const [canvasSize, setCanvasSize] = useState([400, 400]);
@@ -82,12 +85,53 @@ const SnakeGame = ({ browserWindowWidth }) => {
         newApple = createApple();
       }
       setCurrScore(currScore + 100);
-      setHighScore(Math.max(currScore + 100, highScore));
       setApple(newApple);
       return true;
     }
     return false;
   };
+
+  const { userDoc } = useContext(AuthContext);
+
+  useEffect(() => {
+    try {
+      if (userDoc) {
+        setHighScore(userDoc.highscore.snakeGame);
+      } else {
+        console.log("User data not found.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, [userDoc]);
+
+  useEffect(() => {
+    if (currScore > highScore) {
+      setHighScore(currScore);
+      try {
+        if (userDoc && currScore > userDoc.highscore.snakeGame) {
+          const updatedHighscores = {
+            ...userDoc.highscore,
+            snakeGame: currScore,
+          };
+
+          updateDoc(doc(db, "users", userDoc.uid), {
+            highscore: updatedHighscores,
+          })
+            .then(() => {
+              console.log("Highscore updated successfully");
+            })
+            .catch((error) => {
+              console.error("Error updating highscore:", error);
+            });
+        } else {
+          console.log("User data not found.");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [currScore]);
 
   const gameLoop = () => {
     const snakeCopy = JSON.parse(JSON.stringify(snake));
