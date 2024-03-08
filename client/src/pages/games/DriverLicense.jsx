@@ -20,6 +20,8 @@ const Questionnaire = ({
   setSelectedOption,
   feedback,
   setFeedback,
+  currentStreak,
+  setCurrentStreak,
 }) => {
   const handleNext = () => {
     setCurrentPage(currentPage + 1);
@@ -36,6 +38,7 @@ const Questionnaire = ({
 
     const correctAnswerIndex = questionDataset[currentPage].answer;
     if (selectedOptionIndex === correctAnswerIndex) {
+      setCurrentStreak(currentStreak + 1);
       setFeedback("Correct");
     } else {
       setFeedback("Game Over");
@@ -99,6 +102,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [currentStreak, setCurrentStreak] = useState(0);
+  const [highestStreak, setHighestStreak] = useState(0);
 
   const handleShowDriverLicense = () => {
     if (showDriverLicense === true) {
@@ -320,6 +324,12 @@ const DriverLicense = ({ browserWindowWidth }) => {
     console.log(questionDataset);
   }, [questionDataset]);
 
+  useEffect(() => {
+    if (highestStreak < currentStreak) {
+      setHighestStreak(currentStreak);
+    }
+  }, [currentStreak]);
+
   const handleReset = () => {
     handleChangeChar();
     setCurrentLevel(0);
@@ -328,6 +338,7 @@ const DriverLicense = ({ browserWindowWidth }) => {
     setShowDLNextButton(true);
     setSelectedOption(null);
     setFeedback(null);
+    setCurrentStreak(0);
   };
 
   return (
@@ -417,19 +428,37 @@ const DriverLicense = ({ browserWindowWidth }) => {
         </div>
       )}
       {!showDriverLicense && questionDataset.length > 0 && (
-        <Questionnaire
-          questionDataset={questionDataset}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          setShowDLNextButton={setShowDLNextButton}
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-          feedback={feedback}
-          setFeedback={setFeedback}
-        />
+        <>
+          <div className="dl-streak-container">
+            <div>
+              <span>Streak:</span>
+              {` ${currentStreak}`}
+            </div>
+            <div>
+              <span>Highest Streak:</span>
+              {` ${highestStreak}`}
+            </div>
+          </div>
+          <Questionnaire
+            questionDataset={questionDataset}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setShowDLNextButton={setShowDLNextButton}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            feedback={feedback}
+            setFeedback={setFeedback}
+            currentStreak={currentStreak}
+            setCurrentStreak={setCurrentStreak}
+          />
+        </>
       )}
       {feedback !== "Game Over" && showDLNextButton && (
-        <div className="dl-next-button" onClick={handleShowDriverLicense}>
+        <div
+          className="dl-next-button"
+          style={{ marginTop: "30px" }}
+          onClick={handleShowDriverLicense}
+        >
           Next
         </div>
       )}

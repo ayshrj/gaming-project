@@ -13,12 +13,20 @@
     --dl-card-photo-container-margin: 20px;
     --dl-card-issued-expiry-container-font-size: 12px;
     --dl-card-issued-expiry-container-margin-top: 20px;
-    --dl-buttons-width: 480px;
+    --dl-buttons-width: 450px;
     --dl-buttons-margin: 10px;
-    --dl-buttons-padding: 10px;
-    --dl-buttons-border-radius: 3px;
+    --dl-buttons-padding: 30px;
+    --dl-buttons-border-radius: 10px;
     --dl-questions-container-width: 440px;
+    --dl-questionnaire-container-option-color: rgb(219, 219, 219);
+    --dl-questionnaire-container-font-size: 30px;
+    --dl-streak-container-font-size: 20px;
+    --dl-streak-container-width: 486px;
 }
+
+/* [data-theme="light"] {
+    --dl-questionnaire-container-option-color: rgb(219, 219, 219);
+} */
 
 .dl-container {
     display: flex;
@@ -30,6 +38,18 @@
 .dl-card-photo-info {
     display: flex;
     flex-direction: row;
+}
+
+.dl-streak-container {
+    display: flex;
+    font-size: var(--dl-streak-container-font-size);
+    width: var(--dl-streak-container-width);
+    margin: auto;
+    justify-content: space-between;
+}
+
+.dl-streak-container>div>span {
+    color: var(--para-color)
 }
 
 .dl-card {
@@ -116,6 +136,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    font-size: var(--dl-questionnaire-container-font-size);
 }
 
 .dl-questionnaire-container-options {
@@ -129,6 +150,7 @@
     padding: var(--dl-buttons-padding);
     border-radius: var(--dl-buttons-border-radius);
     width: var(--dl-buttons-width);
+    cursor: pointer;
 }
 
 .dl-questionnaire-next-button, .dl-next-button {
@@ -137,6 +159,7 @@
 
 .dl-questionnaire-container-option {
     background-color: var(--border-color);
+    color: var(--dl-questionnaire-container-option-color)
 }
 
 .dl-questionnaire-container-option:hover {
@@ -203,6 +226,13 @@
 
     .dl-questionnaire-container {
         width: calc(var(--dl-card-reduction)*var(--dl-questions-container-width));
+        font-size: calc(var(--dl-card-reduction)*var(--dl-questionnaire-container-font-size));
     }
+
+    .dl-streak-container {
+        font-size: calc(var(--dl-card-reduction)*var(--dl-streak-container-font-size));
+        width: calc(var(--dl-card-reduction)*var(--dl-streak-container-width));
+    }
+
 
 }
