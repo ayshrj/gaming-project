@@ -60,6 +60,14 @@ const Questionnaire = ({
             <label
               className="dl-questionnaire-container-option"
               htmlFor={`option${optionIndex}`}
+              style={{
+                backgroundColor:
+                  selectedOption !== optionIndex
+                    ? ""
+                    : selectedOption === questionDataset[currentPage].answer
+                    ? "green"
+                    : "red",
+              }}
             >
               {option}
             </label>
