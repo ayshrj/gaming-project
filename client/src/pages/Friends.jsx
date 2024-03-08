@@ -5,6 +5,45 @@ import { useNavigate } from "react-router-dom";
 import FaceCreator from "../util/FaceCreator";
 import { db } from "../firebase";
 import { getDoc, doc } from "firebase/firestore";
+import { IconChevronDown, IconChevronRight } from "@tabler/icons-react";
+
+const HighscoreComponent = ({ highscore }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div>
+      <div
+        onClick={toggleOpen}
+        style={{
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {`Highscores `}
+        {isOpen ? (
+          <IconChevronDown size={20} />
+        ) : (
+          <IconChevronRight size={20} />
+        )}
+      </div>
+      {isOpen && (
+        <div>
+          {Object.entries(highscore).map(([game, score]) => (
+            <div key={game}>
+              <div>{game}</div> <div>{score}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Friends = ({ setUser, setSearchQuery, setSearchOpen }) => {
   const navigate = useNavigate();
@@ -59,12 +98,11 @@ const Friends = ({ setUser, setSearchQuery, setSearchOpen }) => {
       {friendsData && (
         <>
           {friendsData.map((friend, index) => (
-            <div
-              key={index}
-              className="friend"
-              onClick={() => handleSelectFriend(friend.id)}
-            >
-              <div className="friend-info">
+            <div key={index} className="friend">
+              <div
+                className="friend-info"
+                onClick={() => handleSelectFriend(friend.id)}
+              >
                 <div>
                   {friend.photoURL !== "" ? (
                     <img
@@ -80,11 +118,12 @@ const Friends = ({ setUser, setSearchQuery, setSearchOpen }) => {
               </div>
 
               {selectedFriendId === friend.id && (
-                <>
+                <div className="friend-container">
                   <div>Current Streak: {friend.currentStreak}</div>
                   <div>Target Streak: {friend.targetStreak}</div>
                   <div>Highest Streak: {friend.highestStreak}</div>
-                </>
+                  <HighscoreComponent highscore={friend.highscore} />
+                </div>
               )}
             </div>
           ))}

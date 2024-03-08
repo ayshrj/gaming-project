@@ -42,3 +42,16 @@
     gap: 10px;
     flex-direction: row;
 }
+
+.friend-container>div {
+    background-color: var(--para-color);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.friend-container>div>div>div {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0px;
+}
