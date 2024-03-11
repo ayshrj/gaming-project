@@ -1,4 +1,12 @@
-.welcome p {
+.welcome>p {
+    color: var(--para-color);
+}
+
+.welcome>h2 {
+    transition: color 0.2s ease-in-out;
+}
+
+.welcome>h2:hover {
     color: var(--para-color);
 }
 

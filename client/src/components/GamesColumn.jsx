@@ -8,6 +8,7 @@ import IconTetris from "../assets/games-icon/IconTetris.svg";
 import IconRockPaperScissor from "../assets/games-icon/IconRockPaperScissor.svg";
 import IconConcentration from "../assets/games-icon/IconConcentration.svg";
 import IconDriverLicense from "../assets/games-icon/IconDriverLicense.svg";
+import IconTicTacToe from "../assets/games-icon/IconTicTacToe.svg";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import "./GamesColumn.css";
 
@@ -22,6 +23,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
     rockpaperscissor: false,
     concentration: false,
     driverlicense: false,
+    tictactoe: false,
   });
 
   const handleGameInfo = (currentGameSelected) => {
@@ -35,6 +37,7 @@ const GamesColumn = ({ browserWindowWidth }) => {
       rockpaperscissor: false,
       concentration: false,
       driverlicense: false,
+      tictactoe: false,
       [currentGameSelected]: !prevState[currentGameSelected],
     }));
   };
@@ -600,6 +603,83 @@ const GamesColumn = ({ browserWindowWidth }) => {
                   your game and trying to find all pairs in the shortest time
                   possible or by reducing the number of turns it takes to
                   complete the game.
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`game-container ${
+            gameInfoOpen.tictactoe ? "game-info-open" : ""
+          }`}
+          onClick={() => handleGameInfo("tictactoe")}
+        >
+          <div className="game-header">
+            <div onClick={() => navigate("/games/tictactoe")}>Tic Tac Toe</div>
+            <div
+              className={`game-info-button ${
+                gameInfoOpen.tictactoe ? "game-info-open" : ""
+              }`}
+            >
+              <img
+                className={`${
+                  gameInfoOpen.tictactoe && browserWindowWidth > 1000
+                    ? "game-info-open"
+                    : "game-info-closed"
+                }`}
+                onClick={() => navigate("/games/tictactoe")}
+                src={IconTicTacToe}
+                alt="IconTicTacToe"
+              />
+              <div>
+                {gameInfoOpen.tictactoe ? (
+                  <IconChevronUp />
+                ) : (
+                  <IconChevronDown />
+                )}
+              </div>
+            </div>
+          </div>
+          <div
+            className={`game-info-text ${
+              !gameInfoOpen.tictactoe ? "no-display" : ""
+            } ${browserWindowWidth < 1000 ? "game-info-right-margin" : ""}`}
+          >
+            <div>
+              Tic Tac Toe is a classic two-player, turn-based strategy game, but
+              in this version, you'll be competing against a bot powered by the
+              Minimax algorithm. The game is played on a 3x3 grid, and the
+              objective remains to be the first to get three of your own marks
+              in a horizontal, vertical, or diagonal row. This AI-driven version
+              challenges players to think strategically against a computer
+              opponent designed to make optimal moves.
+            </div>
+            <div>
+              <br />
+              Instructions:
+              <ol>
+                <li>
+                  The game board consists of a 3x3 grid, which starts empty.
+                </li>
+                <li>
+                  Players choose their symbol: one player uses "X" and the other
+                  uses "O". Players take turns placing their symbol in an empty
+                  cell on the grid.
+                </li>
+
+                <li>
+                  The goal is to place three of your symbols in a straight line
+                  horizontally, vertically, or diagonally.
+                </li>
+                <li>
+                  A player wins if they are the first to create a straight line
+                  of three of their symbols. If the grid is filled and no player
+                  has achieved this, the game ends in a draw.
+                </li>
+                <li>
+                  Strategy is key: each player must not only try to create a
+                  line of three of their own symbols but also must block their
+                  opponent from doing the same.
                 </li>
               </ol>
             </div>

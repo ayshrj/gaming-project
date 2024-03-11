@@ -15,6 +15,7 @@ import Authentication from "../pages/Authentication";
 import Settings from "../pages/Settings";
 import Friends from "../pages/Friends";
 import DriverLicense from "../pages/games/DriverLicense";
+import TicTacToe from "../pages/TicTacToe";
 
 const Content = ({
   isMobileViewport,
@@ -134,6 +135,10 @@ const Content = ({
         <Route
           path="games/driverlicense"
           element={<DriverLicense browserWindowWidth={browserWindowWidth} />}
+        />
+        <Route
+          path="games/tictactoe"
+          element={<TicTacToe browserWindowWidth={browserWindowWidth} />}
         />
       </Routes>
     </div>
