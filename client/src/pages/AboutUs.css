@@ -1,0 +1,50 @@
+.about-us {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.about-us h1 {
+    font-size: 80px;
+}
+
+
+.about-us p {
+    font-size: 32px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-us a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.about-us a:hover {
+    text-decoration: underline;
+}
+
+.about-us-brand-icons {
+    height: 100px;
+    width: 100px;
+}
+
+
+@media (max-width: 768px) {
+    .about-us h1 {
+        font-size: 40px;
+    }
+
+
+    .about-us p {
+        font-size: 16px;
+    }
+
+    .about-us-brand-icons {
+        height: 50px;
+        width: 50px;
+    }
+}

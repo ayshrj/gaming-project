@@ -115,8 +115,14 @@ const LeftPane = ({
           </Option>
         </div>
         <div className="leftpane-user">
-          <Option>Help</Option>
-          <Option>Contact Us</Option>
+          {/* <Option>Help</Option> */}
+          <Option
+            onClick={() => {
+              navigate("aboutUs");
+            }}
+          >
+            About Us
+          </Option>
           {currentUser ? (
             <Option onClick={handleSignOut}>
               <IconLogout />

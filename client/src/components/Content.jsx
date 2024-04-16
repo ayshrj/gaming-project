@@ -16,6 +16,7 @@ import Settings from "../pages/Settings";
 import Friends from "../pages/Friends";
 import DriverLicense from "../pages/games/DriverLicense";
 import TicTacToe from "../pages/TicTacToe";
+import AboutUs from "../pages/AboutUs";
 
 const Content = ({
   isMobileViewport,
@@ -140,6 +141,7 @@ const Content = ({
           path="games/tictactoe"
           element={<TicTacToe browserWindowWidth={browserWindowWidth} />}
         />
+        <Route path="aboutUs" element={<AboutUs />} />
       </Routes>
     </div>
   );
