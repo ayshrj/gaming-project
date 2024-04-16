@@ -25,6 +25,7 @@ const LeftPane = ({
   setTargetStreak,
   setUser,
   setSearchQuery,
+  setIsLeftPaneOpen,
 }) => {
   const leftpaneContainerRef = useRef(null);
   const navigate = useNavigate();
@@ -64,7 +65,13 @@ const LeftPane = ({
     >
       <div className="leftpane">
         <div className="leftpane-logo-container">
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <div
+            onClick={() => {
+              isMobileViewport ? setIsLeftPaneOpen(false) : undefined;
+              navigate("/");
+            }}
+            to="/"
+          >
             <div className="leftpane-logo">
               {/* <IconDeviceGamepad size={50} /> */}
               <svg
@@ -80,12 +87,13 @@ const LeftPane = ({
 
               <div>NoCanDo</div>
             </div>
-          </Link>
+          </div>
         </div>
         <div className="leftpane-options">
           <Option
             icon={<IconUserSquare />}
             onClick={() => {
+              isMobileViewport ? setIsLeftPaneOpen(false) : undefined;
               currentUser
                 ? navigate("/profile")
                 : setAuthenticationBoxOpen(true);
@@ -96,6 +104,7 @@ const LeftPane = ({
           <Option
             icon={<IconUsersGroup />}
             onClick={() => {
+              isMobileViewport ? setIsLeftPaneOpen(false) : undefined;
               currentUser
                 ? navigate("/friends")
                 : setAuthenticationBoxOpen(true);
@@ -106,6 +115,7 @@ const LeftPane = ({
           <Option
             icon={<IconSettings2 />}
             onClick={() => {
+              isMobileViewport ? setIsLeftPaneOpen(false) : undefined;
               currentUser
                 ? navigate("/settings")
                 : setAuthenticationBoxOpen(true);
@@ -118,6 +128,7 @@ const LeftPane = ({
           {/* <Option>Help</Option> */}
           <Option
             onClick={() => {
+              isMobileViewport ? setIsLeftPaneOpen(false) : undefined;
               navigate("aboutUs");
             }}
           >

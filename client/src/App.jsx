@@ -111,6 +111,7 @@ function App() {
             setTargetStreak={setTargetStreak}
             setUser={setUser}
             setSearchQuery={setSearchQuery}
+            setIsLeftPaneOpen={setIsLeftPaneOpen}
             setSearchOpen={setSearchOpen}
           />
         </div>

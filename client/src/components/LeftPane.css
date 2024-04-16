@@ -40,6 +40,7 @@
     align-items: flex-end;
     font-size: 30px;
     border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
     border-bottom-right-radius: var(--border-radius);
 }
 

@@ -22,6 +22,7 @@ const Dashboard = ({
   setUser,
   setSearchQuery,
   setSearchOpen,
+  setIsLeftPaneOpen,
 }) => {
   return (
     <div className="dashboard">
@@ -32,6 +33,7 @@ const Dashboard = ({
         setAuthenticationBoxOpen={setAuthenticationBoxOpen}
         setUser={setUser}
         setSearchQuery={setSearchQuery}
+        setIsLeftPaneOpen={setIsLeftPaneOpen}
       />
       <Content
         isMobileViewport={isMobileViewport}
